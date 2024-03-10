@@ -27,4 +27,3 @@ Compiling module simprims_ver.LUT4
 Compiling module xil_defaultlib.RAM_unit
 Compiling module xil_defaultlib.RAM_unit_test_bench
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot RAM_unit_test_bench_time_impl

@@ -39,34 +39,34 @@ module RAM_unit_test_bench();
         mem_op_waiting = 0;
         mem_op_R_or_w = 1;
         mem_op_data = 0;
-        #5
+        #12
         mem_op_waiting = 1;
-        #5
+        #12
         mem_op_waiting = 0;
         mem_op_address = 1;
-        #5
+        #12
         mem_op_waiting = 1;
-        #5
+        #12
         mem_op_waiting = 0;
         mem_op_address = 2;
-        #5
+        #12
         mem_op_waiting = 1;
-        #5
+        #12
         mem_op_waiting = 0;
-        #5
+        #12
         mem_op_address = 0;
         mem_op_R_or_w = 1;
         mem_op_data = 10;
-        #5
+        #12
         mem_op_waiting = 1;
-        #5
+        #12
         mem_op_waiting = 0;
-        #5
+        #12
         instruction_waiting = 1;
-        #5
+        #12
         instruction_waiting = 0;
         mem_op_waiting = 0;
-        #5
+        #12
         instruction_waiting = 1;
     end
 endmodule
