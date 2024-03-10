@@ -1,0 +1,50 @@
+thoughts:
+7 bits are enough for every 00-99, 8 might be easier to deal with tho.
+100 words of ram
+probably 127 in reality, in that case those 27 are for internal system.
+exceptions are needed, so a few units or one for that, where the user instructions go through there.
+
+roms for running small parts i think is necessary
+since we're using an instruction register shouldn't be too hard.
+maybe pipelined, need to consider.
+allow for variable clock cycles per instruction.
+
+instruction pointer will be for program ip, but we'll have an internal one which is split in two, mem select and address.
+mem select = 0 means ram
+mem select = not 0 is any of a few different roms.
+
+instruction running order - 
+	load into instruction register
+	do stuff based on opcode
+	syscall (if exists) jumps to some rom
+
+memory unit, with two register queues, one from instructions and another from the part that loads instructions from memory or rom, both for asking for bytes, fulfills stuff whenever it can, runs concurently.
+
+
+
+plans:
+8 bits to represent every number from 00-99.
+Anything over 99 in user program raises an exception, rom programs can use them for special internal things in some cases.
+
+main registers:
+    AX, BX: general purpose, 8 bits each
+    IP, EIP: instuction pointer, and exception IP, both 8 bits
+    IR: instuction register, 8*3=24 bit
+
+ram unit:
+    instruction needs, single word: input
+    mem load instruction, tri word: input
+
+rom, for syscalls and exceptions:
+    is jumped to by address either using syscall, or by an exception happening, address based on a jump table
+    AX, BX are kept as is when jumping, so they can be used for arguments in syscalls.
+    ret instruction returns to position in regular execution
+    all registers (AX, BX, IP) are reset, so no need to save them
+    AX register != 0 when running ret means stop program, and returns BX as exit code.
+    some instructions in instruction set are restricted to internal use - from code in the rom.
+
+exception handler:
+    tbd
+
+controllers:
+    tbd

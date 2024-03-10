@@ -1,0 +1,44 @@
+general details:
+everything is in base 10
+memory indexed from 00-99
+numbers are 00-99
+every word is two decimal digits
+program is placed in memory starting at position 00
+arguments are in order, right after opcode
+e.g. mov AX, 99    is    03 01 99
+
+registers:
+AX, BX : general purpose. coding: 01 for AX and 02 for BX
+FR : flag register, for internal use in cmp and je commands
+IP : instruction pointer
+IR : instruction register, stores the current instruction
+
+opcodes:
+00: ret
+01: mov register, constant
+02: mov register, register
+03: mov register, memory
+04: mov memory, constant
+05: mov memory, register
+
+06: add register, constant
+07: add register, register
+
+08: cmp register, constant
+09: cmp register, register
+
+10: jmp constant
+11: jmp register
+12: je constant
+13: je register
+
+
+
+my addition ideas:
+14: sub register, register (sub reg, const is useless as we can use 10s complement)
+15: load registerA, registerB (registerA = mem[registerB])
+16: write registerA, registerB (mem[registerA] = mem[registerB])
+: syscall
+internal ones:
+: send word to master (computer that's connected)
+: wait to receive a word from master (computer that's connected)

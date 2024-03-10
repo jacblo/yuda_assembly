@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2023.2.2 (64-bit)
+# SW Build 4126759 on Thu Feb  8 23:52:05 MST 2024
+# IP Build 4126054 on Fri Feb  9 11:39:09 MST 2024
+# SharedData Build 4115275 on Tue Jan 30 00:40:57 MST 2024
+# Start of session at: Sun Mar 10 18:00:28 2024
+# Process ID: 859997
+# Current directory: /home/y4/Documents/school/cyber-studies/final project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/impl_1
+# Command line: vivado -log RAM_unit.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source RAM_unit.tcl -notrace
+# Log file: /home/y4/Documents/school/cyber-studies/final project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/impl_1/RAM_unit.vdi
+# Journal file: /home/y4/Documents/school/cyber-studies/final project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/impl_1/vivado.jou
+# Running On: BSERVER05, OS: Linux, CPU Frequency: 3800.000 MHz, CPU Physical cores: 6, Host memory: 33562 MB
+#-----------------------------------------------------------
+source RAM_unit.tcl -notrace
