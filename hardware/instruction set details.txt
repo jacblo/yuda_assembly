@@ -1,7 +1,9 @@
+!! inaccurate, numbers are actually 6 digits, i was wrong, a lot of this is wrong
+
 general details:
 everything is in base 10
 memory indexed from 00-99
-numbers are 00-99
+numbers are 000000-999999
 every word is two decimal digits
 program is placed in memory starting at position 00
 arguments are in order, right after opcode
@@ -35,9 +37,12 @@ opcodes:
 
 
 my addition ideas:
-14: sub register, register (sub reg, const is useless as we can use 10s complement)
-15: load registerA, registerB (registerA = mem[registerB])
-16: write registerA, registerB (mem[registerA] = mem[registerB])
+14: mov registerA, PTR [registerB] (registerA = mem[registerB])
+15: mov PTR [registerA], registerB (mem[registerA] = registerB)
+16: sub register, register (sub reg, const is useless as we can use 10s complement)
+17: jl constant (if less than, then IP = constant)
+18: jr register (IP = register)
+
 : syscall
 internal ones:
 : send word to master (computer that's connected)
