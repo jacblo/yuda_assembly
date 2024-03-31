@@ -9,6 +9,7 @@ To get started with yuda_assembly, follow these steps:
 1. Clone the repository
 2. Navigate to the project directory: `cd yuda_assembly` (don't cd into website, it's used as a module)
 3. Install the dependencies: `pipenv install`
+4. Put the monaco installation in static/vs (it can be a link to the monaco editor folder, or a copy of it)
 4. Start the development server: `flask --app website run --port XXXX --`
 
 ## Features
