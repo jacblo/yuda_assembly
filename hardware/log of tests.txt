@@ -1,0 +1,18 @@
+8 or 7 bits, testing RAM unit, before BRAM, just registers:
+    implementation sim:
+        7 bits: 8 ns delay from mem_op_waiting to mem_op_ready
+        8 bits: 8 ns delay from mem_op_waiting to mem_op_ready
+
+    report power:
+        7 bits: thermal margin -18.9c (-5.1 W), confidence level: Low
+        8 bits: exactly the same
+    
+    report utilization:
+        7 bits: LUT 6.02%, FF 3.16%, IO 31.33%
+        8 bits: exactly the same
+
+    schematic:
+        7 bits: a bunch of registers
+        8 bits: exactly the same
+results:
+    inconclusive. i think they're exactly the same. since 8 bits are easier to work with, i'll stick to it.
