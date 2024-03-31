@@ -3,7 +3,7 @@ from flask import Flask, render_template
 import rocher
 
 monaco_html = rocher.editor_html(
-    "",
+    "static/vs",
     "editor",
     "python",
     "print('Hello World!')",
