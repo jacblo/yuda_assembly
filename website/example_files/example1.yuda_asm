@@ -1,0 +1,4 @@
+mov ax, 10
+
+cmp ax, 0
+je

@@ -40,8 +40,9 @@ my addition ideas:
 14: mov registerA, PTR [registerB] (registerA = mem[registerB])
 15: mov PTR [registerA], registerB (mem[registerA] = registerB)
 16: sub register, register (sub reg, const is useless as we can use 10s complement)
-17: jl constant (if less than, then IP = constant)
-18: jr register (IP = register)
+17: jne constant (if not equal, then IP = constant)
+18: jl constant (if less than, then IP = constant)
+19: jr register (IP = register)
 
 : syscall
 internal ones:
