@@ -1,15 +1,25 @@
 <!doctype html>
 
 <head>
-    <title>{% block title %}{% endblock %} - Flaskr</title>
-    <link rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <title>{% block title %}{% endblock %} Yuda's asm runner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Libraries -->
+    <!-- xterm -->
+    <link rel="stylesheet" href="https://unpkg.com/xterm@3.6.0/dist/xterm.css" />
+    <script src="https://unpkg.com/xterm@3.6.0/dist/xterm.js"></script>
+    <script src="https://unpkg.com/xterm@3.6.0/dist/addons/fit/fit.js"></script>
+    <script src="https://unpkg.com/xterm@3.6.0/dist/addons/webLinks/webLinks.js"></script>
+    <script src="https://unpkg.com/xterm@3.6.0/dist/addons/search/search.js"></script>
+
+    <!-- socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js" 
+            integrity="sha512-luMnTJZ7oEchNDZAtQhgjomP1eZefnl82ruTH/3Oj/Yu5qYtwL7+dVRccACS/Snp1lFXq188XFipHKYE75IaQQ==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script></head>
 
 <body>
     <h1>Testing</h1>
     <input type="button" value="Save" onclick="save()" />
-    <input type="button" value="Upper case" onclick="upper()" />
     <div id="container">
         <div id="left_panel">
             {{
@@ -25,7 +35,18 @@
                 )
             | safe }}
         </div>
+        <div id="right_panel">
+            <span> 
+                <span style="font-size: 1.4em;">Output</span>&nbsp;&nbsp;&nbsp;
+                <span style="font-size: small;">status: <span style="font-size: small;" id="status">connecting...</span></span>
+            </span>
+            <div id="output_viewer"></div>
+        </div>
     </div>
+    
+    <!-- xterm  setup -->
+    <script src="{{ url_for('static', filename='xtermjs_socketio_setup.js') }}"></script>
+    <!-- monaco editor setup -->
     <script src="{{ url_for('static', filename='asm_editor_setup.js') }}"></script>
 
 </body>

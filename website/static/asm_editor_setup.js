@@ -69,8 +69,11 @@ require(['rocher_editor_left_panel'], function (editor) {
                 [/\.[\w0-9-_]+/, 'label'],
 
                 // numbers
-                [/0[xX][0-9a-fA-F]+/, 'number.hex'],
-                [/\d+/, 'number'],
+                [/0[xX][0-9a-fA-F]{1,2}\s/, 'number.hex'],    // 99 in hex is 2 chars long, but
+                                                            // i'm not gonna have regex compare to
+                                                            // 0x63 (=99) so just limiting 
+                                                            // to 2 characters.
+                [/\d{1,2}(?!\d)/, 'number'],  // limited to 2 chars because constants are in range 0-99
             ],
 
             whitespace: [
@@ -91,7 +94,7 @@ require(['rocher_editor_left_panel'], function (editor) {
                 endColumn: word.endColumn,
             };
             var suggestions = [];
-            (INSTRUCTIONS+KEYWORDS).forEach((item) => {
+            INSTRUCTIONS.concat(KEYWORDS).forEach((item) => {
                 suggestions.push({
                     label: item,
                     kind: monaco.languages.CompletionItemKind.Keyword,
