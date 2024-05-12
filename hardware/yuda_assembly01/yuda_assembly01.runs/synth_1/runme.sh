@@ -21,7 +21,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/synth_1'
+HD_PWD='/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
@@ -37,4 +37,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log RAM_unit.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source RAM_unit.tcl
+EAStep vivado -log UART_test.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source UART_test.tcl

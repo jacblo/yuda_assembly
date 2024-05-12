@@ -21,7 +21,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/impl_1'
+HD_PWD='/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/impl_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
@@ -39,6 +39,6 @@ EAStep()
 
 # pre-commands:
 /bin/touch .init_design.begin.rst
-EAStep vivado -log RAM_unit.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source RAM_unit.tcl -notrace
+EAStep vivado -log UART_test.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source UART_test.tcl -notrace
 
 

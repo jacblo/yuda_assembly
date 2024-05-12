@@ -3,12 +3,12 @@
 # SW Build 4126759 on Thu Feb  8 23:52:05 MST 2024
 # IP Build 4126054 on Fri Feb  9 11:39:09 MST 2024
 # SharedData Build 4115275 on Tue Jan 30 00:40:57 MST 2024
-# Start of session at: Sun Mar 10 20:40:21 2024
-# Process ID: 951239
-# Current directory: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/synth_1
-# Command line: vivado -log RAM_unit.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source RAM_unit.tcl
-# Log file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/synth_1/RAM_unit.vds
-# Journal file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/synth_1/vivado.jou
-# Running On: BSERVER05, OS: Linux, CPU Frequency: 3804.435 MHz, CPU Physical cores: 6, Host memory: 33562 MB
+# Start of session at: Mon May 13 00:47:57 2024
+# Process ID: 769458
+# Current directory: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1
+# Command line: vivado -log UART_test.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source UART_test.tcl
+# Log file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/UART_test.vds
+# Journal file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/vivado.jou
+# Running On: BSERVER05, OS: Linux, CPU Frequency: 3891.316 MHz, CPU Physical cores: 6, Host memory: 33561 MB
 #-----------------------------------------------------------
-source RAM_unit.tcl -notrace
+source UART_test.tcl -notrace

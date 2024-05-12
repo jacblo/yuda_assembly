@@ -1,6 +1,6 @@
 
 *** Running vivado
-    with args -log RAM_unit.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source RAM_unit.tcl
+    with args -log UART_test.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source UART_test.tcl
 
 
 ****** Vivado v2023.2.2 (64-bit)
@@ -10,16 +10,16 @@
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 
-source RAM_unit.tcl -notrace
-create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1320.965 ; gain = 0.023 ; free physical = 1600 ; free virtual = 50747
+source UART_test.tcl -notrace
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1320.961 ; gain = 0.023 ; free physical = 3189 ; free virtual = 51716
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository '/media/y4/P1/applications02/vivado/arm_processor_ip'.
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/y4/P1/applications02/vivado/Vivado/2023.2/data/ip'.
 WARNING: [IP_Flow 19-1663] Duplicate IP found for 'Arm.com:user:DAPLink_to_Arty_shield:1.0'. The one found in IP location '/media/y4/P1/applications02/vivado/arm_processor_ip/AT426-r0p1-00rel0-1/AT426-BU-98000-r0p1-00rel0/vivado/Arm_ipi_repository/DAPLink_to_Arty_shield' will take precedence over the same IP in location /media/y4/P1/applications02/vivado/arm_processor_ip/AT472-r0p1-00rel0-1/AT472-BU-98000-r0p1-00rel0/vivado/Arm_ipi_repository/DAPLink_to_Arty_shield
-Command: read_checkpoint -auto_incremental -incremental /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/utils_1/imports/synth_1/test_module.dcp
-INFO: [Vivado 12-5825] Read reference checkpoint from /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/utils_1/imports/synth_1/test_module.dcp for incremental synthesis
+Command: read_checkpoint -auto_incremental -incremental /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/utils_1/imports/synth_1/test_module.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/utils_1/imports/synth_1/test_module.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
-Command: synth_design -top RAM_unit -part xc7s25csga225-1
+Command: synth_design -top UART_test -part xc7s25csga225-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7s25'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s25'
@@ -28,203 +28,117 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 951525
+INFO: [Synth 8-7075] Helper process launched with PID 769563
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2014.742 ; gain = 405.684 ; free physical = 463 ; free virtual = 49631
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2011.738 ; gain = 403.715 ; free physical = 2272 ; free virtual = 50799
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'RAM_unit' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:3]
-WARNING: [Synth 8-567] referenced signal 'memoryArray' should be on the sensitivity list [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:23]
-WARNING: [Synth 8-567] referenced signal 'mem_op_address' should be on the sensitivity list [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:23]
-WARNING: [Synth 8-567] referenced signal 'mem_op_R_or_w' should be on the sensitivity list [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:32]
-WARNING: [Synth 8-567] referenced signal 'mem_op_data' should be on the sensitivity list [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:32]
-WARNING: [Synth 8-567] referenced signal 'mem_op_address' should be on the sensitivity list [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:32]
-INFO: [Synth 8-6155] done synthesizing module 'RAM_unit' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:3]
-WARNING: [Synth 8-7129] Port instruction_address[7] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[6] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[5] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[4] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[3] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[2] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[1] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[0] in module RAM_unit is either unconnected or has no load
+INFO: [Synth 8-6157] synthesizing module 'UART_test' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_test.sv:23]
+INFO: [Synth 8-6157] synthesizing module 'UART' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv:22]
+	Parameter BAUD_RATE bound to: 2000000 - type: integer 
+	Parameter CLK_FREQ bound to: 12000000 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'UART' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv:22]
+WARNING: [Synth 8-7071] port 'o_rx_data' of module 'UART' is unconnected for instance 'uart_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_test.sv:36]
+WARNING: [Synth 8-7023] instance 'uart_controller' of module 'UART' has 8 connections declared, but only 7 given [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_test.sv:36]
+INFO: [Synth 8-6155] done synthesizing module 'UART_test' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_test.sv:23]
+WARNING: [Synth 8-3848] Net led[3] in module/entity UART_test does not have driver. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_test.sv:25]
+WARNING: [Synth 8-3848] Net led[2] in module/entity UART_test does not have driver. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_test.sv:25]
+WARNING: [Synth 8-7129] Port led[3] in module UART_test is either unconnected or has no load
+WARNING: [Synth 8-7129] Port led[2] in module UART_test is either unconnected or has no load
+WARNING: [Synth 8-7129] Port btn[1] in module UART_test is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2139.711 ; gain = 530.652 ; free physical = 316 ; free virtual = 49481
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2087.676 ; gain = 479.652 ; free physical = 2158 ; free virtual = 50687
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2151.586 ; gain = 542.527 ; free physical = 333 ; free virtual = 49498
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2105.488 ; gain = 497.465 ; free physical = 2158 ; free virtual = 50687
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2151.586 ; gain = 542.527 ; free physical = 333 ; free virtual = 49498
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2105.488 ; gain = 497.465 ; free physical = 2158 ; free virtual = 50687
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2151.586 ; gain = 0.000 ; free physical = 332 ; free virtual = 49499
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2105.488 ; gain = 0.000 ; free physical = 2158 ; free virtual = 50687
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]
-WARNING: [Vivado 12-584] No ports matched 'clk'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:7]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:7]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'clk'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:8]
-CRITICAL WARNING: [Vivado 12-4739] create_clock:No valid object(s) found for '-objects [get_ports clk]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:8]
-Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.
-WARNING: [Vivado 12-584] No ports matched 'btn[0]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:11]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:11]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'btn[1]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:12]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:12]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'led[0]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:20]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:20]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'led[1]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:21]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:21]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'led[2]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:22]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:22]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-WARNING: [Vivado 12-584] No ports matched 'led[3]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:23]
-CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:23]
-Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
-Finished Parsing XDC File [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]
+Parsing XDC File [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]
+Finished Parsing XDC File [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/UART_test_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/UART_test_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2249.328 ; gain = 0.000 ; free physical = 352 ; free virtual = 49519
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2233.230 ; gain = 0.000 ; free physical = 2148 ; free virtual = 50678
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2249.363 ; gain = 0.000 ; free physical = 350 ; free virtual = 49519
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2233.266 ; gain = 0.000 ; free physical = 2148 ; free virtual = 50677
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 376 ; free virtual = 49539
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2133 ; free virtual = 50662
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s25csga225-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 376 ; free virtual = 49539
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2133 ; free virtual = 50662
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 376 ; free virtual = 49539
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2133 ; free virtual = 50662
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-327] inferring latch for variable 'instruction_out_reg' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:25]
-WARNING: [Synth 8-327] inferring latch for variable 'mem_op_out_reg' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:37]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[0]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[1]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[2]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[3]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[4]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[5]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[6]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[7]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[8]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[9]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[10]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[11]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[12]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[13]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[14]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[15]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[16]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[17]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[18]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[19]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[20]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[21]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[22]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[23]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[24]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[25]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[26]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[27]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[28]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[29]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[30]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[31]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[32]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[33]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[34]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[35]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[36]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[37]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[38]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[39]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[40]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[41]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[42]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[43]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[44]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[45]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[46]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[47]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[48]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[49]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[50]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[51]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[52]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[53]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[54]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[55]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[56]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[57]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[58]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[59]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[60]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[61]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[62]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[63]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[64]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[65]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[66]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[67]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[68]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[69]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[70]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[71]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[72]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[73]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[74]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[75]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[76]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[77]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[78]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[79]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[80]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[81]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[82]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[83]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[84]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[85]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[86]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[87]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[88]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[89]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[90]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[91]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[92]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[93]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[94]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[95]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[96]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-WARNING: [Synth 8-327] inferring latch for variable 'memoryArray_reg[97]' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/RAM_unit.v:35]
-INFO: [Common 17-14] Message 'Synth 8-327' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-802] inferred FSM for state register 'rx_state_reg' in module 'UART'
+INFO: [Synth 8-802] inferred FSM for state register 'tx_state_reg' in module 'UART'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                              000
+               START_BIT |                            00010 |                              001
+               DATA_BITS |                            00100 |                              010
+                STOP_BIT |                            01000 |                              011
+                 CLEANUP |                            10000 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'rx_state_reg' using encoding 'one-hot' in module 'UART'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              000 |                              000
+               START_BIT |                              001 |                              001
+               DATA_BITS |                              010 |                              010
+                STOP_BIT |                              011 |                              011
+                 CLEANUP |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'tx_state_reg' using encoding 'sequential' in module 'UART'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 374 ; free virtual = 49539
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2130 ; free virtual = 50661
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   10 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 3     
++---Registers : 
+	               10 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
+	                3 Bit    Registers := 3     
+	                1 Bit    Registers := 3     
 +---Muxes : 
-	   2 Input    1 Bit        Muxes := 256   
+	   2 Input   10 Bit        Muxes := 1     
+	   5 Input   10 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 1     
+	   5 Input    8 Bit        Muxes := 1     
+	   5 Input    5 Bit        Muxes := 1     
+	   2 Input    5 Bit        Muxes := 6     
+	   2 Input    3 Bit        Muxes := 8     
+	   5 Input    3 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 9     
+	   2 Input    1 Bit        Muxes := 3     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -241,34 +155,29 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
-WARNING: [Synth 8-7129] Port instruction_address[7] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[6] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[5] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[4] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[3] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[2] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[1] in module RAM_unit is either unconnected or has no load
-WARNING: [Synth 8-7129] Port instruction_address[0] in module RAM_unit is either unconnected or has no load
+WARNING: [Synth 8-7129] Port led[3] in module UART_test is either unconnected or has no load
+WARNING: [Synth 8-7129] Port led[2] in module UART_test is either unconnected or has no load
+WARNING: [Synth 8-7129] Port btn[1] in module UART_test is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 351 ; free virtual = 49527
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2112 ; free virtual = 50651
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 366 ; free virtual = 49538
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2122 ; free virtual = 50662
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 378 ; free virtual = 49549
+Finished Timing Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2122 ; free virtual = 50662
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 378 ; free virtual = 49549
+Finished Technology Mapping : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2122 ; free virtual = 50662
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -286,37 +195,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 387 ; free virtual = 49472
+Finished IO Insertion : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 387 ; free virtual = 49472
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 387 ; free virtual = 49472
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 387 ; free virtual = 49472
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 387 ; free virtual = 49472
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 387 ; free virtual = 49472
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -333,42 +242,38 @@ Report Cell Usage:
 |      |Cell  |Count |
 +------+------+------+
 |1     |BUFG  |     1|
-|2     |LUT2  |    67|
-|3     |LUT4  |    70|
-|4     |LUT6  |  1888|
-|5     |MUXF7 |   816|
-|6     |MUXF8 |   408|
-|7     |LD    |  2080|
-|8     |IBUF  |    19|
-|9     |OBUF  |    34|
+|2     |LUT2  |     1|
+|3     |LUT3  |     5|
+|4     |LUT4  |     4|
+|5     |LUT5  |     6|
+|6     |LUT6  |    18|
+|7     |FDRE  |    24|
+|8     |IBUF  |     3|
+|9     |OBUF  |     3|
+|10    |OBUFT |     2|
 +------+------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 387 ; free virtual = 49472
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 267 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2249.363 ; gain = 542.527 ; free physical = 383 ; free virtual = 49467
-Synthesis Optimization Complete : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 2249.363 ; gain = 640.305 ; free physical = 380 ; free virtual = 49464
+Synthesis finished with 0 errors, 0 critical warnings and 4 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 2233.266 ; gain = 497.465 ; free physical = 2139 ; free virtual = 50680
+Synthesis Optimization Complete : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 2233.266 ; gain = 625.242 ; free physical = 2139 ; free virtual = 50680
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2249.363 ; gain = 0.000 ; free physical = 671 ; free virtual = 49755
-INFO: [Netlist 29-17] Analyzing 3304 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
-WARNING: [Netlist 29-101] Netlist 'RAM_unit' is not ideal for floorplanning, since the cellview 'RAM_unit' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2233.266 ; gain = 0.000 ; free physical = 2139 ; free virtual = 50680
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2249.363 ; gain = 0.000 ; free physical = 646 ; free virtual = 49727
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2233.266 ; gain = 0.000 ; free physical = 2421 ; free virtual = 50961
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 2080 instances were transformed.
-  LD => LDCE: 2080 instances
+No Unisim elements were transformed.
 
-Synth Design complete | Checksum: c72cc0f4
+Synth Design complete | Checksum: 10eeda54
 INFO: [Common 17-83] Releasing license: Synthesis
-26 Infos, 132 Warnings, 8 Critical Warnings and 0 Errors encountered.
+30 Infos, 12 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:29 . Memory (MB): peak = 2249.363 ; gain = 928.398 ; free physical = 646 ; free virtual = 49726
-INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1850.918; main = 1520.458; forked = 375.101
-INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3209.090; main = 2249.332; forked = 975.766
-INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
-Write ShapeDB Complete: Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2273.340 ; gain = 0.000 ; free physical = 646 ; free virtual = 49727
-INFO: [Common 17-1381] The checkpoint '/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/yuda_assembly01/yuda_assembly01.runs/synth_1/RAM_unit.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_utilization -file RAM_unit_utilization_synth.rpt -pb RAM_unit_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun Mar 10 20:40:59 2024...
+synth_design: Time (s): cpu = 00:00:23 ; elapsed = 00:00:21 . Memory (MB): peak = 2233.266 ; gain = 912.305 ; free physical = 2420 ; free virtual = 50961
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1769.283; main = 1460.325; forked = 375.478
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3192.992; main = 2233.234; forked = 975.766
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2257.242 ; gain = 0.000 ; free physical = 2420 ; free virtual = 50961
+INFO: [Common 17-1381] The checkpoint '/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/UART_test.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file UART_test_utilization_synth.rpt -pb UART_test_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon May 13 00:48:27 2024...

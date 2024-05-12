@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1710096018" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/test_module.dcp">
-  <File Type="VDS-TIMINGSUMMARY" Name="RAM_unit_timing_summary_synth.rpt"/>
-  <File Type="RDS-DCP" Name="RAM_unit.dcp"/>
-  <File Type="RDS-UTIL-PB" Name="RAM_unit_utilization_synth.pb"/>
-  <File Type="RDS-UTIL" Name="RAM_unit_utilization_synth.rpt"/>
-  <File Type="RDS-PROPCONSTRS" Name="RAM_unit_drc_synth.rpt"/>
-  <File Type="RDS-RDS" Name="RAM_unit.vds"/>
-  <File Type="REPORTS-TCL" Name="RAM_unit_reports.tcl"/>
-  <File Type="VDS-TIMING-PB" Name="RAM_unit_timing_summary_synth.pb"/>
-  <File Type="PA-TCL" Name="RAM_unit.tcl"/>
+<GenRun Id="synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1715550475" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/test_module.dcp">
+  <File Type="VDS-TIMINGSUMMARY" Name="UART_test_timing_summary_synth.rpt"/>
+  <File Type="RDS-DCP" Name="UART_test.dcp"/>
+  <File Type="RDS-UTIL-PB" Name="UART_test_utilization_synth.pb"/>
+  <File Type="RDS-UTIL" Name="UART_test_utilization_synth.rpt"/>
+  <File Type="RDS-PROPCONSTRS" Name="UART_test_drc_synth.rpt"/>
+  <File Type="RDS-RDS" Name="UART_test.vds"/>
+  <File Type="REPORTS-TCL" Name="UART_test_reports.tcl"/>
+  <File Type="VDS-TIMING-PB" Name="UART_test_timing_summary_synth.pb"/>
+  <File Type="PA-TCL" Name="UART_test.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
-    <File Path="$PSRCDIR/sources_1/new/RAM_unit.v">
+    <File Path="$PSRCDIR/sources_1/imports/Downloads/UART.sv">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../../../../../../Downloads/UART.sv"/>
+        <Attr Name="ImportTime" Val="1715548767"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/UART_test.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/Register_file.v">
+    <File Path="$PSRCDIR/sources_1/new/Adder.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UserDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -28,7 +37,7 @@
     </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="RAM_unit"/>
+      <Option Name="TopModule" Val="UART_test"/>
       <Option Name="TopAutoSet" Val="TRUE"/>
     </Config>
   </FileSet>
@@ -59,9 +68,7 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2023">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2023"/>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>

@@ -15,4 +15,23 @@
         7 bits: a bunch of registers
         8 bits: exactly the same
 results:
-    inconclusive. i think they're exactly the same. since 8 bits are easier to work with, i'll stick to it.
+    inconclusive. i think they're exactly the same.
+
+
+
+20 bits for single 6 digit decimal number, vs 7*3, where it's 7 bits for every two digits:
+    notes:
+        i didn't write all the details here because it would be a waste of time, difference
+        was insane in how much harder it was to split a 20 bit number into two digit numbers
+        in base 10. maybe some implementation detail could improve it, but the 7*3 system is
+        more than sufficient, so i'll use it
+
+    addition:
+        20: trivial, built in, fast
+        7*3: slower but fine
+
+    splitting into 2 digit pairs:
+        20: slowwwwww
+        7*3: not applicable, already split
+results:
+    7*3 wayyy better. going with that.
