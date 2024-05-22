@@ -26,7 +26,7 @@ def pty_disconnect():
     pass
 
 
-#           MONACO EDITOR
+#           MONACO EDITOR 
 # Register monaco editor with the Flask app
 # and expose the rocher_editor function to Jinja templates
 rocher.flask.editor_register(app)
