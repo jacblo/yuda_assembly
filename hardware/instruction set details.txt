@@ -1,13 +1,11 @@
-!! inaccurate, numbers are actually 6 digits, i was wrong, a lot of this is wrong
-
 general details:
 everything is in base 10
 memory indexed from 00-99
 numbers are 000000-999999
-every word is two decimal digits
+every word is 6 decimal digits
 program is placed in memory starting at position 00
 arguments are in order, right after opcode
-e.g. mov AX, 99    is    03 01 99
+e.g. mov AX, 99    is    030199
 
 registers:
 AX, BX : general purpose. coding: 01 for AX and 02 for BX
@@ -39,12 +37,13 @@ opcodes:
 my addition ideas:
 14: mov registerA, PTR [registerB] (registerA = mem[registerB])
 15: mov PTR [registerA], registerB (mem[registerA] = registerB)
-16: sub register, register (sub reg, const is useless as we can use 10s complement)
+16: sub register, register (sub reg, sub reg-const is useless as we can use 10s complement)
 17: jne constant (if not equal, then IP = constant)
 18: jl constant (if less than, then IP = constant)
 19: jr register (IP = register)
 
 : syscall
 internal ones:
-: send word to master (computer that's connected)
-: wait to receive a word from master (computer that's connected)
+    : send word to master (computer that's connected)
+    : wait to receive a word from master (computer that's connected)
+    : check if there's a word waiting to be received

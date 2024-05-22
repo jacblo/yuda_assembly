@@ -1,41 +1,36 @@
 thoughts:
 7 bits are enough for every 00-99, 8 might be easier to deal with tho.
 100 words of ram
-probably 127 in reality, in that case those 27 are for internal system.
+probably 127 in reality, in that case those 27 are for internal system if necesarry.
 exceptions are needed, so a few units or one for that, where the user instructions go through there.
 
-roms for running small parts i think is necessary
-since we're using an instruction register shouldn't be too hard.
-maybe pipelined, need to consider.
-allow for variable clock cycles per instruction.
+perhaps multicycle, not pipelined, would take too long to make.
+might use roms for some syscalls or exceptions, not sure it's worth it tho.
 
+IF USING ROMS
 instruction pointer will be for program ip, but we'll have an internal one which is split in two, mem select and address.
 mem select = 0 means ram
 mem select = not 0 is any of a few different roms.
 
-instruction running order - 
-	load into instruction register
-	do stuff based on opcode
-	syscall (if exists) jumps to some rom
-
-memory unit, with two register queues, one from instructions and another from the part that loads instructions from memory or rom, both for asking for bytes, fulfills stuff whenever it can, runs concurently.
-
-
-
 plans:
-8 bits to represent every number from 00-99.
+21 bits to represent every number from 000000-999999 as 3 00-99 numbers stored in 7 bits. tests
+showed that that is better than one big 20 bit number for numbers from 0 to 1M, because splitting
+the instructions is way slower. in this implementation, math is a bit slower but barely.
 Anything over 99 in user program raises an exception, rom programs can use them for special internal things in some cases.
+                                                      (IF IT USES ROMS...)
 
 main registers:
     AX, BX: general purpose, 8 bits each
-    IP, EIP: instuction pointer, and exception IP, both 8 bits
-    IR: instuction register, 8*3=24 bit
+    IP, EIP: instuction pointer, and exception IP, both 8 bits, EIP might not exist
+    IR: instuction register, 7*3=21 bits, this is if we even have a IR
 
 ram unit:
-    instruction needs, single word: input
-    mem load instruction, tri word: input
+    3*7*100 bits of memory
+    read and write in program code
+    read the program itself
+    
 
-rom, for syscalls and exceptions:
+rom, for syscalls and exceptions: !!MAYBE!!
     is jumped to by address either using syscall, or by an exception happening, address based on a jump table
     AX, BX are kept as is when jumping, so they can be used for arguments in syscalls.
     ret instruction returns to position in regular execution
@@ -47,4 +42,9 @@ exception handler:
     tbd
 
 controllers:
-    tbd
+    UART controller:
+        for serial comunication with computer.
+        using one from a library
+
+    communication controller:
+        will talk to computer through UART, but will handle the different modes and stuff

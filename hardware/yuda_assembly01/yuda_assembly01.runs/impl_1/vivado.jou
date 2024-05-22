@@ -3,12 +3,12 @@
 # SW Build 4126759 on Thu Feb  8 23:52:05 MST 2024
 # IP Build 4126054 on Fri Feb  9 11:39:09 MST 2024
 # SharedData Build 4115275 on Tue Jan 30 00:40:57 MST 2024
-# Start of session at: Mon May 13 00:48:32 2024
-# Process ID: 769847
+# Start of session at: Fri May 17 19:08:12 2024
+# Process ID: 1522237
 # Current directory: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/impl_1
-# Command line: vivado -log UART_test.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source UART_test.tcl -notrace
-# Log file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/impl_1/UART_test.vdi
+# Command line: vivado -log program_loader_test.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source program_loader_test.tcl -notrace
+# Log file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/impl_1/program_loader_test.vdi
 # Journal file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/impl_1/vivado.jou
-# Running On: BSERVER05, OS: Linux, CPU Frequency: 3800.340 MHz, CPU Physical cores: 6, Host memory: 33561 MB
+# Running On: BSERVER05, OS: Linux, CPU Frequency: 3800.050 MHz, CPU Physical cores: 6, Host memory: 33561 MB
 #-----------------------------------------------------------
-source UART_test.tcl -notrace
+source program_loader_test.tcl -notrace

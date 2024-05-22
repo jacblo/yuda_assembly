@@ -7,4 +7,4 @@
 # Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 #
 
-vivado -log UART_test.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source UART_test.tcl
+vivado -log program_loader_test.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source program_loader_test.tcl

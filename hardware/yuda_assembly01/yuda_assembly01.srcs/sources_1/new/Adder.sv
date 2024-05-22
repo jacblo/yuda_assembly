@@ -1,9 +1,7 @@
-`timescale 1ns / 1ps
-
 module Adder(
-    input [6:0] A[2:0],
-    input [6:0] B[2:0],
-    output [6:0] C[2:0]
+    input [6:0] A[3],
+    input [6:0] B[3],
+    output [6:0] C[3]
     );
     wire [6:0] temp2;
     
