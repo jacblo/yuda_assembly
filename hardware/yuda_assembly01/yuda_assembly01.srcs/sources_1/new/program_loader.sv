@@ -7,6 +7,8 @@ module program_loader #(
         parameter WORD_PART_BITS = 2 // 2**WORD_PART_BITS >= WORD_PARTS
         )
         (
+        input clk,
+        
         input listen, // expected to rise when loading should start
                       // shouldn't have another midway through loading program
         
@@ -37,36 +39,36 @@ module program_loader #(
         test_led <= 0;
     end
     
-    always @(rx_done_recieving, listen) begin // assuming listen never becomes 1 during recieve
-        if (listen) done = 0; // start running.
-    
-        if (rx_done_recieving) begin
-            if (!done) begin
-                if (rx_data[WORD_SUBWIDTH] == 1) begin // if leftmost bit is 1, done
-                    done = 1;
-                    write = 0;
-                    tx_data = checksum;
-                    tx_dv = 1; // this is a pulse because on negedge it will be set to 0
-                end
-                else begin
-                    temp[position] = rx_data;
+    always @(posedge clk) begin
+        tx_dv <= 0; // so setting it to 1 makes a pulse
+        write <= 0; // so setting it to 1 makes a pulse
+        
+        if (listen) begin
+            done = 0;
+        end
+        
+        if (rx_done_recieving && !done) begin
+            if (rx_data[WORD_SUBWIDTH] == 1) begin // if leftmost bit is 1, done
+                done = 1;
+                write = 0;
+                tx_data = checksum;
+                tx_dv <= 1; // pulsed
+            end
+            else begin
+                temp[position] = rx_data;
+                
+                checksum += rx_data; // update checksum
+//                checksum = checksum + 1;
+//                test_led = position;
                     
-//                    checksum += rx_data; // update checksum
-                    checksum = checksum + 1;
-                    test_led = address;
-                        
-                    position ++;
-                    if (position == WORD_PARTS) begin
-                        position = 0;
-                        address++;
-                        write_data = temp;
-                        write = 1;
-                    end
+                position ++;
+                if (position == WORD_PARTS) begin
+                    position = 0;
+                    address++;
+                    write_data = temp;
+                    write = 1; // pulsed
                 end
             end
-         end
-         else begin
-            tx_dv = 0;
-         end
+        end
     end
 endmodule

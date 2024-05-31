@@ -27,13 +27,14 @@ module program_loader_test(
     reg started = 0;
     wire [6:0] instruction[3];
     
-//    assign led[0] = done;
-//    assign led[1] = started;
+    assign led[0] = done;
+    assign led[1] = started;
 //    assign led[2] = test_led;
 //    assign led[3] = instruction[0][0]; // so memory isn't fully optimized out...
     assign ja = test_led;
     
     program_loader pl(
+        clk,
         listen,
         rx_data,
         rx_dv,
