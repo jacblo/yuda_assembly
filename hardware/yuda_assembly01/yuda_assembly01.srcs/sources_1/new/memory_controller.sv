@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module memory_controller(
     input clk,
     input [6:0] IP, // instruction pointer

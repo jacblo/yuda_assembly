@@ -1,5 +1,7 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/timing/xsim/memory_controller_tb_time_synth.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module memory_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/timing/xsim/ALU_tb_time_synth.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ALU
+INFO: [VRFC 10-311] analyzing module adder
+INFO: [VRFC 10-311] analyzing module adder_0
 INFO: [VRFC 10-311] analyzing module glbl
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/memory_controller_tb.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module memory_controller_tb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/ALU_tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ALU_tb

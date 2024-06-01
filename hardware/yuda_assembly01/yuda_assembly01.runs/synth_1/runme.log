@@ -1,6 +1,6 @@
 
 *** Running vivado
-    with args -log program_loader_test.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source program_loader_test.tcl
+    with args -log ALU.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source ALU.tcl
 
 
 ****** Vivado v2023.2.2 (64-bit)
@@ -10,8 +10,8 @@
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 
-source program_loader_test.tcl -notrace
-create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1281.543 ; gain = 18.867 ; free physical = 1721 ; free virtual = 54196
+source ALU.tcl -notrace
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1281.574 ; gain = 17.867 ; free physical = 979 ; free virtual = 52665
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository '/media/y4/P1/applications02/vivado/arm_processor_ip'.
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/y4/P1/applications02/vivado/Vivado/2023.2/data/ip'.
@@ -19,7 +19,7 @@ WARNING: [IP_Flow 19-1663] Duplicate IP found for 'Arm.com:user:DAPLink_to_Arty_
 Command: read_checkpoint -auto_incremental -incremental /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/utils_1/imports/synth_1/test_module.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/utils_1/imports/synth_1/test_module.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
-Command: synth_design -top program_loader_test -part xc7s25csga225-1
+Command: synth_design -top ALU -part xc7s25csga225-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7s25'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s25'
@@ -28,130 +28,128 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 45744
+INFO: [Synth 8-7075] Helper process launched with PID 225091
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2012.133 ; gain = 405.684 ; free physical = 691 ; free virtual = 53167
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2012.195 ; gain = 402.715 ; free physical = 380 ; free virtual = 51683
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'program_loader_test' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader_test.sv:1]
-INFO: [Synth 8-6157] synthesizing module 'program_loader' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader.sv:4]
-WARNING: [Synth 8-6090] variable 'write' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader.sv:53]
-WARNING: [Synth 8-6090] variable 'write' is written by both blocking and non-blocking assignments, entire logic could be removed [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader.sv:69]
-INFO: [Synth 8-6155] done synthesizing module 'program_loader' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader.sv:4]
-INFO: [Synth 8-6157] synthesizing module 'UART' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv:24]
-	Parameter BAUD_RATE bound to: 115200 - type: integer 
-	Parameter CLK_FREQ bound to: 12000000 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'UART' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv:24]
-INFO: [Synth 8-6157] synthesizing module 'memory_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/memory_controller.sv:3]
-INFO: [Synth 8-6155] done synthesizing module 'memory_controller' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/memory_controller.sv:3]
-WARNING: [Synth 8-689] width (32) of port connection 'IP' does not match port width (7) of module 'memory_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader_test.sv:65]
-WARNING: [Synth 8-567] referenced signal 'uart_ready' should be on the sensitivity list [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader_test.sv:73]
-INFO: [Synth 8-6155] done synthesizing module 'program_loader_test' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader_test.sv:1]
-WARNING: [Synth 8-3848] Net led[3] in module/entity program_loader_test does not have driver. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader_test.sv:6]
-WARNING: [Synth 8-3848] Net led[2] in module/entity program_loader_test does not have driver. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader_test.sv:6]
-WARNING: [Synth 8-7129] Port led[3] in module program_loader_test is either unconnected or has no load
-WARNING: [Synth 8-7129] Port led[2] in module program_loader_test is either unconnected or has no load
-WARNING: [Synth 8-7129] Port btn[1] in module program_loader_test is either unconnected or has no load
+INFO: [Synth 8-6157] synthesizing module 'ALU' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/ALU.sv:26]
+INFO: [Synth 8-6157] synthesizing module 'adder' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/ALU.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'adder' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/ALU.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'ALU' (0#1) [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/ALU.sv:26]
+WARNING: [Synth 8-3848] Net cmp_flags[0] in module/entity ALU does not have driver. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/ALU.sv:31]
+WARNING: [Synth 8-7129] Port cmp_flags[0] in module ALU is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2111.102 ; gain = 504.652 ; free physical = 568 ; free virtual = 53045
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2087.164 ; gain = 477.684 ; free physical = 340 ; free virtual = 51516
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2125.945 ; gain = 519.496 ; free physical = 568 ; free virtual = 53045
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2104.977 ; gain = 495.496 ; free physical = 341 ; free virtual = 51517
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2125.945 ; gain = 519.496 ; free physical = 568 ; free virtual = 53045
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2104.977 ; gain = 495.496 ; free physical = 341 ; free virtual = 51517
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2125.945 ; gain = 0.000 ; free physical = 568 ; free virtual = 53045
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2104.977 ; gain = 0.000 ; free physical = 341 ; free virtual = 51517
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
 Parsing XDC File [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]
+WARNING: [Vivado 12-584] No ports matched 'clk'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:7]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:7]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'clk'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:8]
+CRITICAL WARNING: [Vivado 12-4739] create_clock:No valid object(s) found for '-objects [get_ports clk]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:8]
+Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.
+WARNING: [Vivado 12-584] No ports matched 'btn[0]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:11]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:11]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'btn[1]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:12]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:12]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led[0]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:20]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:20]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led[1]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:21]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:21]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led[2]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:22]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:22]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'led[3]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:23]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:23]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[0]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:26]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:26]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[1]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[2]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:28]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:28]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[3]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:29]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:29]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[4]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:30]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:30]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[5]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:31]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:31]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[6]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:32]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:32]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'ja[7]'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:33]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:33]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'uart_tx'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:37]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:37]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'uart_rx'. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:38]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc:38]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
 Finished Parsing XDC File [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/program_loader_test_propImpl.xdc].
-Resolution: To avoid this warning, move constraints listed in [.Xil/program_loader_test_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2236.688 ; gain = 0.000 ; free physical = 566 ; free virtual = 53044
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2220.719 ; gain = 0.000 ; free physical = 359 ; free virtual = 51536
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2236.723 ; gain = 0.000 ; free physical = 566 ; free virtual = 53044
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2220.754 ; gain = 0.000 ; free physical = 358 ; free virtual = 51535
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 556 ; free virtual = 53034
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 314 ; free virtual = 51487
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s25csga225-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 556 ; free virtual = 53034
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 314 ; free virtual = 51487
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 556 ; free virtual = 53034
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 314 ; free virtual = 51487
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-802] inferred FSM for state register 'rx_state_reg' in module 'UART'
-INFO: [Synth 8-802] inferred FSM for state register 'tx_state_reg' in module 'UART'
----------------------------------------------------------------------------------------------------
-                   State |                     New Encoding |                Previous Encoding 
----------------------------------------------------------------------------------------------------
-                    IDLE |                            00001 |                              000
-               START_BIT |                            00010 |                              001
-               DATA_BITS |                            00100 |                              010
-                STOP_BIT |                            01000 |                              011
-                 CLEANUP |                            10000 |                              100
----------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'rx_state_reg' using encoding 'one-hot' in module 'UART'
----------------------------------------------------------------------------------------------------
-                   State |                     New Encoding |                Previous Encoding 
----------------------------------------------------------------------------------------------------
-                    IDLE |                              000 |                              000
-               START_BIT |                              001 |                              001
-               DATA_BITS |                              010 |                              010
-                STOP_BIT |                              011 |                              011
-                 CLEANUP |                              100 |                              100
----------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'tx_state_reg' using encoding 'sequential' in module 'UART'
-WARNING: [Synth 8-327] inferring latch for variable 'listen_reg' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/program_loader_test.sv:31]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 545 ; free virtual = 53025
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 307 ; free virtual = 51484
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
-	   2 Input   10 Bit       Adders := 1     
-	   2 Input    8 Bit       Adders := 1     
-	   2 Input    7 Bit       Adders := 2     
-	   2 Input    3 Bit       Adders := 2     
-	   2 Input    2 Bit       Adders := 1     
-+---Registers : 
-	               10 Bit    Registers := 1     
-	                8 Bit    Registers := 4     
-	                7 Bit    Registers := 308   
-	                3 Bit    Registers := 2     
-	                2 Bit    Registers := 1     
-	                1 Bit    Registers := 6     
+	   2 Input    8 Bit       Adders := 2     
+	   3 Input    8 Bit       Adders := 2     
+	   3 Input    7 Bit       Adders := 2     
+	   2 Input    7 Bit       Adders := 3     
 +---Muxes : 
-	   2 Input   10 Bit        Muxes := 1     
-	   5 Input   10 Bit        Muxes := 1     
-	   2 Input    8 Bit        Muxes := 1     
-	   5 Input    8 Bit        Muxes := 1     
-	   2 Input    7 Bit        Muxes := 4     
-	   5 Input    5 Bit        Muxes := 1     
-	   2 Input    5 Bit        Muxes := 6     
-	   2 Input    3 Bit        Muxes := 7     
-	   5 Input    3 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 104   
-	   5 Input    1 Bit        Muxes := 9     
+	   2 Input    7 Bit        Muxes := 6     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -168,37 +166,27 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
-WARNING: [Synth 8-3917] design program_loader_test has port ja[7] driven by constant 0
-WARNING: [Synth 8-3917] design program_loader_test has port ja[6] driven by constant 0
-WARNING: [Synth 8-3917] design program_loader_test has port ja[5] driven by constant 0
-WARNING: [Synth 8-3917] design program_loader_test has port ja[4] driven by constant 0
-WARNING: [Synth 8-3917] design program_loader_test has port ja[3] driven by constant 0
-WARNING: [Synth 8-3917] design program_loader_test has port ja[2] driven by constant 0
-WARNING: [Synth 8-3917] design program_loader_test has port ja[1] driven by constant 0
-WARNING: [Synth 8-3917] design program_loader_test has port ja[0] driven by constant 0
-WARNING: [Synth 8-7129] Port led[3] in module program_loader_test is either unconnected or has no load
-WARNING: [Synth 8-7129] Port led[2] in module program_loader_test is either unconnected or has no load
-WARNING: [Synth 8-7129] Port btn[1] in module program_loader_test is either unconnected or has no load
+WARNING: [Synth 8-7129] Port cmp_flags[0] in module ALU is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 542 ; free virtual = 53035
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 406 ; free virtual = 51378
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 522 ; free virtual = 53015
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 348 ; free virtual = 51321
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 522 ; free virtual = 53015
+Finished Timing Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 348 ; free virtual = 51321
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 522 ; free virtual = 53015
+Finished Technology Mapping : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 348 ; free virtual = 51321
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -216,37 +204,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 539 ; free virtual = 53031
+Finished IO Insertion : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51337
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 539 ; free virtual = 53031
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51337
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 539 ; free virtual = 53031
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51337
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 539 ; free virtual = 53031
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51337
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 539 ; free virtual = 53031
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51337
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 539 ; free virtual = 53031
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51337
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -262,44 +250,42 @@ Report Cell Usage:
 +------+-------+------+
 |      |Cell   |Count |
 +------+-------+------+
-|1     |BUFG   |     1|
-|2     |CARRY4 |     2|
-|3     |LUT2   |    15|
-|4     |LUT3   |    12|
-|5     |LUT4   |    14|
-|6     |LUT5   |    18|
-|7     |LUT6   |    16|
-|8     |FDRE   |    65|
-|9     |LD     |     1|
-|10    |IBUF   |     3|
-|11    |OBUF   |    11|
-|12    |OBUFT  |     2|
+|1     |CARRY4 |    18|
+|2     |LUT1   |    13|
+|3     |LUT2   |    20|
+|4     |LUT3   |    18|
+|5     |LUT4   |    27|
+|6     |LUT5   |    20|
+|7     |LUT6   |    42|
+|8     |IBUF   |    44|
+|9     |OBUF   |    22|
+|10    |OBUFT  |     1|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 539 ; free virtual = 53031
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51337
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 13 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2236.723 ; gain = 519.496 ; free physical = 538 ; free virtual = 53031
-Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2236.723 ; gain = 630.273 ; free physical = 538 ; free virtual = 53031
+Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2220.754 ; gain = 495.496 ; free physical = 355 ; free virtual = 51336
+Synthesis Optimization Complete : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2220.754 ; gain = 611.273 ; free physical = 355 ; free virtual = 51336
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2236.723 ; gain = 0.000 ; free physical = 614 ; free virtual = 53106
-INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2220.754 ; gain = 0.000 ; free physical = 355 ; free virtual = 51336
+INFO: [Netlist 29-17] Analyzing 18 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2236.723 ; gain = 0.000 ; free physical = 823 ; free virtual = 53315
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2220.754 ; gain = 0.000 ; free physical = 626 ; free virtual = 51607
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 1 instances were transformed.
-  LD => LDCE: 1 instance 
+No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 9338dc1d
+Synth Design complete | Checksum: 8a4fe7a8
 INFO: [Common 17-83] Releasing license: Synthesis
-36 Infos, 23 Warnings, 0 Critical Warnings and 0 Errors encountered.
+27 Infos, 23 Warnings, 18 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:25 ; elapsed = 00:00:23 . Memory (MB): peak = 2236.723 ; gain = 943.305 ; free physical = 822 ; free virtual = 53315
-INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1830.673; main = 1503.610; forked = 375.858
-INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3196.449; main = 2236.691; forked = 975.766
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2260.699 ; gain = 0.000 ; free physical = 822 ; free virtual = 53315
-INFO: [Common 17-1381] The checkpoint '/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/program_loader_test.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_utilization -file program_loader_test_utilization_synth.rpt -pb program_loader_test_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri May 31 13:34:37 2024...
+synth_design: Time (s): cpu = 00:00:24 ; elapsed = 00:00:21 . Memory (MB): peak = 2220.754 ; gain = 927.305 ; free physical = 625 ; free virtual = 51605
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1771.038; main = 1470.515; forked = 374.561
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3180.480; main = 2220.723; forked = 975.766
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2244.730 ; gain = 0.000 ; free physical = 625 ; free virtual = 51605
+INFO: [Common 17-1381] The checkpoint '/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/ALU.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file ALU_utilization_synth.rpt -pb ALU_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sat Jun  1 23:31:06 2024...

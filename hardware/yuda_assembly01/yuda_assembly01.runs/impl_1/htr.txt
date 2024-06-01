@@ -7,4 +7,4 @@
 # Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 #
 
-vivado -log program_loader_test.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source program_loader_test.tcl -notrace
+vivado -log ALU.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source ALU.tcl -notrace
