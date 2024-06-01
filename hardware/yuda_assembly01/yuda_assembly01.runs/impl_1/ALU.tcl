@@ -127,16 +127,35 @@ set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 1
   set_param checkpoint.writeSynthRtdsInDcp 1
-  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-155887-BSERVER05/incrSyn
   set_param runs.launchOptions { -jobs 6  }
-  reset_param project.defaultXPMLibraries 
-  open_checkpoint /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/impl_1/ALU.dcp
+OPTRACE "create in-memory project" START { }
+  create_project -in_memory -part xc7s25csga225-1
+  set_property board_part_repo_paths {/home/y4/.Xilinx/Vivado/2023.2/xhub/board_store/xilinx_board_store} [current_project]
+  set_property board_part digilentinc.com:cmod-s7-25:part0:1.0 [current_project]
+  set_property design_mode GateLvl [current_fileset]
+  set_param project.singleFileAddWarning.threshold 0
+OPTRACE "create in-memory project" END { }
+OPTRACE "set parameters" START { }
   set_property webtalk.parent_dir /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.cache/wt [current_project]
   set_property parent.project_path /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.xpr [current_project]
   set_property ip_repo_paths /media/y4/P1/applications02/vivado/arm_processor_ip [current_project]
   update_ip_catalog
   set_property ip_output_repo /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
+OPTRACE "set parameters" END { }
+OPTRACE "add files" START { }
+  add_files -quiet /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/ALU.dcp
+OPTRACE "read constraints: implementation" START { }
+  read_xdc /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc
+OPTRACE "read constraints: implementation" END { }
+OPTRACE "read constraints: implementation_pre" START { }
+OPTRACE "read constraints: implementation_pre" END { }
+OPTRACE "add files" END { }
+OPTRACE "link_design" START { }
+  link_design -top ALU -part xc7s25csga225-1 
+OPTRACE "link_design" END { }
+OPTRACE "gray box cells" START { }
+OPTRACE "gray box cells" END { }
 OPTRACE "init_design_reports" START { REPORT }
 OPTRACE "init_design_reports" END { }
 OPTRACE "init_design_write_hwdef" START { }

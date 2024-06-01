@@ -32,5 +32,32 @@ module ALU_tb();
         A = {0,0,0};
         B = {87,56,44};
         control_operation = 'b01; // A + B
+        
+        // testing comparing
+        #30
+        A = {12,5,2}; // eq
+        B = {12,5,2};
+        control_operation = 'b11; // A-B
+        #30
+        A = {12,5,1}; // A=B
+        B = {12,5,2};
+        control_operation = 'b11; // A-B
+        #30
+        A = {11,5,2}; // A<B
+        B = {12,5,2};
+        control_operation = 'b11; // A-B
+        #30
+        A = {12,4,2}; // A<B
+        B = {12,5,2};
+        control_operation = 'b11; // A-B
+        #30
+        A = {12,5,3}; // A>B
+        B = {12,5,2};
+        control_operation = 'b11; // A-B
+        #30
+        A = {13,5,2}; // A>B
+        B = {12,5,2};
+        control_operation = 'b11; // A-B
+        
     end
 endmodule
