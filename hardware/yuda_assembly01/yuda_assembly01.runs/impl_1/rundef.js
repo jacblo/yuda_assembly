@@ -30,7 +30,7 @@ eval( EAInclude(ISEJScriptLib) );
 // pre-commands:
 ISETouchFile( "init_design", "begin" );
 ISEStep( "vivado",
-         "-log ALU.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source ALU.tcl -notrace" );
+         "-log register_file.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source register_file.tcl -notrace" );
 
 
 

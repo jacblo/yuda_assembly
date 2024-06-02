@@ -2,3 +2,6 @@ Running: xsim.dir/ALU_tb_time_synth/xsimk -simmode gui -wdb ALU_tb_time_synth.wd
 Design successfully loaded
 Design Loading Memory Usage: 26340 KB (Peak: 26340 KB)
 Design Loading CPU Usage: 50 ms
+Simulation completed
+Simulation Memory Usage: 108228 KB (Peak: 165608 KB)
+Simulation CPU Usage: 70 ms

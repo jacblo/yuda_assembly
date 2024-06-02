@@ -1,1 +1,2 @@
 Time resolution is 1 ps
+WARNING: "/home/y4/P1/applications02/vivado/Vivado/2023.2/data/verilog/src/unisims/LDCE.v" Line 166: Timing violation in scope /register_file_tb/tester/Data2_reg[2][3]/TChk166_549 at time 2704318 ps $setuphold (posedge G,posedge D,(0:0:0),(0:0:0),notifier,in_clk_enable_p,in_clk_enable_p,G_dly,D_dly)  $hold violation detected. Time: 2704318 ps, Ref Event Time Stamp: 2704284 ps, Data Event Time Stamp: 2704318 ps, Limit: 241 ps

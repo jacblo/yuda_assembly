@@ -8,13 +8,15 @@ arguments are in order, right after opcode
 e.g. mov AX, 99    is    030199
 
 registers:
-AX, BX : general purpose. coding: 01 for AX and 02 for BX
-FR : flag register, for internal use in cmp and je commands
-IP : instruction pointer
-IR : instruction register, stores the current instruction
+AX, BX : general purpose. coding: 01 for AX and 02 for BX, initialized to 000000 for convenience
+FR : flag register, for internal use in cmp and je commands, not really a register
+                    it is just a component, inline - not a register
+IP : instruction pointer, we'll allow this to be addressed as 99
+IR : instruction register, stores the current instruction, not really implemented
 
-opcodes:
-00: ret
+opcode: instruction (explanation, optional)
+-------------------------------------------
+00: ret (simply ends program)
 01: mov register, constant
 02: mov register, register
 03: mov register, memory
@@ -34,16 +36,22 @@ opcodes:
 
 
 
-my addition ideas:
+my additions:
 14: mov registerA, PTR [registerB] (registerA = mem[registerB])
 15: mov PTR [registerA], registerB (mem[registerA] = registerB)
 16: sub register, register (sub reg, sub reg-const is useless as we can use 10s complement)
 17: jne constant (if not equal, then IP = constant)
-18: jl constant (if less than, then IP = constant)
-19: jr register (IP = register)
+18: jne register (if not equal, then IP = register)
+19: jl constant (if less than, then IP = constant)
+20: jl register (if less than, then IP = register)
+
 
 : syscall
 internal ones:
     : send word to master (computer that's connected)
     : wait to receive a word from master (computer that's connected)
     : check if there's a word waiting to be received
+
+
+allow IP access through register 99, adds complexity but very useful, replaces jump register
+    and also allows calculations on IP, for specialized jumping

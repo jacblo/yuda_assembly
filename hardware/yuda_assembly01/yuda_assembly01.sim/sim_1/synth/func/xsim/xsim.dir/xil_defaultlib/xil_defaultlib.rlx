@@ -2,5 +2,6 @@
 2020.2
 Feb  8 2024
 23:58:30
-/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/ALU_tb_func_synth.v,1717274427,verilog,,,,ALU;adder;adder_0;glbl,,uvm,,,,,,
+/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/register_file_tb_func_synth.v,1717342382,verilog,,,,glbl;register_file,,uvm,,,,,,
 /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/ALU_tb.sv,1717274339,systemVerilog,,,,ALU_tb,,uvm,,,,,,
+/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/register_file_tb.sv,1717342372,systemVerilog,,,,register_file_tb,,uvm,,,,,,

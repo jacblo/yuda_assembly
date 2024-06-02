@@ -1,3 +1,5 @@
+VERY OUTDATED, MIGHT UPDATE IN FUTURE OR RECREATE, CURRENT PLANS ARE IN DRAWIO DESIGNS
+
 thoughts:
 7 bits are enough for every 00-99, 8 might be easier to deal with tho.
 100 words of ram
