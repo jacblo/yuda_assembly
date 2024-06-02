@@ -30,6 +30,7 @@ To get started with yuda_assembly, follow these steps:
 ## Acknowledgements
 
 This project uses the [Monaco Editor](https://github.com/Microsoft/monaco-editor) for the code editor.
+
 This project also uses the [XTERM.js](https://xtermjs.org) project for the terminal. 
 
 ## License
