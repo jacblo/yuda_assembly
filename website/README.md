@@ -34,4 +34,4 @@ This project also uses the [XTERM.js](https://xtermjs.org) project for the termi
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](../LICENSE).
