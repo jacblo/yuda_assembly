@@ -7,16 +7,18 @@ This project is a web-based assembly language interpreter for Yuda's Assembly. I
 To get started with yuda_assembly, follow these steps:
 
 1. Clone the repository
-2. Navigate to the project directory: `cd yuda_assembly` (don't cd into website, it's used as a module)
+2. Navigate to the project directory: `cd yuda_assembly/website`
 3. Install the dependencies: `pipenv install`
-4. Put the monaco installation in static/vs (it can be a link to the monaco editor folder, or a copy of it)
-4. Start the development server: `flask --app website run --port XXXX --`
+4. Enter the env with `pipenv shell` or similar
+5. change directory into the main repo - `cd ..`
+6. Start the development server: `flask --app website run --port XXXX --`
 
 ## Features
 
 - Syntax highlighting for Yuda's Assembly code
 - Real-time code execution
-- Error handling and debugging support
+- Error handling
+- Might have a Hardware implementation that's available to use at some point
 
 ## Usage
 
@@ -27,7 +29,8 @@ To get started with yuda_assembly, follow these steps:
 
 ## Acknowledgements
 
-This project uses the [Monaco Editor](https://github.com/Microsoft/monaco-editor) for the code editor. The static/vs directory in this repository is a copy of the Monaco Editor.
+This project uses the [Monaco Editor](https://github.com/Microsoft/monaco-editor) for the code editor.
+This project also uses the [XTERM.js](https://xtermjs.org) project for the terminal. 
 
 ## License
 
