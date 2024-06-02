@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2.2 (lin64) Build 4126759 Thu Feb  8 23:52:05 MST 2024
-| Date         : Sun Jun  2 18:57:24 2024
+| Date         : Sun Jun  2 23:54:05 2024
 | Host         : BSERVER05 running 64-bit Linux Mint 21.3
 | Command      : report_control_sets -verbose -file register_file_control_sets_placed.rpt
 | Design       : register_file
@@ -58,10 +58,10 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              50 |           17 |
+| No           | No                    | No                     |              50 |           20 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |              42 |           17 |
+| Yes          | No                    | No                     |              42 |           22 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
@@ -73,11 +73,11 @@ Table of Contents
 +----------------+----------------------------+------------------+------------------+----------------+--------------+
 |  Clock Signal  |        Enable Signal       | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
 +----------------+----------------------------+------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG |                            |                  |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | registers                  |                  |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG | registers[1][0][6]_i_1_n_0 |                  |                9 |             21 |         2.33 |
-|  Data2         |                            |                  |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG |                            |                  |                5 |              8 |         1.60 |
 |  Data1         |                            |                  |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG | registers                  |                  |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG | registers[1][0][6]_i_1_n_0 |                  |               11 |             21 |         1.91 |
+|  Data2         |                            |                  |                8 |             21 |         2.62 |
 +----------------+----------------------------+------------------+------------------+----------------+--------------+
 
 

@@ -26,8 +26,8 @@ alternatively but equivilantly:
     
 cmp_flags:
     overflow, eq
-    if overflowed when doing A-B then A>=B if negative then that's A<B
-    which is needed 
+    if overflowed when doing A-B then A>=B if negated then that's A<B
+    which is needed
 */
 localparam [6:0] ZERO[3] = {0,0,0};
 module ALU(

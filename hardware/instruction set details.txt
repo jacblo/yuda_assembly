@@ -36,21 +36,31 @@ opcode: instruction (explanation, optional)
 
 
 
+// notes, i've added many repetative instructions because they make coding simpler, and since there are only 100 words of memory, being a CISC is better, so this is closer to a CISC, with many slightly redundant instructions, all have had a lot of thought put into them though, so please refer questions to me if i forgot to document some decisions here.
+
 my additions:
 14: mov registerA, PTR [registerB] (registerA = mem[registerB])
 15: mov PTR [registerA], registerB (mem[registerA] = registerB)
-16: sub register, register (sub reg, sub reg-const is useless as we can use 10s complement)
-17: jne constant (if not equal, then IP = constant)
-18: jne register (if not equal, then IP = register)
-19: jl constant (if less than, then IP = constant)
-20: jl register (if less than, then IP = register)
+16: sub register, register
+17: sub register, constant (can't be replaced by addition with 10's complement because that would require signed vs unsigned stuff regarding sign extension which is hard in base 10, this is better)
+18: sub constant, register (seperate because order matters in subtraction, still saves to register)
+19: cmp constant, register (same reason, matters for jl)
+20: jne constant (if not equal, then IP = constant)
+21: jne register (if not equal, then IP = register)
+22: jl constant (if less than, then IP = constant)
+23: jl register (if less than, then IP = register)
 
+(these are included because it shortens a few instructions down into one, worth it when there are only 100 words of memory...)
+24: jg constant (if greater than, then IP = constant)
+25: jg register (if greater than, then IP = register)
 
-: syscall
-internal ones:
-    : send word to master (computer that's connected)
-    : wait to receive a word from master (computer that's connected)
-    : check if there's a word waiting to be received
+26: syscall code  // handled as such, AX is the operand
+index of syscall codes:
+    0: send char to host (computer that's connected) (BX is address to send)
+    1: wait to receive a char from host (computer that's connected) (BX is address to save in)
+    2: send null terminated string to host (BX is the address to send)
+    3: receive line from host (BX is address to write to, 
+    4: check if there's a word waiting to be received
 
 
 allow IP access through register 99, adds complexity but very useful, replaces jump register

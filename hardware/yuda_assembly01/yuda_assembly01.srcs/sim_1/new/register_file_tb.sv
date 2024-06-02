@@ -53,6 +53,7 @@ module register_file_tb();
     initial begin
         clk = 0;
         WriteIP = 0;
+        RegWrite = 0;
         #300
         clk = 1;
         #100
@@ -125,6 +126,21 @@ module register_file_tb();
         clk = 1;
         #100
         WriteIP = 0;
+        RegWrite = 0;
+        #200
+        clk = 0;
+        #300
+        clk = 1;
+        #100
+        RegWrite = 1;
+        writeReg = 2; // write to IP
+        WriteData = {0,0,5};
+        #200
+        clk = 0;
+        #300
+        clk = 1;
+        #100
+        RegWrite = 0;
         #200
         clk = 0;
         #300

@@ -57,7 +57,7 @@ module register_file(
             case (writeReg)
                 0: registers[0] <= writeData;
                 1: registers[1] <= writeData;
-//                2: IP_reg <= writeData[2];
+                2: IP_reg <= writeData[2];
             endcase
         end
      
