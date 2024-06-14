@@ -25,26 +25,23 @@ module program_loader #(
         // for sending checksum
         output reg[WORD_SUBWIDTH:0] tx_data,
         output reg tx_dv
-        
-        , output reg[7:0] test_led
     );
     reg[WORD_PART_BITS-1:0] position = 0; // position in filling temp
     reg[WORD_SUBWIDTH-1:0] temp[WORD_PARTS]; // repeatedly filled, then dumped into memory
     reg[WORD_SUBWIDTH:0] checksum = 0; // all data is added to it (with carry), then sent in the end
     
     initial begin
-        done <= 1; // unsure if to make this start at 0 to make it start immediately
-        address <= -1; // we repeatedly add to it
-    
-        test_led <= 0;
+        done = 1; // unsure if to make this start at 0 to make it start immediately
+        address = -1; // we repeatedly add to it so starting at -1 means first write will be to 0
     end
     
     always @(posedge clk) begin
-        tx_dv <= 0; // so setting it to 1 makes a pulse
-        write <= 0; // so setting it to 1 makes a pulse
+        tx_dv = 0; // so setting it to 1 makes a pulse
+        write = 0; // so setting it to 1 makes a pulse
         
         if (listen) begin
             done = 0;
+            checksum = 0;
         end
         
         if (rx_done_recieving && !done) begin
@@ -52,15 +49,13 @@ module program_loader #(
                 done = 1;
                 write = 0;
                 tx_data = checksum;
-                tx_dv <= 1; // pulsed
+                tx_dv = 1; // pulsed
             end
             else begin
                 temp[position] = rx_data;
                 
                 checksum += rx_data; // update checksum
-//                checksum = checksum + 1;
-//                test_led = position;
-                    
+                
                 position ++;
                 if (position == WORD_PARTS) begin
                     position = 0;

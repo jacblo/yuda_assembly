@@ -1,17 +1,66 @@
 module adder(
     input [6:0] A[3],
     input [6:0] B[3],
-    output [6:0] C[3],
+    output reg [6:0] C[3],
     output overflow // 1 if overflowed 0 else
     );
-    wire [6:0] temp2;
+    // this is all equivilant to this - 
+    //    assign C[2] = (A[2] + B[2]) % 100;
+    //    assign temp = A[1] + B[1] + ( (A[2] + B[2]) / 100 );
+    //    assign C[1] = temp % 100;
+    //    assign C[0] = (temp/100 + A[0] + B[0]) % 100;
+    //    assign overflow = ( (temp/100 + A[0] + B[0]) >= 100 ); // if before modulo it was bigger
+    // but in this implementation, we assume legal inputs (numbers from 0 to 99), and don't need modulo here
+    // really we are doing modulo but assuming result of division is 0 or 1, so just one subtraction necessary.
+    // it could be argued that it's more robust without legality assumption but that's wrong, because the
+    // previous implementation wouldn't return anything meaningful to illegal input, so it was just wasteful
+    // to calculate an expensive modulo. details on how this algorithm works appear in the writeup.
     
-    assign C[2] = (A[2] + B[2]) % 100;
-    assign temp2 = A[1] + B[1] + ( (A[2] + B[2]) / 100 );
-    assign C[1] = temp2 % 100;
-    assign C[0] = (temp2/100 + A[0] + B[0]) % 100;
-    assign overflow = ( (temp2/100 + A[0] + B[0]) >= 100 ); // if before modulo it was bigger
+    
+    reg [7:0] temp; // extra bit for overflow
+    reg [7:0] temp2; // extra bit for overflow
+    reg carry;
+    assign overflow = carry; // if last one has carry then overflowed
+    
+    always_comb begin
+        // right most number
+        temp = A[2] + B[2];
+        temp2 = temp - 100;
+        if (!temp2[7]) begin // not negative means A[2]+B[2] > 99, and due to legal input: A[2]+B[2] < 198 = 99+99
+            C[2] = temp2;
+            carry = 1;
+        end
+        else begin
+            C[2] = temp;
+            carry = 0;
+        end
+        
+        // middle number
+        temp = A[1] + B[1] + carry;
+        temp2 = temp - 100;
+        if (!temp2[7]) begin // not negative means A[1]+B[1]+carry > 99, and due to legal input: A[1]+B[1]+carry < 199 = 99+99+1
+            C[1] = temp2;
+            carry = 1;
+        end
+        else begin
+            C[1] = temp;
+            carry = 0;
+        end
+        
+        // left most number
+        temp = A[0] + B[0] + carry;
+        temp2 = temp - 100;
+        if (!temp2[7]) begin // not negative means A[0]+B[0]+carry > 99, and due to legal input: A[0]+B[0]+carry < 199 = 99+99+1
+            C[0] = temp2;
+            carry = 1;
+        end
+        else begin
+            C[0] = temp;
+            carry = 0;
+        end
+    end
 endmodule
+
 
 
 /*
@@ -35,11 +84,12 @@ module ALU(
     input [6:0] A[3],
     input [6:0] B[3],
     output reg [6:0] out[3],
-    output reg cmp_flags[2] // {oveflow, eq}, if overflowed when doing A-B then A>B
+    output reg cmp_flags[2] // {less, equal}, negative defined using 10's complement
     );
     
+    assign cmp_flags[0] = (out[0] >= 50); // in 10's complement this means a negative number
     assign cmp_flags[1] = (out == ZERO);
-    
+
     reg [6:0] adder_B[3];
     
     // 99's complement of B
@@ -53,7 +103,9 @@ module ALU(
     adder add_1(negative_B_99, {0,0,1}, negative_B); // add one to 99's complement
     
     wire [6:0] adder_out[3];
-    adder add(A,adder_B,adder_out, cmp_flags[0]); // its overflow is sent to cmp_flags output
+    adder add(A,adder_B,adder_out); // its overflow is thrown out, couldv'e been useful but this
+                                    // implementation no longer uses it, hasn't been removed as it
+                                    // will be optimized out anyway so why not keep a feature.
     
     always_comb begin
         case (control_operation[1])

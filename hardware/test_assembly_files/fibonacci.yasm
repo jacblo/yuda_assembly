@@ -1,0 +1,15 @@
+; simple asm                      machine code
+mov AX, 0                       ; 010100
+mov BX, 1                       ; 010201
+mov [2], 9 ; fib index          ; 040209
+
+mov [22], BX ; temp location    ; 052202
+add BX, AX                      ; 070201
+
+mov AX, [2]                     ; 030102
+sub AX, 1                       ; 170101
+mov [2], AX                     ; 050201
+
+mov AX, [22]                    ; 030122
+jg 3                            ; 240300
+ret                             ; 000000

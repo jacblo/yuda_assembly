@@ -15,6 +15,7 @@ module ALU_tb();
         cmp_flags[0], cmp_flags[1]
     );
     
+    // check all these with calculator, calculations are mod 1 million
     initial begin
         A = {0,0,0};
         B = {12,34,56};
@@ -31,6 +32,10 @@ module ALU_tb();
         #30
         A = {0,0,0};
         B = {87,56,44};
+        control_operation = 'b01; // A + B
+        #30
+        A = {99,99,99};
+        B = {99,99,99}; // checking correct double overflow, when greater than a million and also 2^20, result should be 999998
         control_operation = 'b01; // A + B
         
         // testing comparing

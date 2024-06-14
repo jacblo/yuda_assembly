@@ -6,10 +6,15 @@ module register_file(
     input [6:0] writeData[3], // when written to IP assumed that it's under 100
                               // exception for that should handled seperately
     input RegWrite,
-    
+
     output reg [6:0] Data1[3], Data2[3],
 
+    // syscall direct read from AX
+    output [6:0] AX[3],
+
     // instruction pointer
+    // input reset, // when set to 1, all registers are reset
+    
     input [6:0] newIP,
     input WriteIP, // 1 means IP should be overwritten with newIP, otherwise it's simply incremented
 
@@ -28,6 +33,7 @@ module register_file(
 
 
     assign IP = IP_reg;
+    assign AX = registers[0]; // seperate because it's used in syscalls
 
     initial begin
         running = 1;
@@ -53,20 +59,27 @@ module register_file(
 
     // register setting
     always @(posedge clk) begin
-        if (RegWrite) begin
-            case (writeReg)
-                0: registers[0] <= writeData;
-                1: registers[1] <= writeData;
-                2: IP_reg <= writeData[2];
-            endcase
-        end
-     
         if (WriteIP) begin
             IP_reg = newIP;
         end
         else if (running) begin
             IP_reg ++;
         end
+    
+        if (RegWrite) begin
+            case (writeReg)
+                0: registers[0] = writeData;
+                1: registers[1] = writeData;
+                2: IP_reg = writeData[2];
+            endcase
+        end
+
+//        if (reset) begin
+//            IP_reg = 0;
+//            registers[0] = {0,0,0};
+//            registers[1] = {0,0,0};
+//        end
+
         running = IP_reg < 100;
     end
 endmodule

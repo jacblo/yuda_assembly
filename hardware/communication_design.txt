@@ -8,23 +8,26 @@ character set is all printable ascii values with a few exceptions, so 32-127, th
 special translations:    
     96: carriage return (\r)
     97: line feed / newline (\n)
-    99: tab
-    98: bell (because why noooooooooot lmao)
+    98: tab
+    99: bell (because why noooooooooot lmao)
 
 
 control signals:
     8 bits words are sent every time. a 1 in the first bit means it's something control related.
-    when from host side, after sending a program, anything with a 1 there means end of sent program, and program should start running.
+    when from host side, after sending a program, anything with a 1 there means end of sent program, and program should start running, standard is 0xfe (one under ff which is kill program).
     during regular operations, a 0xff means stop running, start listening for program
     when input is requested from user, host responds with all characters using the character set, then with a null to signify end
     likewise when stuff is printed, just sent and then null terminated if you want.
     a 0x80 is sent from client to mean ask user for input. works like in python with input(), where you get a line of input
+    a 0x81 is sent to ask for one char of any kind
+    a 0x82 might be used to ask for 1 if there's waiting input, and 0 otherwise, may not be implemented.
 
 or in short:
     from host:
         0xff: restart and wait for program
-        0b1xxx_xxxx: after sending program, means done
+        0b1xxx_xxxx: after sending program, means done, standard is 0xfe
     
     from processor:
-        0x80: waiting for input
-        // 0x81: is there input waiting? (maybe implemented, maybe not)
+        0x80: waiting for null-terminated input line
+        0x81: waiting for one char of input
+        // 0x82: is there input waiting? (maybe implemented, maybe not)

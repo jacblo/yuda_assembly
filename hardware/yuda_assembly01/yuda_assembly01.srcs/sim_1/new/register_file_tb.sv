@@ -15,7 +15,8 @@ module register_file_tb();
     reg [1:0] read2; // second register to output
     wire [6:0] Data1[3]; // first reg output
     wire [6:0] Data2[3]; // second reg output
-    
+    wire [6:0] AX[3]; // seperate read access to ax for syscalls
+
     // register setting
     reg RegWrite; // 1 if register should be written
     reg [1:0] writeReg; // register to set
@@ -29,6 +30,7 @@ module register_file_tb();
         RegWrite,
         Data1[0], Data1[1], Data1[2],
         Data2[0], Data2[1], Data2[2],
+        AX,
         newIP,
         WriteIP,
         IP,

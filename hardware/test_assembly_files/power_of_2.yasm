@@ -1,0 +1,9 @@
+; simple asm                      machine code
+mov AX, 5                       ; 010105
+mov BX, 1                       ; 010201
+add BX, BX                      ; 070202
+sub AX, 1                       ; 170101
+cmp AX, 0                       ; 080100
+jg 2 (jump to the add BX, BX)   ; 240200
+mov AX, BX                      ; 020102
+ret                             ; 000000

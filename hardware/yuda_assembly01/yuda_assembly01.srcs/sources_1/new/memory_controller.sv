@@ -10,6 +10,10 @@ module memory_controller(
     );
     reg [6:0] memory[100][3]; // 100 items, each 3 numbers from 0 to 99 so 7 bits each
     
+    initial begin
+        memory <= '{default: 0};
+    end
+    
     assign instruction = memory[IP];
     assign read_data = memory[address];
     

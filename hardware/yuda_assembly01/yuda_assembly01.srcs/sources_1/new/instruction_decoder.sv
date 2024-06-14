@@ -1,7 +1,7 @@
 module instruction_decoder(
     input [6:0] instruction[3],
     //      control signals
-    output reg mem_write, reg_write, running,
+    output reg mem_write, reg_write,
 
     //      reg addresses
     output reg[1:0] read1, read2, write_reg,
@@ -19,6 +19,7 @@ module instruction_decoder(
     //      ALU
     output reg[1:0] alu_A, alu_B, // 0: regData1, 1: regData2, 2: memory, 3: constant
     output reg[1:0] alu_op,
+    output reg store_cmp_flags, // 1 if cmp_flags should be updated, 0 otherwise
 
     //      special
     output reg is_syscall, is_ret,
@@ -41,16 +42,16 @@ module instruction_decoder(
         internal_unknown_reg2 = 0;
         
         case (instruction[1])
-            0: internal_reg1 = 0;
-            1: internal_reg1 = 1;
+            1: internal_reg1 = 0;
+            2: internal_reg1 = 1;
             99: internal_reg1 = 2;
             default:
                 internal_unknown_reg1 = 1;
         endcase
 
         case (instruction[2])
-            0: internal_reg2 = 0;
-            1: internal_reg2 = 1;
+            1: internal_reg2 = 0;
+            2: internal_reg2 = 1;
             99: internal_reg2 = 2;
             default:
                 internal_unknown_reg2 = 1;
@@ -60,13 +61,17 @@ module instruction_decoder(
         // instruction decoding
         mem_write = 0;
         reg_write = 0;
-        running = 0;
         is_ptr = 0;
         is_jmp = 0;
         is_syscall = 0;
         is_ret = 0;
         unknown_op = 0;
         unkown_reg = 0;
+        store_cmp_flags = 0;
+        requires_eq = 0;
+        requires_ne = 0;
+        requires_less = 0;
+        requires_greater = 0;
 
         case (instruction[0])
             0: is_ret = 1; // ret
@@ -124,6 +129,7 @@ module instruction_decoder(
                 alu_A = 0; // send regData1
                 alu_B = 3; // send constant
                 alu_op = 1; // A + B
+                store_cmp_flags = 1;
             end
             7: begin // add register, register
                 reg_write = 1;
@@ -135,6 +141,7 @@ module instruction_decoder(
                 alu_A = 0; // send regData1
                 alu_B = 1; // send regData2
                 alu_op = 1; // A + B
+                store_cmp_flags = 1;
             end
 
             //      CMP operations
@@ -145,6 +152,7 @@ module instruction_decoder(
                 alu_A = 0; // send regData1
                 alu_B = 3; // send constant
                 alu_op = 3; // A - B
+                store_cmp_flags = 1;
             end
             9: begin // cmp register, register
                 // if either register is illegal, the operation is illegal
@@ -154,6 +162,7 @@ module instruction_decoder(
                 alu_A = 0; // send regData1
                 alu_B = 1; // send regData2
                 alu_op = 3; // A - B
+                store_cmp_flags = 1;
             end
 
             //      JMP operations
@@ -222,6 +231,7 @@ module instruction_decoder(
                 alu_A = 0; // send regData1
                 alu_B = 1; // send regData2
                 alu_op = 3; // A - B
+                store_cmp_flags = 1;
             end
             17: begin // sub register, constant
                 reg_write = 1;
@@ -232,6 +242,7 @@ module instruction_decoder(
                 alu_A = 0; // send regData1
                 alu_B = 3; // send constant
                 alu_op = 3; // A - B
+                store_cmp_flags = 1;
             end
             18: begin // sub constant, register (still saves to register, just different order)
                 reg_write = 1;
@@ -242,6 +253,7 @@ module instruction_decoder(
                 alu_A = 3; // send constant
                 alu_B = 0; // send regData1
                 alu_op = 3; // A - B
+                store_cmp_flags = 1;
             end
 
             //      extra CMP operations
@@ -252,6 +264,7 @@ module instruction_decoder(
                 alu_A = 3; // send constant
                 alu_B = 0; // send regData1
                 alu_op = 3; // A - B
+                store_cmp_flags = 1;
             end
 
             //      extra JMP operations
@@ -272,14 +285,14 @@ module instruction_decoder(
                 alu_op = 0; // output A
             end
             //  JL
-            20: begin // jl constant
+            22: begin // jl constant
                 requires_less = 1;
                 is_jmp = 1;
                 constant = instruction[1];
                 alu_A = 3; // send constant
                 alu_op = 0; // output A
             end
-            21: begin // jl register
+            23: begin // jl register
                 requires_less = 1;
                 is_jmp = 1;
                 read1 = internal_reg1;
@@ -288,14 +301,14 @@ module instruction_decoder(
                 alu_op = 0; // output A
             end
             //  JG
-            20: begin // jg constant
+            24: begin // jg constant
                 requires_greater = 1;
                 is_jmp = 1;
                 constant = instruction[1];
                 alu_A = 3; // send constant
                 alu_op = 0; // output A
             end
-            21: begin // jg register
+            25: begin // jg register
                 requires_greater = 1;
                 is_jmp = 1;
                 read1 = internal_reg1;
@@ -304,7 +317,7 @@ module instruction_decoder(
                 alu_op = 0; // output A
             end
 
-            22: begin // syscall
+            26: begin // syscall
                 is_syscall = 1;
                 constant = instruction[1]; // stores the code for the syscall, handled seperately
             end
