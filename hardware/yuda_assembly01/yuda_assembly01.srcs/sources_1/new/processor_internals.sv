@@ -18,7 +18,7 @@ module processor_internals(
     // for reading and writing when execution frozen, 
     input mem_clk, // so execution can be frozen seperately from memory&registers
 
-    // input reset, // when set to 1, the processor is reset on mem_clk
+    input reset, // when set to 1, the processor is reset on mem_clk
     
     input override, // 1 means memory is under external control
     input [6:0] override_mem_address,
@@ -54,9 +54,9 @@ module processor_internals(
     wire [6:0] reg_IP;
     wire reg_running;
     wire [6:0] reg_AX[3];
-    // wire reg_reset;
-    register_file registers(/* mem_ */clk, reg_read1, reg_read2, reg_writeReg, reg_writeData, reg_RegWrite,
-        reg_Data1, reg_Data2, reg_AX, /* reg_reset, */ reg_newIP, reg_WriteIP, reg_IP, reg_running);
+    wire reg_reset;
+    register_file registers(clk, reg_read1, reg_read2, reg_writeReg, reg_writeData, reg_RegWrite,
+        reg_Data1, reg_Data2, reg_AX, reg_reset, reg_newIP, reg_WriteIP, reg_IP, reg_running);
     
     // ALU
     wire [1:0] alu_control_operation;
@@ -157,7 +157,7 @@ module processor_internals(
     assign reg_writeReg = id_write_reg;
     assign reg_writeData = alu_out;
     assign reg_RegWrite = id_reg_write;
-    // assign reg_reset = reset; // for resetting processor, so from external control
+    assign reg_reset = reset; // for resetting processor, so from external control
 
     // control -> FR (cmp_flags register)
     always @(posedge clk) begin

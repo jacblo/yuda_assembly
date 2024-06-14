@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2.2 (lin64) Build 4126759 Thu Feb  8 23:52:05 MST 2024
-| Date             : Fri Jun 14 13:38:12 2024
+| Date             : Fri Jun 14 15:11:58 2024
 | Host             : BSERVER05 running 64-bit Linux Mint 21.3
 | Command          : report_power -file program_loader_processor_test_power_routed.rpt -pb program_loader_processor_test_power_summary_routed.pb -rpx program_loader_processor_test_power_routed.rpx
 | Design           : program_loader_processor_test
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |    <0.001 |        3 |       --- |             --- |
-| Slice Logic    |     0.001 |     4794 |       --- |             --- |
-|   LUT as Logic |     0.001 |     1564 |     14600 |           10.71 |
-|   F7/F8 Muxes  |    <0.001 |      765 |     14600 |            5.24 |
+| Slice Logic    |     0.001 |     4706 |       --- |             --- |
+|   LUT as Logic |     0.001 |     1624 |     14600 |           11.12 |
+|   F7/F8 Muxes  |    <0.001 |      611 |     14600 |            4.18 |
 |   CARRY4       |    <0.001 |        8 |      3650 |            0.22 |
-|   Register     |    <0.001 |     2345 |     29200 |            8.03 |
+|   Register     |    <0.001 |     2344 |     29200 |            8.03 |
 |   Others       |     0.000 |       17 |       --- |             --- |
-| Signals        |     0.002 |     3241 |       --- |             --- |
-| I/O            |    <0.001 |       16 |       150 |           10.67 |
+| Signals        |     0.002 |     3424 |       --- |             --- |
+| I/O            |    <0.001 |       15 |       150 |           10.00 |
 | Static Power   |     0.061 |          |           |                 |
 | Total          |     0.065 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
@@ -140,9 +140,8 @@ Table of Contents
 | Name                          | Power (W) |
 +-------------------------------+-----------+
 | program_loader_processor_test |     0.004 |
-|   processor                   |     0.004 |
+|   processor                   |     0.003 |
 |     memory                    |     0.002 |
-|     registers                 |     0.001 |
 +-------------------------------+-----------+
 
 

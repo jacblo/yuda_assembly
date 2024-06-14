@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2.2 (lin64) Build 4126759 Thu Feb  8 23:52:05 MST 2024
-| Date         : Fri Jun 14 13:37:55 2024
+| Date         : Fri Jun 14 15:11:41 2024
 | Host         : BSERVER05 running 64-bit Linux Mint 21.3
 | Command      : report_control_sets -verbose -file program_loader_processor_test_control_sets_placed.rpt
 | Design       : program_loader_processor_test
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |   132 |
-|    Minimum number of control sets                        |   132 |
+| Total control sets                                       |   130 |
+|    Minimum number of control sets                        |   130 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |   455 |
+| Unused register locations in slices containing registers |   440 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,8 +39,8 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |   132 |
-| >= 0 to < 4        |    17 |
+| Total control sets |   130 |
+| >= 0 to < 4        |    15 |
 | >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     4 |
 | >= 8 to < 10       |     2 |
@@ -58,10 +58,10 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |             108 |           46 |
+| No           | No                    | No                     |             109 |           47 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              13 |            6 |
-| Yes          | No                    | No                     |            2216 |         1116 |
+| No           | Yes                   | No                     |              12 |            5 |
+| Yes          | No                    | No                     |            2215 |         1055 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |               8 |            2 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
@@ -70,141 +70,139 @@ Table of Contents
 4. Detailed Control Set Information
 -----------------------------------
 
-+-------------------------------------------+----------------------------------------+-------------------------------+------------------+----------------+--------------+
-|                Clock Signal               |              Enable Signal             |        Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
-+-------------------------------------------+----------------------------------------+-------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG                            | uart_controller/tx                     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data[3]_i_1_n_0     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data[6]_i_1_n_0     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_dv_0                |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            |                                        | started                       |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data[5]_i_1_n_0     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data[4]_i_1_n_0     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data[2]_i_1_n_0     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data[1]_i_1_n_0     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data[0]_i_1_n_0     |                               |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG                            | started2_out                           |                               |                1 |              1 |         1.00 |
-|  processor/memory/address_reg[4]_i_3_0[0] |                                        |                               |                1 |              2 |         2.00 |
-|  processor/memory/reg_RegWrite            |                                        |                               |                1 |              2 |         2.00 |
-|  processor/memory/led[2]_INST_0_i_4_1[0]  |                                        |                               |                1 |              2 |         2.00 |
-|  processor/memory/read1_reg[1]_i_6_0[0]   |                                        |                               |                1 |              2 |         2.00 |
-|  processor/memory/led[2]_INST_0_i_6_1[0]  |                                        |                               |                2 |              2 |         1.00 |
-|  processor/memory/address_reg[4]_i_2_0[0] |                                        |                               |                1 |              2 |         2.00 |
-|  processor/memory/led[2]_INST_0_i_6_0[0]  |                                        |                               |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG                            |                                        | uart_controller/rx_bit_index0 |                2 |              6 |         3.00 |
-|  clk_IBUF_BUFG                            |                                        | uart_controller/tx_bit_index0 |                3 |              6 |         2.00 |
-|  processor/memory/led[2]_INST_0_i_2_0[0]  |                                        |                               |                2 |              7 |         3.50 |
-|  processor/memory/address_reg[6]_i_3_0[0] |                                        |                               |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG                            | uart_controller/tx_data                |                               |                2 |              8 |         4.00 |
-|  clk_IBUF_BUFG                            | uart_controller/rx_data_reg[7]_0       | pl/tx_data[7]_i_1_n_0         |                2 |              8 |         4.00 |
-|  processor_clk_BUFG                       |                                        |                               |                3 |             10 |         3.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_5[0]   |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_25[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_26[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_27[0]  |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_28[0]  |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_29[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_30[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_31[0]  |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_32[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_33[0]  |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_48[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_49[0]  |                               |                6 |             21 |         3.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_22[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_50[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_51[0]  |                               |               11 |             21 |         1.91 |
-|  clk_IBUF_BUFG                            | processor/registers/E[0]               |                               |               11 |             21 |         1.91 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_16[0]  |                               |                4 |             21 |         5.25 |
-|  processor_clk_BUFG                       | processor/id/E[0]                      |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_17[0]  |                               |               15 |             21 |         1.40 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_18[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_19[0]  |                               |               15 |             21 |         1.40 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_20[0]  |                               |               18 |             21 |         1.17 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_21[0]  |                               |               15 |             21 |         1.40 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_53[0]  |                               |                8 |             21 |         2.62 |
-|  processor/id/read2_reg[1]_0[0]           |                                        |                               |               10 |             21 |         2.10 |
-|  processor/id/read1_reg[1]_0[0]           |                                        |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_93[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_92[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_94[0]  |                               |               11 |             21 |         1.91 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_99[0]  |                               |                7 |             21 |         3.00 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_98[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_96[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_97[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_95[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | uart_controller/E[0]                   |                               |                5 |             21 |         4.20 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_52[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_24[0]  |                               |               16 |             21 |         1.31 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_54[0]  |                               |               11 |             21 |         1.91 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_55[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_56[0]  |                               |               16 |             21 |         1.31 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_57[0]  |                               |               16 |             21 |         1.31 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_58[0]  |                               |               16 |             21 |         1.31 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_59[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_6[0]   |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_60[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_61[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_62[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_23[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_88[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_76[0]  |                               |                5 |             21 |         4.20 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_77[0]  |                               |                7 |             21 |         3.00 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_78[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_79[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_8[0]   |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_80[0]  |                               |                5 |             21 |         4.20 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_81[0]  |                               |                5 |             21 |         4.20 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_82[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_83[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_84[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_85[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_86[0]  |                               |               11 |             21 |         1.91 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_87[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_35[0]  |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_89[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_9[0]   |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_90[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_91[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_15[0]  |                               |                7 |             21 |         3.00 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_13[0]  |                               |                7 |             21 |         3.00 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_14[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_11[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_102[0] |                               |               17 |             21 |         1.24 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_101[0] |                               |                6 |             21 |         3.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_12[0]  |                               |                7 |             21 |         3.00 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_100[0] |                               |                5 |             21 |         4.20 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_10[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_74[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_34[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_36[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_37[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_38[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_39[0]  |                               |               11 |             21 |         1.91 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_4[0]   |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_40[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_41[0]  |                               |                8 |             21 |         2.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_42[0]  |                               |               11 |             21 |         1.91 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_43[0]  |                               |               15 |             21 |         1.40 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_44[0]  |                               |                9 |             21 |         2.33 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_45[0]  |                               |               16 |             21 |         1.31 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_46[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_63[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_75[0]  |                               |                4 |             21 |         5.25 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_73[0]  |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_72[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_71[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_70[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_7[0]   |                               |                7 |             21 |         3.00 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_69[0]  |                               |               13 |             21 |         1.62 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_68[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_67[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_66[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_65[0]  |                               |               10 |             21 |         2.10 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_64[0]  |                               |               12 |             21 |         1.75 |
-|  clk_IBUF_BUFG                            | processor/registers/running_reg_47[0]  |                               |               14 |             21 |         1.50 |
-|  clk_IBUF_BUFG                            |                                        |                               |               11 |             26 |         2.36 |
-|  clk_IBUF_BUFG                            | pl/write_data[0][6]_i_1_n_0            |                               |                8 |             28 |         3.50 |
-|  processor_clk_BUFG                       | processor/id/write_reg_reg[1]_0[0]     |                               |                9 |             28 |         3.11 |
-+-------------------------------------------+----------------------------------------+-------------------------------+------------------+----------------+--------------+
++-------------------------------------------+-------------------------------------------+-------------------------------+------------------+----------------+--------------+
+|                Clock Signal               |               Enable Signal               |        Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
++-------------------------------------------+-------------------------------------------+-------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG                            | uart_controller/rx_data[6]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/tx                        |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_data[3]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_data[5]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_dv_0                   |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_data[4]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_data[1]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_data[0]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_data[2]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  processor/memory/led[2]_INST_0_i_5_0[0]  |                                           |                               |                1 |              2 |         2.00 |
+|  processor/memory/reg_RegWrite            |                                           |                               |                1 |              2 |         2.00 |
+|  processor/memory/address_reg[2]_i_3_0[0] |                                           |                               |                1 |              2 |         2.00 |
+|  processor/memory/address_reg[2]_i_2_0[0] |                                           |                               |                1 |              2 |         2.00 |
+|  processor/memory/read1_reg[1]_i_8_0[0]   |                                           |                               |                1 |              2 |         2.00 |
+|  processor/memory/led[2]_INST_0_i_3_1[0]  |                                           |                               |                1 |              2 |         2.00 |
+|  processor/memory/led[2]_INST_0_i_5_1[0]  |                                           |                               |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                            |                                           | uart_controller/rx_bit_index0 |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG                            |                                           | uart_controller/tx_bit_index0 |                3 |              6 |         2.00 |
+|  processor/memory/address_reg[6]_i_3_0[0] |                                           |                               |                3 |              7 |         2.33 |
+|  processor/memory/led[2]_INST_0_i_3_0[0]  |                                           |                               |                3 |              7 |         2.33 |
+|  clk_IBUF_BUFG                            | uart_controller/tx_data                   |                               |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG                            | uart_controller/rx_data_reg[7]_0          | pl/tx_data[7]_i_1_n_0         |                2 |              8 |         4.00 |
+|  processor_clk_BUFG                       |                                           |                               |                4 |             10 |         2.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[7][0][6]_i_1_n_0  |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[80][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[79][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[78][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[77][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[76][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[75][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[74][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[73][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[72][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[71][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[70][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[6][0][6]_i_1_n_0  |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[69][0][6]_i_1_n_0 |                               |                4 |             21 |         5.25 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[68][0][6]_i_1_n_0 |                               |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[67][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[66][0][6]_i_1_n_0 |                               |                5 |             21 |         4.20 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[65][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[64][0][6]_i_1_n_0 |                               |                4 |             21 |         5.25 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[63][0][6]_i_1_n_0 |                               |               16 |             21 |         1.31 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[61][0][6]_i_1_n_0 |                               |               16 |             21 |         1.31 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[62][0][6]_i_1_n_0 |                               |               13 |             21 |         1.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[57][0][6]_i_1_n_0 |                               |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[91][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  processor/id/E[0]                        |                                           |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[9][0][6]_i_1_n_0  |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | uart_controller/E[0]                      |                               |                5 |             21 |         4.20 |
+|  clk_IBUF_BUFG                            | processor/memory/memory                   |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[98][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[97][0][6]_i_1_n_0 |                               |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[96][0][6]_i_1_n_0 |                               |                5 |             21 |         4.20 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[95][0][6]_i_1_n_0 |                               |               13 |             21 |         1.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[94][0][6]_i_1_n_0 |                               |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[93][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[92][0][6]_i_1_n_0 |                               |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[81][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[90][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[8][0][6]_i_1_n_0  |                               |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[89][0][6]_i_1_n_0 |                               |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[88][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[87][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[86][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[85][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[84][0][6]_i_1_n_0 |                               |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[83][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[82][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[1][0][6]_i_1_n_0  |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[32][0][6]_i_1_n_0 |                               |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[31][0][6]_i_1_n_0 |                               |               17 |             21 |         1.24 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[30][0][6]_i_1_n_0 |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[2][0][6]_i_1_n_0  |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[29][0][6]_i_1_n_0 |                               |               13 |             21 |         1.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[28][0][6]_i_1_n_0 |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[27][0][6]_i_1_n_0 |                               |               15 |             21 |         1.40 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[26][0][6]_i_1_n_0 |                               |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[25][0][6]_i_1_n_0 |                               |               13 |             21 |         1.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[24][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[23][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[22][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[21][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[20][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[5][0][6]_i_1_n_0  |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[19][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[18][0][6]_i_1_n_0 |                               |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[17][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[16][0][6]_i_1_n_0 |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[15][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[14][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[13][0][6]_i_1_n_0 |                               |               15 |             21 |         1.40 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[12][0][6]_i_1_n_0 |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[11][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[10][0][6]_i_1_n_0 |                               |               13 |             21 |         1.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[99][0][6]_i_1_n_0 |                               |               17 |             21 |         1.24 |
+|  processor/id/read2_reg[0]_0[0]           |                                           |                               |                9 |             21 |         2.33 |
+|  processor_clk_BUFG                       | processor/id/write_reg_reg[1]_0           |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[34][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[60][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[59][0][6]_i_1_n_0 |                               |               13 |             21 |         1.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[58][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[56][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[55][0][6]_i_1_n_0 |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[54][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[53][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[52][0][6]_i_1_n_0 |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[51][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[50][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[4][0][6]_i_1_n_0  |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[49][0][6]_i_1_n_0 |                               |               14 |             21 |         1.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[48][0][6]_i_1_n_0 |                               |               12 |             21 |         1.75 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[47][0][6]_i_1_n_0 |                               |               18 |             21 |         1.17 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[45][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[33][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[35][0][6]_i_1_n_0 |                               |                8 |             21 |         2.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[36][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[37][0][6]_i_1_n_0 |                               |                5 |             21 |         4.20 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[38][0][6]_i_1_n_0 |                               |                4 |             21 |         5.25 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[39][0][6]_i_1_n_0 |                               |               11 |             21 |         1.91 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[3][0][6]_i_1_n_0  |                               |               10 |             21 |         2.10 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[40][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[41][0][6]_i_1_n_0 |                               |                7 |             21 |         3.00 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[42][0][6]_i_1_n_0 |                               |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[43][0][6]_i_1_n_0 |                               |               13 |             21 |         1.62 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[44][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            | processor/memory/memory[46][0][6]_i_1_n_0 |                               |                9 |             21 |         2.33 |
+|  clk_IBUF_BUFG                            |                                           |                               |               11 |             27 |         2.45 |
+|  clk_IBUF_BUFG                            | pl/write_data[0][6]_i_1_n_0               |                               |               10 |             28 |         2.80 |
+|  processor_clk_BUFG                       | processor/id/registers                    |                               |                9 |             28 |         3.11 |
++-------------------------------------------+-------------------------------------------+-------------------------------+------------------+----------------+--------------+
 
 

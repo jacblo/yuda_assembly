@@ -11,7 +11,7 @@ module program_loader_processor_test(
     wire uart_ready;
     
     //
-    reg listen = 0;
+    reg listen;
     
     // outputs of program_loader
     wire[7:0] rx_data;
@@ -57,7 +57,7 @@ module program_loader_processor_test(
     // for reading and writing when execution frozen
     wire mem_clk; // so execution can be frozen seperately from memory
 
-    // reg reset = 0;
+    reg reset = 0;
 
     wire override; // 1 means memory is under external control
     wire [6:0] override_mem_address;
@@ -72,7 +72,7 @@ module program_loader_processor_test(
     wire is_syscall, unkown_reg, unknown_op, is_ret; // all are set to 1 when encountered
     wire [6:0] syscall_constant; // constant, used in syscall
 
-    processor_internals processor(processor_clk, mem_clk, /* reset, */ override, override_mem_address,
+    processor_internals processor(processor_clk, mem_clk, reset, override, override_mem_address,
         override_mem_write_data, override_mem_write, override_mem_read_data, AX, is_syscall,
         unkown_reg, unknown_op, is_ret, syscall_constant);
 
@@ -83,7 +83,8 @@ module program_loader_processor_test(
     
     reg started = 0;
     initial begin
-//        listen = 1;
+//        listen = 0;
+        listen = 1;
         running = 0;
     end
 
@@ -100,29 +101,29 @@ module program_loader_processor_test(
 
     reg [2:0]done_count = 1; // counts how long been done
     always @(posedge clk) begin
-        // reset = 0; // so making it 1 is a pulse
+        reset = 0; // so making it 1 is a pulse
         listen = 0; // so making it 1 is a pulse
 
-         if (started) begin
+//        if (started) begin
             if (done) begin
                 if (done_count != 0)
                     done_count ++;
-//                if (done_count == -1) // done 6 times
-//                    reset = 1; // reset processor before running
+                if (done_count == -1) // done 6 times
+                    reset = 1; // reset processor before running
                 if (done_count == 0) // done 7 times
                     running = 1; // start running
             end
 
-//            if (is_ret & running) begin
-//                listen = 1;
-//                running = 0;
-//            end
+            if (is_ret & running) begin
+                listen = 1;
+                running = 0;
+            end
             
-         end
+//        end
 
-         else if (btn[0]) begin
-             listen = 1;
-             started = 1;
-         end
+//        else if (btn[0]) begin
+//            listen = 1;
+//            started = 1;
+//        end
     end
 endmodule
