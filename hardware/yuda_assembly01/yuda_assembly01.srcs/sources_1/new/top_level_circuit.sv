@@ -144,7 +144,8 @@ module top_level_circuit(
     wire ex_unknown_reg; 
     wire ex_unknown_op;
     wire ex_unknown_syscall;
-    
+    wire ex_is_ret;
+
     wire ex_tx_ready;
     wire [7:0] ex_tx_data;
     wire ex_tx_dv;
@@ -156,6 +157,7 @@ module top_level_circuit(
         ex_unknown_reg, 
         ex_unknown_op,
         ex_unknown_syscall,
+        ex_is_ret,
         ex_tx_ready,
         ex_tx_data,
         ex_tx_dv,
@@ -209,7 +211,8 @@ module top_level_circuit(
 
     // processor & syscall -> exception
     assign ex_unknown_op = proc_unknown_op;
-    assign ex_unknown_reg = proc_regex_unknown_reg;
+    assign ex_unknown_reg = proc_unknown_reg;
+    assign ex_is_ret = proc_is_ret;
 
     assign ex_unknown_syscall = syscall_unknown_sys_number;
 
