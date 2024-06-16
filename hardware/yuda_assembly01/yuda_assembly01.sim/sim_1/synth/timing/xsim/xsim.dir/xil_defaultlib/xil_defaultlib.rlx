@@ -2,7 +2,8 @@
 2020.2
 Feb  8 2024
 23:58:30
-/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/timing/xsim/register_file_tb_time_synth.v,1718551191,verilog,,,,glbl;register_file,,uvm,,,,,,
+/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/timing/xsim/register_file_tb_time_synth.v,1718552293,verilog,,,,ALU;UART;adder;glbl;instruction_decoder;memory_controller;processor_internals;program_loader;program_loader_processor_test,,uvm,,,,,,
 /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/ALU_tb.sv,1718299497,systemVerilog,,,,ALU_tb,,uvm,,,,,,
 /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/memory_controller_tb.sv,1715593847,systemVerilog,,,,memory_controller_tb,,uvm,,,,,,
-/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/register_file_tb.sv,1718551188,systemVerilog,,,,register_file_tb,,uvm,,,,,,
+/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/register_file_tb.sv,1718552289,systemVerilog,,,,register_file_tb,,uvm,,,,,,
+/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/register_file.sv,1718369491,systemVerilog,,/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/register_file_tb.sv,,register_file,,uvm,,,,,,

@@ -1,0 +1,2 @@
+; simple asm                      machine code
+jmp 0                           ; 100000

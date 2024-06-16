@@ -6,6 +6,7 @@ module processor_internals_tb();
 
     // for reading and writing when execution frozen, 
     reg mem_clk; // so execution can be frozen seperately from memory
+    reg reset = 0;
     reg override; // 1 means memory is under external control
     reg [6:0] override_mem_address;
     reg [6:0] override_mem_write_data[3];
@@ -18,7 +19,7 @@ module processor_internals_tb();
     wire is_syscall, unknown_reg, unknown_op, is_ret; // all are set to 1 when encountered
     wire [6:0] syscall_constant; // constant, used in syscall
 
-    processor_internals tester(clk, mem_clk, override, override_mem_address, 
+    processor_internals tester(clk, mem_clk, reset, override, override_mem_address, 
         override_mem_write_data, override_mem_write, override_mem_read_data, AX, is_syscall,
         unknown_reg, unknown_op, is_ret, syscall_constant);
 
@@ -29,54 +30,75 @@ module processor_internals_tb();
         override = 1;
         override_mem_write = 1;
         override_mem_address = 0;
-        override_mem_write_data = {1, 1, 5}; // mov AX, 5
+        override_mem_write_data = {10, 3, 0};
         #30
         mem_clk = 1;
         #10
         override_mem_address = 1;
-        override_mem_write_data = {1, 2, 1}; // mov BX, 1
+        override_mem_write_data = {0, 0, 1};
         #20
         mem_clk = 0;
         #30
         mem_clk = 1;
         #10
         override_mem_address = 2;
-        override_mem_write_data = {7, 2, 2}; // add BX, BX
+        override_mem_write_data = {0, 0, 2};
         #20
         mem_clk = 0;
         #30
         mem_clk = 1;
         #10
         override_mem_address = 3;
-        override_mem_write_data = {17, 1, 1}; // sub AX, 1
+        override_mem_write_data = {3, 1, 1};
         #20
         mem_clk = 0;
         #30
         mem_clk = 1;
         #10
         override_mem_address = 4;
-        override_mem_write_data = {8, 1, 0}; // cmp AX, 0
+        override_mem_write_data = {3, 2, 2};
         #20
         mem_clk = 0;
         #30
         mem_clk = 1;
         #10
         override_mem_address = 5;
-        override_mem_write_data = {24, 2, 0}; // jg 2
+        override_mem_write_data = {17, 1, 1};
         #20
         mem_clk = 0;
         #30
         mem_clk = 1;
         #10
         override_mem_address = 6;
-        override_mem_write_data = {26, 4, 0}; // syscall 4
+        override_mem_write_data = {24, 4, 0};
         #20
         mem_clk = 0;
         #30
         mem_clk = 1;
         #10
         override_mem_address = 7;
-        override_mem_write_data = {0, 0, 0}; // ret
+        override_mem_write_data = {3, 1, 1};
+        #20
+        mem_clk = 0;
+        #30
+        mem_clk = 1;
+        #10
+        override_mem_address = 8;
+        override_mem_write_data = {17, 2, 1};
+        #20
+        mem_clk = 0;
+        #30
+        mem_clk = 1;
+        #10
+        override_mem_address = 9;
+        override_mem_write_data = {24, 04, 0};
+        #20
+        mem_clk = 0;
+        #30
+        mem_clk = 1;
+        #10
+        override_mem_address = 10;
+        override_mem_write_data = {0, 0, 0};
         #20
         mem_clk = 0;
         #30
@@ -86,7 +108,7 @@ module processor_internals_tb();
         #20
         mem_clk = 0;
         // start running
-        for (int i = 0; i < 30; i = i + 1) begin
+        for (int i = 0; i < 400; i = i + 1) begin
             #30
             mem_clk = 1;
             clk = 1;

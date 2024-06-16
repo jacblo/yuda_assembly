@@ -1,9 +1,10 @@
 import serial
 
+# fibonacci
 data = [ # assuming all are 6 digits
     "010100",
     "010201",
-    "040203",
+    "040209", # last two digits here are index into fibo
     "052202",
     "070201",
     "030102",
@@ -13,6 +14,30 @@ data = [ # assuming all are 6 digits
     "240300",
     "000000",
 ]
+
+# long loop
+data = [
+    "100300",
+    "499999",
+    "000012",
+    "030101",
+    "030202",
+    "170101",
+    "240500",
+    "030101",
+    "170201",
+    "240500",
+    "010102",
+    "000000",
+]
+
+# # skip a few lines
+# data = [
+#     "010102", # mov AX, 2
+#     "100300", # jmp 3
+#     "010106", # mov AX, 6
+#     "000000"
+# ]
 
 with serial.Serial('/dev/ttyUSB1', 2_000_000, timeout=5) as ser:
     checksum = 0
@@ -34,3 +59,7 @@ with serial.Serial('/dev/ttyUSB1', 2_000_000, timeout=5) as ser:
     
     dat = ser.read(1)
     print("received checksum:", dat, hex(int.from_bytes(dat, 'big'))) # byte order doesn't matter - one byte
+    if checksum % (1 << 8 ) == int.from_bytes(dat, 'big'): # byte order doesn't matter - one byte
+        print("Checksum matches")
+    else:
+        print("Checsum failed to match!!")

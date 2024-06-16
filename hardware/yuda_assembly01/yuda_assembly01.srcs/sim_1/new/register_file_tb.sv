@@ -27,11 +27,11 @@ module register_file_tb();
     register_file tester(
         clk,
         read1, read2, writeReg,        
-        WriteData[0], WriteData[1], WriteData[2],
+        WriteData,//[0], WriteData[1], WriteData[2],
         RegWrite,
-        Data1[0], Data1[1], Data1[2],
-        Data2[0], Data2[1], Data2[2],
-        AX[0], AX[1], AX[2],
+        Data1,//[0], Data1[1], Data1[2],
+        Data2,//[0], Data2[1], Data2[2],
+        AX,//[0], AX[1], AX[2],
         reset,
         newIP,
         WriteIP,
@@ -154,9 +154,6 @@ module register_file_tb();
         clk = 0;
         reset = 1;
         #300
-        clk = 1;
-        #300
-        clk = 0;
         reset = 0;
         #300
         clk = 1;

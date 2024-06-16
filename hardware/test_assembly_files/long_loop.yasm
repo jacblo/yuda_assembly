@@ -1,0 +1,13 @@
+jmp 3                           ; 100200
+;data
+499999                          ; 499999
+000012                          ; 000012 ; so we run around 12*500K loops, so we run a few seconds
+;program
+mov AX, [1]                     ; 030100
+mov BX, [2]                     ; 030201
+sub AX, 1                       ; 170101
+jg 5                            ; 240500
+mov AX, [1]                     ; 030100
+sub BX, 1                       ; 170201
+jg 5                            ; 240500
+ret                             ; 000000

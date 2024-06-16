@@ -66,7 +66,7 @@ module processor_internals(
     ALU alu(alu_control_operation, alu_A, alu_B, alu_out, alu_cmp_flags);
 
     // FR (cmp_flags register)
-    reg cmp_flags[2];
+    reg cmp_flags[2] = {0,0};
 
     //          Control parts
     // instruction_decoder
@@ -160,9 +160,14 @@ module processor_internals(
     assign reg_reset = reset; // for resetting processor, so from external control
 
     // control -> FR (cmp_flags register)
-    always @(posedge clk) begin
-        if (id_store_cmp_flags) begin
-            cmp_flags = alu_cmp_flags;
+    always @(posedge clk, posedge reset) begin
+        if (reset) begin
+            cmp_flags = {0,0};
+        end
+        else begin
+            if (id_store_cmp_flags) begin
+                cmp_flags = alu_cmp_flags;
+            end
         end
     end
 

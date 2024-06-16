@@ -1,101 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7s25csga225-1" LaunchTime="1718550986">
+<GenRun Id="impl_1" LaunchPart="xc7s25csga225-1" LaunchTime="1718557891">
   <File Type="ROUTE-RQS-RPT" Name="route_report_qor_suggestions_0.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-RQS" Name="register_file_postroute_physopted.rqs"/>
-  <File Type="ROUTE-RQS" Name="register_file_routed.rqs"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS" Name="program_loader_processor_test_postroute_physopted.rqs"/>
+  <File Type="ROUTE-RQS" Name="program_loader_processor_test_routed.rqs"/>
   <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
-  <File Type="BG-BGN" Name="register_file.bgn"/>
-  <File Type="BITSTR-SYSDEF" Name="register_file.sysdef"/>
+  <File Type="BG-BGN" Name="program_loader_processor_test.bgn"/>
+  <File Type="BITSTR-SYSDEF" Name="program_loader_processor_test.sysdef"/>
   <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
-  <File Type="BITSTR-LTX" Name="register_file.ltx"/>
-  <File Type="RBD_FILE" Name="register_file.rbd"/>
-  <File Type="NPI_FILE" Name="register_file.npi"/>
-  <File Type="RNPI_FILE" Name="register_file.rnpi"/>
-  <File Type="CFI_FILE" Name="register_file.cfi"/>
-  <File Type="RCFI_FILE" Name="register_file.rcfi"/>
-  <File Type="PL-PDI-FILE" Name="register_file_pld.pdi"/>
-  <File Type="BOOT-PDI-FILE" Name="register_file_boot.pdi"/>
-  <File Type="RDI-RDI" Name="register_file.vdi"/>
-  <File Type="PDI-FILE" Name="register_file.pdi"/>
-  <File Type="BITSTR-MMI" Name="register_file.mmi"/>
-  <File Type="BITSTR-BMM" Name="register_file_bd.bmm"/>
-  <File Type="BITSTR-NKY" Name="register_file.nky"/>
-  <File Type="BITSTR-RBT" Name="register_file.rbt"/>
-  <File Type="BITSTR-MSK" Name="register_file.msk"/>
-  <File Type="BG-BIN" Name="register_file.bin"/>
+  <File Type="BITSTR-LTX" Name="program_loader_processor_test.ltx"/>
+  <File Type="RBD_FILE" Name="program_loader_processor_test.rbd"/>
+  <File Type="NPI_FILE" Name="program_loader_processor_test.npi"/>
+  <File Type="RNPI_FILE" Name="program_loader_processor_test.rnpi"/>
+  <File Type="CFI_FILE" Name="program_loader_processor_test.cfi"/>
+  <File Type="RCFI_FILE" Name="program_loader_processor_test.rcfi"/>
+  <File Type="PL-PDI-FILE" Name="program_loader_processor_test_pld.pdi"/>
+  <File Type="BOOT-PDI-FILE" Name="program_loader_processor_test_boot.pdi"/>
+  <File Type="RDI-RDI" Name="program_loader_processor_test.vdi"/>
+  <File Type="PDI-FILE" Name="program_loader_processor_test.pdi"/>
+  <File Type="BITSTR-MMI" Name="program_loader_processor_test.mmi"/>
+  <File Type="BITSTR-BMM" Name="program_loader_processor_test_bd.bmm"/>
+  <File Type="BITSTR-NKY" Name="program_loader_processor_test.nky"/>
+  <File Type="BITSTR-RBT" Name="program_loader_processor_test.rbt"/>
+  <File Type="BITSTR-MSK" Name="program_loader_processor_test.msk"/>
+  <File Type="BG-BIN" Name="program_loader_processor_test.bin"/>
   <File Type="POSTROUTE-PHYSOPT-RQS-RPT" Name="postroute_physopt_report_qor_suggestions_0.rpt"/>
-  <File Type="BG-BIT" Name="register_file.bit"/>
+  <File Type="BG-BIT" Name="program_loader_processor_test.bit"/>
   <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="program_loader_processor_test_bus_skew_postroute_physopted.rpx"/>
   <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="program_loader_processor_test_bus_skew_postroute_physopted.pb"/>
   <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="program_loader_processor_test_bus_skew_postroute_physopted.rpt"/>
   <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="program_loader_processor_test_timing_summary_postroute_physopted.rpx"/>
   <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="program_loader_processor_test_timing_summary_postroute_physopted.pb"/>
   <File Type="POSTROUTE-PHYSOPT-TIMING" Name="program_loader_processor_test_timing_summary_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="register_file_postroute_physopt_bb.dcp"/>
-  <File Type="POSTROUTE-PHYSOPT-DCP" Name="register_file_postroute_physopt.dcp"/>
-  <File Type="BG-DRC" Name="register_file.drc"/>
-  <File Type="ROUTE-RQS-PB" Name="register_file_rqs_routed.pb"/>
-  <File Type="ROUTE-BUS-SKEW-RPX" Name="register_file_bus_skew_routed.rpx"/>
-  <File Type="ROUTE-BUS-SKEW-PB" Name="register_file_bus_skew_routed.pb"/>
-  <File Type="ROUTE-BUS-SKEW" Name="register_file_bus_skew_routed.rpt"/>
-  <File Type="ROUTE-CLK" Name="register_file_clock_utilization_routed.rpt"/>
-  <File Type="ROUTE-SIMILARITY" Name="register_file_incremental_reuse_routed.rpt"/>
-  <File Type="ROUTE-TIMING-RPX" Name="register_file_timing_summary_routed.rpx"/>
-  <File Type="ROUTE-TIMING-PB" Name="register_file_timing_summary_routed.pb"/>
-  <File Type="ROUTE-TIMINGSUMMARY" Name="register_file_timing_summary_routed.rpt"/>
-  <File Type="ROUTE-STATUS-PB" Name="register_file_route_status.pb"/>
-  <File Type="ROUTE-STATUS" Name="register_file_route_status.rpt"/>
-  <File Type="ROUTE-PWR-RPX" Name="register_file_power_routed.rpx"/>
-  <File Type="ROUTE-PWR-SUM" Name="register_file_power_summary_routed.pb"/>
-  <File Type="ROUTE-PWR" Name="register_file_power_routed.rpt"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="register_file_methodology_drc_routed.pb"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="register_file_methodology_drc_routed.rpx"/>
-  <File Type="ROUTE-METHODOLOGY-DRC" Name="register_file_methodology_drc_routed.rpt"/>
-  <File Type="ROUTE-DRC-RPX" Name="register_file_drc_routed.rpx"/>
-  <File Type="ROUTE-DRC-PB" Name="register_file_drc_routed.pb"/>
-  <File Type="ROUTE-DRC" Name="register_file_drc_routed.rpt"/>
-  <File Type="ROUTE-BLACKBOX-DCP" Name="register_file_routed_bb.dcp"/>
-  <File Type="ROUTE-DCP" Name="register_file_routed.dcp"/>
-  <File Type="ROUTE-ERROR-DCP" Name="register_file_routed_error.dcp"/>
-  <File Type="PHYSOPT-TIMING" Name="register_file_timing_summary_physopted.rpt"/>
-  <File Type="PHYSOPT-DRC" Name="register_file_drc_physopted.rpt"/>
-  <File Type="PHYSOPT-DCP" Name="register_file_physopt.dcp"/>
-  <File Type="POSTPLACE-PWROPT-TIMING" Name="register_file_timing_summary_postplace_pwropted.rpt"/>
-  <File Type="POSTPLACE-PWROPT-DCP" Name="register_file_postplace_pwropt.dcp"/>
-  <File Type="PLACE-RQA-PB" Name="register_file_rqa_placed.pb"/>
-  <File Type="PLACE-TIMING" Name="register_file_timing_summary_placed.rpt"/>
-  <File Type="PLACE-PRE-SIMILARITY" Name="register_file_incremental_reuse_pre_placed.rpt"/>
-  <File Type="PLACE-SIMILARITY" Name="register_file_incremental_reuse_placed.rpt"/>
-  <File Type="PLACE-CTRL" Name="register_file_control_sets_placed.rpt"/>
-  <File Type="PLACE-UTIL-PB" Name="register_file_utilization_placed.pb"/>
-  <File Type="PLACE-UTIL" Name="register_file_utilization_placed.rpt"/>
-  <File Type="PLACE-CLK" Name="register_file_clock_utilization_placed.rpt"/>
-  <File Type="PLACE-IO" Name="register_file_io_placed.rpt"/>
-  <File Type="PLACE-DCP" Name="register_file_placed.dcp"/>
-  <File Type="PWROPT-TIMING" Name="register_file_timing_summary_pwropted.rpt"/>
-  <File Type="PWROPT-DRC" Name="register_file_drc_pwropted.rpt"/>
-  <File Type="PWROPT-DCP" Name="register_file_pwropt.dcp"/>
-  <File Type="OPT-RQA-PB" Name="register_file_rqa_opted.pb"/>
-  <File Type="OPT-HWDEF" Name="register_file.hwdef"/>
-  <File Type="OPT-METHODOLOGY-DRC" Name="register_file_methodology_drc_opted.rpt"/>
-  <File Type="OPT-DRC" Name="register_file_drc_opted.rpt"/>
-  <File Type="OPT-DCP" Name="register_file_opt.dcp"/>
-  <File Type="OPT-TIMING" Name="register_file_timing_summary_opted.rpt"/>
-  <File Type="REPORTS-TCL" Name="register_file_reports.tcl"/>
-  <File Type="INIT-TIMING" Name="register_file_timing_summary_init.rpt"/>
-  <File Type="PA-TCL" Name="register_file.tcl"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="program_loader_processor_test_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="program_loader_processor_test_postroute_physopt.dcp"/>
+  <File Type="BG-DRC" Name="program_loader_processor_test.drc"/>
+  <File Type="ROUTE-RQS-PB" Name="program_loader_processor_test_rqs_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="program_loader_processor_test_bus_skew_routed.rpx"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="program_loader_processor_test_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW" Name="program_loader_processor_test_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="program_loader_processor_test_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-SIMILARITY" Name="program_loader_processor_test_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-TIMING-RPX" Name="program_loader_processor_test_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-TIMING-PB" Name="program_loader_processor_test_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="program_loader_processor_test_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="program_loader_processor_test_route_status.pb"/>
+  <File Type="ROUTE-STATUS" Name="program_loader_processor_test_route_status.rpt"/>
+  <File Type="ROUTE-PWR-RPX" Name="program_loader_processor_test_power_routed.rpx"/>
+  <File Type="ROUTE-PWR-SUM" Name="program_loader_processor_test_power_summary_routed.pb"/>
+  <File Type="ROUTE-PWR" Name="program_loader_processor_test_power_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="program_loader_processor_test_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="program_loader_processor_test_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="program_loader_processor_test_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-RPX" Name="program_loader_processor_test_drc_routed.rpx"/>
+  <File Type="ROUTE-DRC-PB" Name="program_loader_processor_test_drc_routed.pb"/>
+  <File Type="ROUTE-DRC" Name="program_loader_processor_test_drc_routed.rpt"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="program_loader_processor_test_routed_bb.dcp"/>
+  <File Type="ROUTE-DCP" Name="program_loader_processor_test_routed.dcp"/>
+  <File Type="ROUTE-ERROR-DCP" Name="program_loader_processor_test_routed_error.dcp"/>
+  <File Type="PHYSOPT-TIMING" Name="program_loader_processor_test_timing_summary_physopted.rpt"/>
+  <File Type="PHYSOPT-DRC" Name="program_loader_processor_test_drc_physopted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="program_loader_processor_test_physopt.dcp"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="program_loader_processor_test_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="program_loader_processor_test_postplace_pwropt.dcp"/>
+  <File Type="PLACE-RQA-PB" Name="program_loader_processor_test_rqa_placed.pb"/>
+  <File Type="PLACE-TIMING" Name="program_loader_processor_test_timing_summary_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="program_loader_processor_test_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="program_loader_processor_test_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-CTRL" Name="program_loader_processor_test_control_sets_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="program_loader_processor_test_utilization_placed.pb"/>
+  <File Type="PLACE-UTIL" Name="program_loader_processor_test_utilization_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="program_loader_processor_test_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-IO" Name="program_loader_processor_test_io_placed.rpt"/>
+  <File Type="PLACE-DCP" Name="program_loader_processor_test_placed.dcp"/>
+  <File Type="PWROPT-TIMING" Name="program_loader_processor_test_timing_summary_pwropted.rpt"/>
+  <File Type="PWROPT-DRC" Name="program_loader_processor_test_drc_pwropted.rpt"/>
+  <File Type="PWROPT-DCP" Name="program_loader_processor_test_pwropt.dcp"/>
+  <File Type="OPT-RQA-PB" Name="program_loader_processor_test_rqa_opted.pb"/>
+  <File Type="OPT-HWDEF" Name="program_loader_processor_test.hwdef"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="program_loader_processor_test_methodology_drc_opted.rpt"/>
+  <File Type="OPT-DRC" Name="program_loader_processor_test_drc_opted.rpt"/>
+  <File Type="OPT-DCP" Name="program_loader_processor_test_opt.dcp"/>
+  <File Type="OPT-TIMING" Name="program_loader_processor_test_timing_summary_opted.rpt"/>
+  <File Type="REPORTS-TCL" Name="program_loader_processor_test_reports.tcl"/>
+  <File Type="INIT-TIMING" Name="program_loader_processor_test_timing_summary_init.rpt"/>
+  <File Type="PA-TCL" Name="program_loader_processor_test.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
-    <File Path="$PSRCDIR/sources_1/new/register_file.sv">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <File Path="$PSRCDIR/sources_1/new/ALU.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -103,7 +95,6 @@
     </File>
     <File Path="$PSRCDIR/sources_1/imports/Downloads/UART.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="ImportPath" Val="$PPRDIR/../../../../../../../Downloads/UART.sv"/>
         <Attr Name="ImportTime" Val="1715548767"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -113,7 +104,6 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/comparison_checker.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -121,7 +111,6 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/instruction_decoder.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -129,7 +118,6 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/memory_controller.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -137,7 +125,6 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/processor_internals.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -145,7 +132,13 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/program_loader.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/register_file.sv">
+      <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -153,7 +146,6 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/program_loader_processor_test.sv">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -209,7 +201,7 @@
     </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="register_file"/>
+      <Option Name="TopModule" Val="program_loader_processor_test"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">

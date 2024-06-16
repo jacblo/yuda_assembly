@@ -97,7 +97,7 @@ module program_loader_processor_test(
     assign led[1] = running;
     assign led[2] = is_ret;
     assign led[3] = listen;
-    assign ja = {1'b1, AX[2]}; // add leading 1
+    assign ja = AX[2];
 
     reg [2:0]done_count = 1; // counts how long been done
     always @(posedge clk) begin
@@ -108,15 +108,16 @@ module program_loader_processor_test(
             if (done) begin
                 if (done_count != 0)
                     done_count ++;
-                if (done_count == -1) // done 6 times
+                if (done_count == 3) // be done for a little before starting over
                     reset = 1; // reset processor before running
-                if (done_count == 0) // done 7 times
+                if (done_count == 4)
                     running = 1; // start running
             end
 
             if (is_ret & running) begin
                 listen = 1;
                 running = 0;
+                done_count = 1;
             end
             
 //        end
