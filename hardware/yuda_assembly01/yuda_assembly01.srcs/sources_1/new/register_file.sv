@@ -45,15 +45,15 @@ module register_file(
     // register loading
     always_comb begin
         case (read1)
-            0: Data1 <= registers[0];
-            1: Data1 <= registers[1];
-            2: Data1 <= {0,0,IP_reg};
+            0: Data1 = registers[0];
+            1: Data1 = registers[1];
+            2: Data1 = {0,0,IP_reg};
         endcase
 
         case (read2)
-            0: Data2 <= registers[0];
-            1: Data2 <= registers[1];
-            2: Data2 <= {0,0,IP_reg};
+            0: Data2 = registers[0];
+            1: Data2 = registers[1];
+            2: Data2 = {0,0,IP_reg};
         endcase
     end
 

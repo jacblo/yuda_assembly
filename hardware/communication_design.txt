@@ -21,8 +21,9 @@ control signals:
     a 0x80 is sent from client to mean ask user for input. works like in python with input(), where you get a line of input
     a 0x81 is sent to ask for one char of any kind
     a 0x82 might be used to ask for 1 if there's waiting input, and 0 otherwise, may not be implemented.
+    lastly, 0xf0-0xff from the processor is for exceptions and control, so when program ends and such
 
-or in short:
+overview of messages:
     from host:
         0xff: restart and wait for program
         0b1xxx_xxxx: after sending program, means done, standard is 0xfe
@@ -31,3 +32,9 @@ or in short:
         0x80: waiting for null-terminated input line
         0x81: waiting for one char of input
         // 0x82: is there input waiting? (maybe implemented, maybe not)
+
+        // exceptions & control
+        0xf0: unkown opcode
+        0xf1: unknown register
+        
+        0xff: program ended successfully

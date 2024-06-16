@@ -8,7 +8,7 @@ module UART_test(
     );
     reg [7:0] to_send = "g";
     wire rx_dv;
-    wire [7:0] recieved_wire;
+    wire [7:0] received_wire;
     
     UART #(
         .CLK_FREQ(12_000_000),
@@ -21,10 +21,10 @@ module UART_test(
         .i_tx_dv(btn[0]),
         .o_tx_rdy(led[0]),
         .o_rx_dv(rx_dv),
-        .o_rx_data(recieved_wire)
+        .o_rx_data(received_wire)
     );
         
     always @(posedge rx_dv) begin
-        to_send <= recieved_wire;
+        to_send <= received_wire;
     end
 endmodule

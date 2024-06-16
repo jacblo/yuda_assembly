@@ -33,4 +33,4 @@ with serial.Serial('/dev/ttyUSB1', 2_000_000, timeout=5) as ser:
     print(f"sent. checksum should be: {hex(checksum % (1 << 8 ))}")
     
     dat = ser.read(1)
-    print("recieved checksum:", dat, hex(int.from_bytes(dat, 'big'))) # byte order doesn't matter - one byte
+    print("received checksum:", dat, hex(int.from_bytes(dat, 'big'))) # byte order doesn't matter - one byte

@@ -9,18 +9,17 @@ module program_loader #(
         (
         input clk,
         
-        input listen, // expected to rise when loading should start
-                      // shouldn't have another midway through loading program
+        input listen, // expected to rise when loading should start, for one cycle.
         
-        input [WORD_SUBWIDTH:0] rx_data, // recieved data, a byte by default.
-        input rx_done_recieving, // expected to be pulsed when an element is received
+        input [WORD_SUBWIDTH:0] rx_data, // received data, a byte by default.
+        input rx_done_receiving, // expected to be pulsed when an element is received
         
         output reg[WORD_SUBWIDTH-1:0] address, // address to write to, 
                                                // 7 bits for address by default
         output reg write, // 1 means data should be written
         output reg[WORD_SUBWIDTH-1:0] write_data[WORD_PARTS], // data to write to address
         
-        output reg done, // 1 when done recieving
+        output reg done, // 1 when done receiving
         
         // for sending checksum
         output reg[WORD_SUBWIDTH:0] tx_data,
@@ -41,10 +40,13 @@ module program_loader #(
         
         if (listen) begin
             done = 0;
+            // reset variables
             checksum = 0;
+            address = -1;
+            position = 0;
         end
         
-        if (rx_done_recieving && !done) begin
+        if (rx_done_receiving && !done) begin
             if (rx_data[WORD_SUBWIDTH] == 1) begin // if leftmost bit is 1, done
                 done = 1;
                 write = 0;
