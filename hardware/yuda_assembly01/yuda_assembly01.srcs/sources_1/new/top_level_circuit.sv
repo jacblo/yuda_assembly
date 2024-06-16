@@ -80,7 +80,7 @@ module top_level_circuit(
     
     wire [6:0] pl_address;
     wire pl_write;
-    wire [6:0] pl_write_data;
+    wire [6:0] pl_write_data[3];
     
     wire pl_done;
     
@@ -195,7 +195,7 @@ module top_level_circuit(
 
     //                  Connections
     // control -> processor
-    assign proc_clk = clk & running; // so when running it's enabled
+    assign proc_clk = clk & !io_cont_freeze; // so when running it's enabled
     assign proc_mem_clk = clk; // it's always running
 
     assign proc_override = io_cont_freeze;
@@ -242,7 +242,7 @@ module top_level_circuit(
     // override logic
     always_comb begin
         // memory override
-        case (io_cont_chip_select) begin
+        case (io_cont_chip_select)
             0: begin
                 proc_override_mem_address = pl_address;
                 proc_override_mem_write_data = pl_write_data;
@@ -257,7 +257,7 @@ module top_level_circuit(
         endcase
     
         // uart output
-        case (io_cont_chip_select) begin
+        case (io_cont_chip_select)
             0: begin
                 uart_output_data = pl_tx_data;
                 uart_output_send = pl_tx_dv;

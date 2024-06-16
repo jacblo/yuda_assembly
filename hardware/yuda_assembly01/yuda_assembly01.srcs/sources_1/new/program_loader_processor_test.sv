@@ -97,7 +97,7 @@ module program_loader_processor_test(
     assign led[1] = running;
     assign led[2] = is_ret;
     assign led[3] = listen;
-    assign ja = AX[2];
+    assign ja = {1'b1, AX[2]}; // add leading 1
 
     reg [2:0]done_count = 1; // counts how long been done
     always @(posedge clk) begin

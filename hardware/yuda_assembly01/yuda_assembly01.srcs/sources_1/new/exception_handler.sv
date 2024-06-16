@@ -1,7 +1,7 @@
 module exception_handler(
         input clk,
 
-        input unknown_reg, unknown_op, unknown_syscall, is_ret
+        input unknown_reg, unknown_op, unknown_syscall, is_ret,
 
         // for reporting the exception
         input tx_ready,

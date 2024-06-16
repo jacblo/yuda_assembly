@@ -3,7 +3,7 @@ import serial
 data = [ # assuming all are 6 digits
     "010100",
     "010201",
-    "040206",
+    "040203",
     "052202",
     "070201",
     "030102",

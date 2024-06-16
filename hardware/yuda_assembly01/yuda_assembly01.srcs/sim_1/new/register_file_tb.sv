@@ -18,6 +18,7 @@ module register_file_tb();
     wire [6:0] AX[3]; // seperate read access to ax for syscalls
 
     // register setting
+    reg reset;
     reg RegWrite; // 1 if register should be written
     reg [1:0] writeReg; // register to set
     reg [6:0] WriteData[3];
@@ -30,7 +31,8 @@ module register_file_tb();
         RegWrite,
         Data1[0], Data1[1], Data1[2],
         Data2[0], Data2[1], Data2[2],
-        AX,
+        AX[0], AX[1], AX[2],
+        reset,
         newIP,
         WriteIP,
         IP,
@@ -53,6 +55,7 @@ module register_file_tb();
 
 
     initial begin
+        reset = 0;
         clk = 0;
         WriteIP = 0;
         RegWrite = 0;
@@ -143,6 +146,33 @@ module register_file_tb();
         clk = 1;
         #100
         RegWrite = 0;
+        #200
+        clk = 0;
+        #300
+        clk = 1;
+        #300
+        clk = 0;
+        reset = 1;
+        #300
+        clk = 1;
+        #300
+        clk = 0;
+        reset = 0;
+        #300
+        clk = 1;
+        #300
+        clk = 0;
+        #300
+        clk = 1;
+        #100
+        WriteIP = 1;
+        newIP = 98;
+        #200
+        clk = 0;
+        #300
+        clk = 1;
+        #100
+        WriteIP = 0;
         #200
         clk = 0;
         #300
