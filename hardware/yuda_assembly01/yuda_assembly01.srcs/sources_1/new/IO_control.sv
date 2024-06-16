@@ -1,9 +1,6 @@
 module IO_control(
         input clk,
         
-        // processor outputs
-        input is_syscall, is_syscall, unkown_reg, unknown_op, is_ret,
-
         // chips done output
         input io_done,
         input exception_done,
@@ -18,7 +15,7 @@ module IO_control(
         output reg reset, // reset processor to all zeros
 
         // io control
-        // this selects for what chip will have control over the UART output
+        // this selects for what chip will have control over the UART output and processor memory writing
         output reg [1:0]chip_select, // 0: program_loader, 1: input_output, 2: exception_handler, 3: undefined
     
         output reg listen // program_loader listen, also means the input_output can't read input
@@ -29,7 +26,7 @@ module IO_control(
         listen = 0; // so setting it to 1 will be a pulse
 
         // overrules anything and everything
-        if (rx_data == 'hff) begin
+        if (rx_data == 'hff && rx_done_receiving) begin
             // restart processor
             reset = 1;
             freeze = 1;

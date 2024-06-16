@@ -1,7 +1,7 @@
 module exception_handler(
         input clk,
 
-        input unkown_reg, unknown_op,
+        input unknown_reg, unknown_op, unknown_syscall, is_ret
 
         // for reporting the exception
         input tx_ready,
@@ -16,13 +16,17 @@ module exception_handler(
     always @(posedge clk) begin
         tx_dv = 0; // so setting it to 1 will pulse
 
-        if (unkown_reg || unknown_op || !done) begin // if there's an error, or we have yet to deal with a previous error
+        if (unknown_reg || unknown_op || unknown_syscall || is_ret || !done) begin // if there's an error, or we have yet to deal with a previous error
             done = 0;
             if (!handled && tx_ready) begin
-                if (unkown_op)
+                if (unknown_op)
                     tx_data = 'hf0;
-                else if (unkown_reg)
+                else if (unknown_reg)
                     tx_data = 'hf1;
+                else if (unknown_syscall)
+                    tx_data = 'hf2;
+                else if (is_ret)
+                    tx_data = 'hff;
                 
                 tx_dv = 1; // pulse that
 

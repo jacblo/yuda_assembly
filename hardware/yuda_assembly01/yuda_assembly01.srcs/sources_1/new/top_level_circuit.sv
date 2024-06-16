@@ -14,7 +14,7 @@ module top_level_circuit(
     //          UART Controller
     wire [7:0] uart_output_data;
     wire uart_output_send;
-    wire uart_ready;
+    wire uart_send_ready;
 
     wire uart_input_done_receiving;
     wire [7:0] uart_input_data;
@@ -31,7 +31,7 @@ module top_level_circuit(
         // output
         .i_tx_data(uart_output_data),
         .i_tx_dv(uart_output_send),
-        .o_tx_rdy(uart_ready),
+        .o_tx_rdy(uart_send_ready),
         
         // input
         .o_rx_dv(uart_input_done_receiving),
@@ -41,46 +41,54 @@ module top_level_circuit(
 
     
     //          Processor
-    wire processor_clk;
-
-    // for reading and writing when execution frozen
-    wire mem_clk; // so execution can be frozen seperately from memory
-
-    wire reset = 0;
-
-    wire override; // 1 means memory is under external control
-    wire [6:0] override_mem_address;
-    wire [6:0] override_mem_write_data[3];
-    wire override_mem_write;
+    wire proc_clk;
+    wire proc_mem_clk;
     
-    wire [6:0] override_mem_read_data[3]; // used during override, can be anything when override=0
-
-    wire [6:0] proc_AX[3]; // for syscall's to use as argument
+    wire proc_reset;
+    wire proc_override;
+    reg [6:0] proc_override_mem_address;
+    reg [6:0] proc_override_mem_write_data[3];
+    reg proc_override_mem_write;
+    wire [6:0] proc_override_mem_read_data[3];
     
-    // to call syscalls, report exceptions, and end execution
-    wire is_syscall, unkown_reg, unknown_op, is_ret; // all are set to 1 when encountered
-    wire [6:0] syscall_constant; // constant, used in syscall
+    wire [6:0] proc_AX[3];
+    wire proc_is_syscall, proc_unknown_reg, proc_unknown_op, proc_is_ret;
+    wire [6:0] proc_syscall_constant;
 
-    processor_internals processor(processor_clk, mem_clk, reset, override, override_mem_address,
-        override_mem_write_data, override_mem_write, override_mem_read_data, proc_AX, is_syscall,
-        unkown_reg, unknown_op, is_ret, syscall_constant);
-
+    processor_internals processor(
+        proc_clk,
+        proc_mem_clk,
+        proc_reset,
+        proc_override,
+        proc_override_mem_address,
+        proc_override_mem_write_data,
+        proc_override_mem_write,
+        proc_override_mem_read_data,
+        proc_proc_AX,
+        proc_is_syscall,
+        proc_unknown_reg,
+        proc_unknown_op,
+        proc_is_ret,
+        proc_syscall_constant
+    );
 
 
     //          Program loader
-    wire pl_clk;
     wire pl_listen;
-    wire pl_rx_data;
+    wire [7:0] pl_rx_data;
     wire pl_rx_done_receiving;
-    wire pl_address;
+    
+    wire [6:0] pl_address;
     wire pl_write;
-    wire pl_write_data;
+    wire [6:0] pl_write_data;
+    
     wire pl_done;
-    wire pl_tx_data;
+    
+    wire [7:0] pl_tx_data;
     wire pl_tx_dv;
 
     program_loader pl(
-        pl_clk,
+        clk,
         pl_listen,
         pl_rx_data,
         pl_rx_done_receiving,
@@ -94,45 +102,174 @@ module top_level_circuit(
 
 
     //          IO from Syscalls handler
+    wire syscall_is_syscall;
+    wire [6:0] syscall_syscall_number;
+    wire [6:0] syscall_AX[3];
+    wire syscall_unknown_sys_number;
+
+    wire [6:0] syscall_address;
+    wire syscall_write;
+    wire [6:0] syscall_write_data[3]; 
+    wire [6:0] syscall_read_data[3];
+
+    wire [7:0] syscall_rx_data;
+    wire syscall_rx_done_receiving;
+    
+    wire syscall_tx_ready;
+    wire [7:0] syscall_tx_data;
+    wire syscall_tx_dv;
+    
+    wire syscall_done;
+
     input_output syscall_handler(
         clk,
-        is_syscall,
-        syscal_number,
-        AX,
-        rx_data,
-        rx_done_receiving,
-
-        input clk,
-        input is_syscall, // set to 1 to mean syscall should be run
-        input [6:0]syscall_number,
-        input [6:0]AX[3],
-
-        // for receiving input
-        input [7:0] rx_data, // received data, a byte by default.
-        input rx_done_receiving, // expected to be pulsed when an element is received
-
-        // for sending output
-        input tx_ready,
-        output reg[7:0] tx_data,
-        output reg tx_dv,
-
-        output reg done
+        syscall_is_syscall,
+        syscall_syscall_number,
+        syscall_AX,
+        syscall_unknown_sys_number,
+        syscall_address,
+        syscall_write,
+        syscall_write_data,
+        syscall_read_data,
+        syscall_rx_data,
+        syscall_rx_done_receiving,
+        syscall_tx_ready,
+        syscall_tx_data,
+        syscall_tx_dv,
+        syscall_done
     );
 
 
     //          Exception handler
+    wire ex_unknown_reg; 
+    wire ex_unknown_op;
+    wire ex_unknown_syscall;
     
+    wire ex_tx_ready;
+    wire [7:0] ex_tx_data;
+    wire ex_tx_dv;
+    
+    wire ex_done;
+    
+    exception_handler ex_handler(
+        clk,
+        ex_unknown_reg, 
+        ex_unknown_op,
+        ex_unknown_syscall,
+        ex_tx_ready,
+        ex_tx_data,
+        ex_tx_dv,
+        ex_done
+    );
+
 
     //          IO controller
+    wire io_cont_io_done;
+    wire io_cont_exception_done;
+    wire io_cont_loader_done;
+    
+    wire [7:0] io_cont_rx_data;
+    wire io_cont_rx_done_receiving;
+    
+    wire io_cont_freeze;
+    wire io_cont_reset;
+    wire [1:0] io_cont_chip_select;
+    wire io_cont_listen;
+
+    IO_control io_cont(
+        clk,
+        io_cont_io_done,
+        io_cont_exception_done,
+        io_cont_loader_done,
+        io_cont_rx_data,
+        io_cont_rx_done_receiving,
+        io_cont_freeze,
+        io_cont_reset,
+        io_cont_chip_select,
+        io_cont_listen
+    );
 
 
 
+    //                  Connections
     // control -> processor
-    reg running;
-    assign processor_clk = clk & running; // so when running it's enabled
-    assign mem_clk = clk; // it's always running
-    assign override = !running;
+    assign proc_clk = clk & running; // so when running it's enabled
+    assign proc_mem_clk = clk; // it's always running
+
+    assign proc_override = io_cont_freeze;
+    assign proc_reset = io_cont_reset;
 
 
+    // processor -> syscall
+    assign syscall_is_syscall = proc_is_syscall;
+    assign syscall_AX = proc_AX;
+    assign syscall_syscall_number = proc_syscall_constant;
+    assign syscall_read_data = proc_override_mem_read_data;
+
+
+    // processor & syscall -> exception
+    assign ex_unknown_op = proc_unknown_op;
+    assign ex_unknown_reg = proc_regex_unknown_reg;
+
+    assign ex_unknown_syscall = syscall_unknown_sys_number;
+
+    
+    // io chips -> control
+    assign io_cont_io_done = syscall_done;
+    assign io_cont_exception_done = ex_done;
+    assign io_cont_loader_done = pl_done;
+
+    // control -> program loader
+    assign pl_listen = io_cont_listen;
+
+
+    // uart -> io chips
+    assign syscall_tx_ready = uart_send_ready;
+    assign ex_tx_ready = uart_send_ready;
+
+    assign syscall_rx_done_receiving = uart_input_done_receiving;
+    assign pl_rx_done_receiving = uart_input_done_receiving;
+    assign io_cont_rx_done_receiving = uart_input_done_receiving;
+
+    assign syscall_rx_data = uart_input_data;
+    assign pl_rx_data = uart_input_data;
+    assign io_cont_rx_data = uart_input_data;
+
+
+    // override logic
+    always_comb begin
+        // memory override
+        case (io_cont_chip_select) begin
+            0: begin
+                proc_override_mem_address = pl_address;
+                proc_override_mem_write_data = pl_write_data;
+                proc_override_mem_write = pl_write;
+            end
+
+            1: begin
+                proc_override_mem_address = syscall_address;
+                proc_override_mem_write_data = syscall_write_data;
+                proc_override_mem_write = syscall_write;
+            end
+        endcase
+    
+        // uart output
+        case (io_cont_chip_select) begin
+            0: begin
+                uart_output_data = pl_tx_data;
+                uart_output_send = pl_tx_dv;
+            end
+
+            1: begin
+                uart_output_data = syscall_tx_data;
+                uart_output_send = syscall_tx_dv;
+            end
+
+            2: begin
+                uart_output_data = ex_tx_data;
+                uart_output_send = ex_tx_dv;
+            end
+        endcase
+    end
 
 endmodule

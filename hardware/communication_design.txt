@@ -34,7 +34,8 @@ overview of messages:
         // 0x82: is there input waiting? (maybe implemented, maybe not)
 
         // exceptions & control
-        0xf0: unkown opcode
+        0xf0: unknown opcode
         0xf1: unknown register
-        
+        0xf2: unknown syscall number
+
         0xff: program ended successfully

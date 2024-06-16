@@ -29,7 +29,7 @@ module processor_internals(
     output [6:0] AX[3], // for syscall's to use as argument
     
     // to call syscalls, report exceptions, and end execution
-    output is_syscall, unkown_reg, unknown_op, is_ret, // all are set to 1 when encountered
+    output is_syscall, unknown_reg, unknown_op, is_ret, // all are set to 1 when encountered
     output [6:0] syscall_constant // constant, used in syscall
     );
     
@@ -82,7 +82,7 @@ module processor_internals(
     wire id_store_cmp_flags;
     wire id_is_syscall, id_is_ret;
     wire [6:0] id_constant;
-    wire id_unknown_op, id_unkown_reg;
+    wire id_unknown_op, id_unknown_reg;
     instruction_decoder id(id_instruction,
         id_mem_write, id_reg_write,
         id_read1, id_read2, id_write_reg,
@@ -92,7 +92,7 @@ module processor_internals(
         id_alu_A, id_alu_B, id_alu_op, id_store_cmp_flags,
         id_is_syscall, id_is_ret,
         id_constant,
-        id_unknown_op, id_unkown_reg
+        id_unknown_op, id_unknown_reg
     );
 
     // comparison_checker
@@ -180,7 +180,7 @@ module processor_internals(
     // instruction decode -> external
     assign syscall_constant = id_constant;
     assign is_syscall = id_is_syscall;
-    assign unkown_reg = id_unkown_reg;
+    assign unknown_reg = id_unknown_reg;
     assign unknown_op = id_unknown_op;
     assign is_ret = id_is_ret || !reg_running; // if we reached a ret instruction or the end of the
                                                // program, execution should be terminated

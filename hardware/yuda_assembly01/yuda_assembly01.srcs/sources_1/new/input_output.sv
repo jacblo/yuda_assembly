@@ -1,8 +1,16 @@
 module input_output(
         input clk,
+        
         input is_syscall, // set to 1 to mean syscall should be run
         input [6:0]syscall_number,
         input [6:0]AX[3],
+        output unknown_syscall,
+
+        // for reading and writing to ram
+        output reg [6:0] address,
+        output reg write,
+        output reg [6:0] write_data[3],
+        input [6:0] read_data[3],
 
         // for receiving input
         input [7:0] rx_data, // received data, a byte by default.

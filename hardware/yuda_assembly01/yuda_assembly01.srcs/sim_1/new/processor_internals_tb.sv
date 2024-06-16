@@ -15,12 +15,12 @@ module processor_internals_tb();
     wire [6:0] AX[3]; // for syscall's to use as argument
     
     // to call syscalls, report exceptions, and end execution
-    wire is_syscall, unkown_reg, unknown_op, is_ret; // all are set to 1 when encountered
+    wire is_syscall, unknown_reg, unknown_op, is_ret; // all are set to 1 when encountered
     wire [6:0] syscall_constant; // constant, used in syscall
 
     processor_internals tester(clk, mem_clk, override, override_mem_address, 
         override_mem_write_data, override_mem_write, override_mem_read_data, AX, is_syscall,
-        unkown_reg, unknown_op, is_ret, syscall_constant);
+        unknown_reg, unknown_op, is_ret, syscall_constant);
 
     initial begin
         clk = 0;

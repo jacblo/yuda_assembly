@@ -26,7 +26,7 @@ module instruction_decoder(
     output reg [6:0] constant,
     
     //      problems
-    output reg unknown_op, unkown_reg // 1 means there's a problem
+    output reg unknown_op, unknown_reg // 1 means there's a problem
     );
 
     reg [1:0] internal_reg1;
@@ -66,7 +66,7 @@ module instruction_decoder(
         is_syscall = 0;
         is_ret = 0;
         unknown_op = 0;
-        unkown_reg = 0;
+        unknown_reg = 0;
         store_cmp_flags = 0;
         requires_eq = 0;
         requires_ne = 0;
@@ -80,7 +80,7 @@ module instruction_decoder(
             1: begin // mov register, constant
                 reg_write = 1;
                 write_reg = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 constant = instruction[2];
                 alu_A = 3; // send constant
                 alu_op = 0; // output A
@@ -89,7 +89,7 @@ module instruction_decoder(
                 reg_write = 1;
                 write_reg = internal_reg1;
                 // if either register is illegal, the operation is illegal
-                unkown_reg = internal_unknown_reg1 || internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg1 || internal_unknown_reg2;
                 read1 = internal_reg2; // load from second register operand
                 alu_A = 0; // send regData1
                 alu_op = 0; // output A
@@ -97,7 +97,7 @@ module instruction_decoder(
             3: begin // mov register, memory
                 reg_write = 1;
                 write_reg = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 address = instruction[2];
                 alu_A = 2; // send mem
                 alu_op = 0; // output A
@@ -112,7 +112,7 @@ module instruction_decoder(
             5: begin // mov memory, register
                 address = instruction[1];
                 mem_write = 1;
-                unkown_reg = internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg2;
                 read1 = internal_reg2;
                 alu_A = 0; // send regData1
                 alu_op = 0; // output A
@@ -123,7 +123,7 @@ module instruction_decoder(
             6: begin // add register, constant
                 reg_write = 1;
                 write_reg = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 constant = instruction[2];
                 read1 = internal_reg1;
                 alu_A = 0; // send regData1
@@ -135,7 +135,7 @@ module instruction_decoder(
                 reg_write = 1;
                 write_reg = internal_reg1;
                 // if either register is illegal, the operation is illegal
-                unkown_reg = internal_unknown_reg1 || internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg1 || internal_unknown_reg2;
                 read1 = internal_reg1;
                 read2 = internal_reg2;
                 alu_A = 0; // send regData1
@@ -146,7 +146,7 @@ module instruction_decoder(
 
             //      CMP operations
             8: begin // cmp register, constant
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 constant = instruction[2];
                 read1 = internal_reg1;
                 alu_A = 0; // send regData1
@@ -156,7 +156,7 @@ module instruction_decoder(
             end
             9: begin // cmp register, register
                 // if either register is illegal, the operation is illegal
-                unkown_reg = internal_unknown_reg1 || internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg1 || internal_unknown_reg2;
                 read1 = internal_reg1;
                 read2 = internal_reg2;
                 alu_A = 0; // send regData1
@@ -175,7 +175,7 @@ module instruction_decoder(
             11: begin // jmp register
                 is_jmp = 1;
                 read1 = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 alu_A = 0; // send regData1
                 alu_op = 0; // output A
             end
@@ -191,7 +191,7 @@ module instruction_decoder(
                 requires_eq = 1;
                 is_jmp = 1;
                 read1 = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 alu_A = 0; // send regData1
                 alu_op = 0; // output A
             end
@@ -202,7 +202,7 @@ module instruction_decoder(
             14: begin // mov register, PTR [register] 
                 reg_write = 1;
                 write_reg = internal_reg1;
-                unkown_reg = internal_unknown_reg1 || internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg1 || internal_unknown_reg2;
                 is_ptr = 1;
                 ptr_data_selector = 0; // regData1 is address
                 read1 = internal_reg2;
@@ -214,7 +214,7 @@ module instruction_decoder(
                 is_ptr = 1;
                 ptr_data_selector = 0; // regData1 is address
                 mem_write = 1;
-                unkown_reg = internal_unknown_reg1 || internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg1 || internal_unknown_reg2;
                 read2 = internal_reg2;
                 alu_A = 1; // send regData2
                 alu_op = 0; // output A
@@ -225,7 +225,7 @@ module instruction_decoder(
                 reg_write = 1;
                 write_reg = internal_reg1;
                 // if either register is illegal, the operation is illegal
-                unkown_reg = internal_unknown_reg1 || internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg1 || internal_unknown_reg2;
                 read1 = internal_reg1;
                 read2 = internal_reg2;
                 alu_A = 0; // send regData1
@@ -236,7 +236,7 @@ module instruction_decoder(
             17: begin // sub register, constant
                 reg_write = 1;
                 write_reg = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 constant = instruction[2];
                 read1 = internal_reg1;
                 alu_A = 0; // send regData1
@@ -247,7 +247,7 @@ module instruction_decoder(
             18: begin // sub constant, register (still saves to register, just different order)
                 reg_write = 1;
                 write_reg = internal_reg2;
-                unkown_reg = internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg2;
                 constant = instruction[1];
                 read1 = internal_reg2;
                 alu_A = 3; // send constant
@@ -258,7 +258,7 @@ module instruction_decoder(
 
             //      extra CMP operations
             19: begin // cmp constant, register
-                unkown_reg = internal_unknown_reg2;
+                unknown_reg = internal_unknown_reg2;
                 constant = instruction[1];
                 read1 = internal_reg2;
                 alu_A = 3; // send constant
@@ -280,7 +280,7 @@ module instruction_decoder(
                 requires_ne = 1;
                 is_jmp = 1;
                 read1 = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 alu_A = 0; // send regData1
                 alu_op = 0; // output A
             end
@@ -296,7 +296,7 @@ module instruction_decoder(
                 requires_less = 1;
                 is_jmp = 1;
                 read1 = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 alu_A = 0; // send regData1
                 alu_op = 0; // output A
             end
@@ -312,7 +312,7 @@ module instruction_decoder(
                 requires_greater = 1;
                 is_jmp = 1;
                 read1 = internal_reg1;
-                unkown_reg = internal_unknown_reg1;
+                unknown_reg = internal_unknown_reg1;
                 alu_A = 0; // send regData1
                 alu_op = 0; // output A
             end
