@@ -13,6 +13,8 @@ module register_file(
     output [6:0] AX[3],
 
     // instruction pointer
+    input override, // when it is 1, nothing changes apart from reset. also subtracts 1 from IP so
+                    // instruction at IP is rerun after override
     input reset, // all registers are reset on rising edge
     
     input [6:0] newIP,
@@ -58,12 +60,17 @@ module register_file(
     end
 
     // register setting
-    always @(posedge clk, posedge reset) begin
+    always @(posedge clk, posedge reset, posedge override) begin
         if (reset) begin // if was just reset
             IP_reg = 0;
             registers[0] = {0,0,0};
             registers[1] = {0,0,0};
         end
+
+        else if (override) begin
+            IP_reg --;
+        end
+        
         else begin
             if (WriteIP) begin
                 IP_reg = newIP;

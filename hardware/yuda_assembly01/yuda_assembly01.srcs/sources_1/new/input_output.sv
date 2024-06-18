@@ -38,11 +38,22 @@ module input_output(
     reg [6:0] temp[3]; // for storing parts before writing it to memory
     assign write_data = temp; // we always send what is in temp when we're done with it
 
+    reg [1:0] done_count = 0; // used to delay checking for syscall by a bit so processor continues and we don't run over and over
+
     reg sent_request = 0; // so we only start receiving after sending request to host
     reg handled = 0; // so we don't rerun syscall over and over
     always @(posedge clk) begin
         tx_dv = 0; // so setting it to 1 will pulse
         write = 0; // so setting it to 1 will pulse
+        
+        if (done && handled) // if we just finished running
+            done_count ++;
+        // get ready to run next syscall
+        if (done_count == 2) begin  // only a few cycles after finishing should we allow this to rerun by resetting handled so we
+            handled = 0;            // give the processor time to continue and don't rerun the same syscall over and over.
+            done_count = 0;
+        end
+
 
         // initial setup when syscall is called
         if (is_syscall && !handled) begin // unhandled syscall to deal with
@@ -149,7 +160,6 @@ module input_output(
 
                             if ((temp[0] == 0 && temp[1] == 0 && temp[2] == 0) || one_word) begin // found null teminator or receiving one item thing anyway, so we stop
                                 done = 1;
-                                handled = 0;
                             end
                         end
                         else
@@ -169,7 +179,6 @@ module input_output(
                             (read_data[2] == 0 && position_min == 2)) begin
                             
                             done = 1;
-                            handled = 0;
                         end
 
                         // prep for next word
@@ -182,5 +191,6 @@ module input_output(
                 end
             end
         end
+
     end
 endmodule

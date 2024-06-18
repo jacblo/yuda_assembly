@@ -6,6 +6,14 @@ module top_level_tb();
     
     initial begin
         for (int i = 0; i < 3; i = i + 1) begin // run a few times in a row
+            // time before first program
+            for (int j = 0; j < 3; j = j + 1) begin
+                #10
+                clk = 1;
+                #10
+                clk = 0;
+            end
+            
             // send 0xff to start loading program
             #10
             clk = 1;
@@ -60,7 +68,52 @@ module top_level_tb();
             clk = 1;
             #10
             clk = 0;
-            top_level_circuit.uart_controller.rx_data = 0; // load 0 into AX
+            top_level_circuit.uart_controller.rx_data = 1; // load 1 into AX
+            top_level_circuit.uart_controller.o_rx_dv = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            top_level_circuit.uart_controller.o_rx_dv = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            top_level_circuit.uart_controller.rx_data = 17; // sub AX, 1
+            top_level_circuit.uart_controller.o_rx_dv = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            top_level_circuit.uart_controller.o_rx_dv = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            top_level_circuit.uart_controller.rx_data = 01;
+            top_level_circuit.uart_controller.o_rx_dv = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            top_level_circuit.uart_controller.o_rx_dv = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            top_level_circuit.uart_controller.rx_data = 1;
             top_level_circuit.uart_controller.o_rx_dv = 1;
             #10
             clk = 1;
@@ -120,7 +173,7 @@ module top_level_tb();
             clk = 1;
             #10
             clk = 0;
-            top_level_circuit.uart_controller.rx_data = 00; // 00 is opcode for ret
+            top_level_circuit.uart_controller.rx_data = 03; // 00 is opcode for ret, 03 is for loading memory
             top_level_circuit.uart_controller.o_rx_dv = 1;
             #10
             clk = 1;
@@ -165,7 +218,7 @@ module top_level_tb();
             clk = 1;
             #10
             clk = 0;
-            top_level_circuit.uart_controller.rx_data = 10; // jmp 0
+            top_level_circuit.uart_controller.rx_data = 0; // ret
             top_level_circuit.uart_controller.o_rx_dv = 1;
             #10
             clk = 1;

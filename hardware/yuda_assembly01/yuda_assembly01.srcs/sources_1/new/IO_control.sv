@@ -58,8 +58,20 @@ module IO_control(
         // used to make it so when program is loading, the rest of this chain doesn't run
         else if (!loader_done || last_listen); // if we just started loader, or it is running, everything else is overruled
 
-        // if not loading, immediately handle freezing and giving control, later stuff is seperate
-        else if (is_syscall || unknown_reg || unknown_op || is_ret && !freeze) begin
+        else if (!io_done) begin
+            // freeze processor, and let the input_output deal with everyhting
+            freeze = 1;
+            chip_select = 1;
+        end
+        else if (!exception_done) begin
+            // freeze processor, and let the exception_handler send the exception, then we wait with frozen program until 'hff is sent
+            freeze = 1;
+            started = 0; // fully stop
+            chip_select = 2;
+        end
+
+        // if doing something, but will next cycle, immediately handle freezing and giving control
+        else if ((is_syscall || unknown_reg || unknown_op || is_ret) && !freeze) begin
             freeze = 1;
             if (unknown_reg || unknown_op || is_ret)
                 chip_select = 2;
@@ -67,22 +79,8 @@ module IO_control(
                 chip_select = 1;
         end
 
-        else if (!exception_done) begin
-            // freeze processor, and let the exception_handler send the exception, then we wait with frozen program until 'hff is sent
-            freeze = 1;
-            started = 0; // fully stop
-            chip_select = 2;
-        end
-        else if (!io_done) begin
-            // freeze processor, and let the input_output deal with everyhting
-            freeze = 1;
-            chip_select = 1;
-        end
-        else if (io_done && started) begin
-            // if it tells us it's done, we continue running
-            freeze = 0;
-        end
-        else if (loader_done && started) begin // note that io_done overrules this, so this let's syscalls still pause program
+        // if we're not doing anything, and we've started, we run
+        else if (started) begin
             freeze = 0;
         end
 

@@ -49,14 +49,15 @@ module processor_internals(
     wire [6:0] reg_writeData[3];
     wire reg_RegWrite;
     wire [6:0] reg_Data1[3], reg_Data2[3];
+    wire reg_override;
+    wire reg_reset;
     wire [6:0] reg_newIP;
     wire reg_WriteIP;
     wire [6:0] reg_IP;
     wire reg_running;
     wire [6:0] reg_AX[3];
-    wire reg_reset;
     register_file registers(clk, reg_read1, reg_read2, reg_writeReg, reg_writeData, reg_RegWrite,
-        reg_Data1, reg_Data2, reg_AX, reg_reset, reg_newIP, reg_WriteIP, reg_IP, reg_running);
+        reg_Data1, reg_Data2, reg_AX, reg_override, reg_reset, reg_newIP, reg_WriteIP, reg_IP, reg_running);
     
     // ALU
     wire [1:0] alu_control_operation;
@@ -158,6 +159,7 @@ module processor_internals(
     assign reg_writeData = alu_out;
     assign reg_RegWrite = id_reg_write;
     assign reg_reset = reset; // for resetting processor, so from external control
+    assign reg_override = override; // for not applying extra instruction while doing syscall
 
     // control -> FR (cmp_flags register)
     always @(posedge clk, posedge reset) begin

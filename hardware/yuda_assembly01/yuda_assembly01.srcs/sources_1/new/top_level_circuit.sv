@@ -234,7 +234,7 @@ module top_level_circuit(
     assign ex_unknown_syscall = syscall_unknown_sys_number;
 
     // control -> exception
-    assign ex_running = !io_cont_freeze;
+    assign ex_running = !io_cont_freeze || !syscall_done; // if the program is really running, in syscall or not
 
     
     // io chips -> control

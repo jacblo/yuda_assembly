@@ -12,4 +12,10 @@ mov [2], AX                     ; 050201
 
 mov AX, [22]                    ; 030122
 jg 3                            ; 240300
+
+mov AX, 22 ; address            ; 010122
+syscall 4 ; send word           ; 260400
+
+mov AX, [22] ; for debug led    ; 030122
 ret                             ; 000000
+mov AX, 99 ; shouldn't run      ; 010199
