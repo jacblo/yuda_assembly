@@ -1,7 +1,7 @@
 module exception_handler(
         input clk,
 
-        input unknown_reg, unknown_op, unknown_syscall, is_ret,
+        input unknown_reg, unknown_op, unknown_syscall, is_ret, running,
 
         // for reporting the exception
         input tx_ready,
@@ -11,30 +11,41 @@ module exception_handler(
         output reg done
     );
 
-    reg handled = 0; // so we don't keep sending exceptions, one is enough
+    initial begin
+        done = 1;
+    end
 
+    reg handled = 1; // so we only send first exception and don't repeat one exception over and over
     always @(posedge clk) begin
         tx_dv = 0; // so setting it to 1 will pulse
-
-        if (unknown_reg || unknown_op || unknown_syscall || is_ret || !done) begin // if there's an error, or we have yet to deal with a previous error
+    
+        if (handled) begin
+            done = 1; // so it happens only one cycle after the message has been sent
+        end
+    
+        // if there's an unhandled error or termination of program
+        if (unknown_reg || unknown_op || unknown_syscall || (is_ret && running) && handled) begin
+            // we set tx_data immediately, because it could change next instruction,
+            // because stopping is delayed by one, so another instruction will run
+            if (unknown_op)
+                tx_data = 'hf0;
+            else if (unknown_reg)
+                tx_data = 'hf1;
+            else if (unknown_syscall)
+                tx_data = 'hf2;
+            else if (is_ret)
+                tx_data = 'hff;
+            handled = 0; // so we know to send tx_data as soon as we can
+        end
+        
+        // this is repeatedly run until tx_ready is 1, then exception is sent and this stops running
+        if (!handled) begin
             done = 0;
-            if (!handled && tx_ready) begin
-                if (unknown_op)
-                    tx_data = 'hf0;
-                else if (unknown_reg)
-                    tx_data = 'hf1;
-                else if (unknown_syscall)
-                    tx_data = 'hf2;
-                else if (is_ret)
-                    tx_data = 'hff;
-                
-                tx_dv = 1; // pulse that
-
+            if (tx_ready) begin
+                tx_dv = 1; // pulse that so we send the tx_data we saved earlier
                 handled = 1; // we just handled it
-                done = 1;
             end
         end
-        else
-            handled = 0; // no exception resets this
+
     end
 endmodule

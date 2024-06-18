@@ -1,0 +1,21 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  \
+"../../../../yuda_assembly01.srcs/sources_1/new/ALU.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/IO_control.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/comparison_checker.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/exception_handler.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/input_output.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/instruction_decoder.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/memory_controller.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/processor_internals.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/program_loader.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/register_file.sv" \
+"../../../../yuda_assembly01.srcs/sources_1/new/top_level_circuit.sv" \
+"../../../../yuda_assembly01.srcs/sim_1/new/top_level_tb.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

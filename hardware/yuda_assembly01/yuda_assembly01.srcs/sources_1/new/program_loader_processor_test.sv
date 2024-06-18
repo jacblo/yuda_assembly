@@ -34,7 +34,8 @@ module program_loader_processor_test(
         write_data,
         done,
         tx_data,
-        tx_dv
+        tx_dv,
+        uart_ready
     );
     
     UART #(

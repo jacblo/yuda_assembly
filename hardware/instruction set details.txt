@@ -54,16 +54,17 @@ my additions:
 24: jg constant (if greater than, then IP = constant)
 25: jg register (if greater than, then IP = register)
 
-26: syscall code  // handled as such, AX is the operand
+26: syscall code  // handled as such, AX is the address, in all of them where ax is address, first 4 digits are ignored.
 index of syscall codes:
     0: send char to host (computer that's connected) (AX is address to send)
     1: wait to receive a char from host (computer that's connected) (AX is address to save in)
     2: send null terminated string to host (AX is the address to send)
     3: receive null-terminated char string from host (AX is address to write to) 
     4: send word to host (AX is address to send)
-    5: send null terminated string of whole words to host (AX is the address to send)
-    6: receive null-terminated string of whole words from host (AX is address to write to)
-    7: check if there's a word waiting to be received (AX is address to write result to)
+    5: wait to receive word from host (AX is address to save in)
+    6: send null terminated string of whole words to host (AX is the address to send)
+    7: receive null-terminated string of whole words from host (AX is address to write to)
+    8: check if there's a word waiting to be received (AX is address to write result to)
  
 
 allow IP access through register 99, adds complexity but very useful, replaces jump register

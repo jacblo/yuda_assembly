@@ -20,8 +20,10 @@ control signals:
     likewise when stuff is printed, just sent and then null terminated if you want.
     a 0x80 is sent from client to mean ask user for input. works like in python with input(), where you get a line of input
     a 0x81 is sent to ask for one char of any kind
-    a 0x82 might be used to ask for 1 if there's waiting input, and 0 otherwise, may not be implemented.
+    a 0x82 ask for how many chars of input are waiting, 0 if nothing is waiting, if it's over 99 then expects 99.
     lastly, 0xf0-0xff from the processor is for exceptions and control, so when program ends and such
+
+note that words are sent in big-endian
 
 overview of messages:
     from host:
@@ -29,9 +31,11 @@ overview of messages:
         0b1xxx_xxxx: after sending program, means done, standard is 0xfe
     
     from processor:
-        0x80: waiting for null-terminated input line
-        0x81: waiting for one char of input
-        // 0x82: is there input waiting? (maybe implemented, maybe not)
+        0x80: waiting for one char of input
+        0x81: waiting for null-terminated input line
+        0x82: waiting for 3 chars - meaning one word of input
+        0x83: waiting for null-terminated input of words, so null-terminator is a word of 3 zeros.
+        0x84: is there input waiting?
 
         // exceptions & control
         0xf0: unknown opcode

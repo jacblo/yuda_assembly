@@ -1,4 +1,5 @@
 import serial
+import time
 
 # fibonacci
 data = [ # assuming all are 6 digits
@@ -19,7 +20,7 @@ data = [ # assuming all are 6 digits
 data = [
     "100300",
     "499999",
-    "000012",
+    "000050",
     "030101",
     "030202",
     "170101",
@@ -39,7 +40,14 @@ data = [
 #     "000000"
 # ]
 
+# # no 00s
+# data = [
+#     "010102", # mov AX, 2
+# ]
+
 with serial.Serial('/dev/ttyUSB1', 2_000_000, timeout=5) as ser:
+    ser.write(b"\xff") # send 0xff first
+    
     checksum = 0
     for item in data:
         to_send = item[:2], item[2:4], item[4:]
@@ -52,7 +60,7 @@ with serial.Serial('/dev/ttyUSB1', 2_000_000, timeout=5) as ser:
             # input()
             
     # send done command using MSB of 8, bc that bit is never used for data.
-    ser.write((0xfe).to_bytes(1, 'big')) # big or little doesn't matter - one byte
+    ser.write(b'\xfe')
     # input()
     
     print(f"sent. checksum should be: {hex(checksum % (1 << 8 ))}")
@@ -63,3 +71,17 @@ with serial.Serial('/dev/ttyUSB1', 2_000_000, timeout=5) as ser:
         print("Checksum matches")
     else:
         print("Checsum failed to match!!")
+    
+    a = time.time() # to measure how long it takes to run
+    
+    try:
+        while True:
+            if ser.in_waiting:
+                dat = ser.read(1)
+                print("received:", dat, hex(int.from_bytes(dat, 'big'))) # byte order doesn't matter - one byte
+                if dat == b'\xff':
+                    elapsed = time.time() - a
+                    print(f"Program finished and took {elapsed:.5f} seconds to run.")
+                    break
+    except KeyboardInterrupt:
+        print("stopping and closing...")

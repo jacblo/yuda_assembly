@@ -42,7 +42,8 @@ module program_loader_test(
         write_data,
         done,
         tx_data,
-        tx_dv
+        tx_dv,
+        uart_ready
         // ,test_led
     );
     

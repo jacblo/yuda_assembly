@@ -23,7 +23,8 @@ module program_loader #(
         
         // for sending checksum
         output reg[WORD_SUBWIDTH:0] tx_data,
-        output reg tx_dv
+        output reg tx_dv,
+        input tx_ready
     );
     reg[WORD_PART_BITS-1:0] position = 0; // position in filling temp
     reg[WORD_SUBWIDTH-1:0] temp[WORD_PARTS]; // repeatedly filled, then dumped into memory
@@ -34,24 +35,24 @@ module program_loader #(
         address = -1; // we repeatedly add to it so starting at -1 means first write will be to 0
     end
     
+    reg done_loading = 1;
     always @(posedge clk) begin
         tx_dv = 0; // so setting it to 1 makes a pulse
         write = 0; // so setting it to 1 makes a pulse
         
         if (listen) begin
             done = 0;
+            done_loading = 0;
             // reset variables
             checksum = 0;
             address = -1;
             position = 0;
         end
         
-        if (rx_done_receiving && !done) begin
+        if (rx_done_receiving && !done_loading) begin
             if (rx_data[WORD_SUBWIDTH] == 1) begin // if leftmost bit is 1, done
-                done = 1;
+                done_loading = 1;
                 write = 0;
-                tx_data = checksum;
-                tx_dv = 1; // pulsed
             end
             else begin
                 temp[position] = rx_data;
@@ -65,6 +66,14 @@ module program_loader #(
                     write_data = temp;
                     write = 1; // pulsed
                 end
+            end
+        end
+
+        if (done_loading && !done) begin // meaning checksum hasn't been sent
+            if (tx_ready) begin
+                done = 1;
+                tx_data = checksum;
+                tx_dv = 1; // pulsed
             end
         end
     end

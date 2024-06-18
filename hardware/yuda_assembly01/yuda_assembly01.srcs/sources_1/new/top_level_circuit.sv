@@ -12,8 +12,8 @@ module top_level_circuit(
     );
 
     //          UART Controller
-    wire [7:0] uart_output_data;
-    wire uart_output_send;
+    reg [7:0] uart_output_data;
+    reg uart_output_send;
     wire uart_send_ready;
 
     wire uart_input_done_receiving;
@@ -28,12 +28,12 @@ module top_level_circuit(
         .i_rx(uart_rx),
         .o_tx(uart_tx),
 
-        // output
+        // processor output
         .i_tx_data(uart_output_data),
         .i_tx_dv(uart_output_send),
         .o_tx_rdy(uart_send_ready),
         
-        // input
+        // processor input
         .o_rx_dv(uart_input_done_receiving),
         .o_rx_data(uart_input_data)
     );
@@ -64,7 +64,7 @@ module top_level_circuit(
         proc_override_mem_write_data,
         proc_override_mem_write,
         proc_override_mem_read_data,
-        proc_proc_AX,
+        proc_AX,
         proc_is_syscall,
         proc_unknown_reg,
         proc_unknown_op,
@@ -86,6 +86,7 @@ module top_level_circuit(
     
     wire [7:0] pl_tx_data;
     wire pl_tx_dv;
+    wire pl_tx_ready;
 
     program_loader pl(
         clk,
@@ -97,7 +98,8 @@ module top_level_circuit(
         pl_write_data,
         pl_done,
         pl_tx_data,
-        pl_tx_dv
+        pl_tx_dv,
+        pl_tx_ready
     );
 
 
@@ -144,7 +146,7 @@ module top_level_circuit(
     wire ex_unknown_reg; 
     wire ex_unknown_op;
     wire ex_unknown_syscall;
-    wire ex_is_ret;
+    wire ex_is_ret, ex_running; // if is_ret and running, then stop program
 
     wire ex_tx_ready;
     wire [7:0] ex_tx_data;
@@ -158,6 +160,7 @@ module top_level_circuit(
         ex_unknown_op,
         ex_unknown_syscall,
         ex_is_ret,
+        ex_running,
         ex_tx_ready,
         ex_tx_data,
         ex_tx_dv,
@@ -166,6 +169,11 @@ module top_level_circuit(
 
 
     //          IO controller
+    wire io_cont_is_syscall;
+    wire io_cont_unknown_reg;
+    wire io_cont_unknown_op;
+    wire io_cont_is_ret;
+
     wire io_cont_io_done;
     wire io_cont_exception_done;
     wire io_cont_loader_done;
@@ -180,6 +188,10 @@ module top_level_circuit(
 
     IO_control io_cont(
         clk,
+        io_cont_is_syscall,
+        io_cont_unknown_reg,
+        io_cont_unknown_op,
+        io_cont_is_ret,
         io_cont_io_done,
         io_cont_exception_done,
         io_cont_loader_done,
@@ -201,6 +213,11 @@ module top_level_circuit(
     assign proc_override = io_cont_freeze;
     assign proc_reset = io_cont_reset;
 
+    // processor -> control
+    assign io_cont_is_syscall = proc_is_syscall;
+    assign io_cont_unknown_reg = proc_unknown_reg;
+    assign io_cont_unknown_op = proc_unknown_op;
+    assign io_cont_is_ret = proc_is_ret;
 
     // processor -> syscall
     assign syscall_is_syscall = proc_is_syscall;
@@ -216,6 +233,9 @@ module top_level_circuit(
 
     assign ex_unknown_syscall = syscall_unknown_sys_number;
 
+    // control -> exception
+    assign ex_running = !io_cont_freeze;
+
     
     // io chips -> control
     assign io_cont_io_done = syscall_done;
@@ -227,9 +247,6 @@ module top_level_circuit(
 
 
     // uart -> io chips
-    assign syscall_tx_ready = uart_send_ready;
-    assign ex_tx_ready = uart_send_ready;
-
     assign syscall_rx_done_receiving = uart_input_done_receiving;
     assign pl_rx_done_receiving = uart_input_done_receiving;
     assign io_cont_rx_done_receiving = uart_input_done_receiving;
@@ -240,6 +257,10 @@ module top_level_circuit(
 
 
     // override logic
+    assign pl_tx_ready = uart_send_ready && (io_cont_chip_select==0);
+    assign syscall_tx_ready = uart_send_ready && (io_cont_chip_select==1);
+    assign ex_tx_ready = uart_send_ready && (io_cont_chip_select==2);
+
     always_comb begin
         // memory override
         case (io_cont_chip_select)
@@ -272,7 +293,19 @@ module top_level_circuit(
                 uart_output_data = ex_tx_data;
                 uart_output_send = ex_tx_dv;
             end
+
+            3: begin
+                uart_output_send = 0; // no one can send anything if no one is in control
+            end
         endcase
     end
+
+
+    // testing leds
+    assign ja = {!proc_is_ret, proc_AX[2]};
+    // assign ja = proc_AX[2];
+    // assign ja = {uart_send_ready, proc_is_ret, pl_done, ex_done, syscall_done ,io_cont_freeze,io_cont_chip_select};
+    
+    assign led = {io_cont_freeze, pl_done, ex_done, syscall_done};
 
 endmodule

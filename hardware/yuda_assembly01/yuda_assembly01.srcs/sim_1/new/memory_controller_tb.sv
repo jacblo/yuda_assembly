@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module memory_controller_tb();
     reg clk = 0;
     reg [6:0] IP; // instruction pointer

@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1718557891" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/test_module.dcp">
-  <File Type="VDS-TIMINGSUMMARY" Name="program_loader_processor_test_timing_summary_synth.rpt"/>
-  <File Type="RDS-DCP" Name="program_loader_processor_test.dcp"/>
-  <File Type="RDS-UTIL-PB" Name="program_loader_processor_test_utilization_synth.pb"/>
-  <File Type="RDS-UTIL" Name="program_loader_processor_test_utilization_synth.rpt"/>
-  <File Type="RDS-PROPCONSTRS" Name="program_loader_processor_test_drc_synth.rpt"/>
-  <File Type="RDS-RDS" Name="program_loader_processor_test.vds"/>
-  <File Type="REPORTS-TCL" Name="program_loader_processor_test_reports.tcl"/>
-  <File Type="VDS-TIMING-PB" Name="program_loader_processor_test_timing_summary_synth.pb"/>
-  <File Type="PA-TCL" Name="program_loader_processor_test.tcl"/>
+<GenRun Id="synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1718660285" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/test_module.dcp">
+  <File Type="VDS-TIMINGSUMMARY" Name="top_level_circuit_timing_summary_synth.rpt"/>
+  <File Type="RDS-DCP" Name="top_level_circuit.dcp"/>
+  <File Type="RDS-UTIL-PB" Name="top_level_circuit_utilization_synth.pb"/>
+  <File Type="RDS-UTIL" Name="top_level_circuit_utilization_synth.rpt"/>
+  <File Type="RDS-PROPCONSTRS" Name="top_level_circuit_drc_synth.rpt"/>
+  <File Type="RDS-RDS" Name="top_level_circuit.vds"/>
+  <File Type="REPORTS-TCL" Name="top_level_circuit_reports.tcl"/>
+  <File Type="VDS-TIMING-PB" Name="top_level_circuit_timing_summary_synth.pb"/>
+  <File Type="PA-TCL" Name="top_level_circuit.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/ALU.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/IO_control.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
@@ -28,6 +35,20 @@
       </FileInfo>
     </File>
     <File Path="$PSRCDIR/sources_1/new/comparison_checker.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/exception_handler.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/input_output.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
@@ -69,8 +90,16 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/top_level_circuit.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/new/program_loader_processor_test.sv">
       <FileInfo>
+        <Attr Name="UserDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -92,41 +121,10 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/input_output.sv">
-      <FileInfo>
-        <Attr Name="UserDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/IO_control.sv">
-      <FileInfo>
-        <Attr Name="UserDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/exception_handler.sv">
-      <FileInfo>
-        <Attr Name="UserDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/top_level_circuit.sv">
-      <FileInfo>
-        <Attr Name="UserDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="program_loader_processor_test"/>
+      <Option Name="TopModule" Val="top_level_circuit"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
