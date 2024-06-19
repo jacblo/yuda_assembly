@@ -27,7 +27,7 @@ def callback(ser):
 # receive and reprint
 data = [
     "010105",
-    "260300",
+    "262300",
     # "010105",
     "260200",
     "260200",

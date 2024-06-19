@@ -84,7 +84,7 @@ module top_level_tb();
             end
             #10
             clk = 0;
-            uart_output_data = 01; // 01 is opcode for mov reg, const
+            uart_output_data = 91; // 01 is opcode for mov reg, const
             uart_output_send = 1;
             #10
             clk = 1;

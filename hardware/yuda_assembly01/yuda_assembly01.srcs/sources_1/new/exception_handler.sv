@@ -23,8 +23,8 @@ module exception_handler(
             done = 1; // so it happens only one cycle after the message has been sent
         end
     
-        // if there's an unhandled error or termination of program
-        if (unknown_reg || unknown_op || unknown_syscall || (is_ret && running) && handled) begin
+        // if there's an unhandled error or termination of program while running
+        if ((unknown_reg || unknown_op || unknown_syscall || is_ret) && handled && running) begin
             // we set tx_data immediately, because it could change next instruction,
             // because stopping is delayed by one, so another instruction will run
             if (unknown_op)
@@ -36,11 +36,11 @@ module exception_handler(
             else if (is_ret)
                 tx_data = 'hff;
             handled = 0; // so we know to send tx_data as soon as we can
+            done = 0;
         end
         
         // this is repeatedly run until tx_ready is 1, then exception is sent and this stops running
         if (!handled) begin
-            done = 0;
             if (tx_ready) begin
                 tx_dv = 1; // pulse that so we send the tx_data we saved earlier
                 handled = 1; // we just handled it
