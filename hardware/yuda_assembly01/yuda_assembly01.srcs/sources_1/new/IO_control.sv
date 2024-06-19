@@ -33,12 +33,16 @@ module IO_control(
     
     reg started = 0; // so program doesn't start running before first one is sent, also so exception can kill execution completely
     reg last_listen = 0;
+//    reg last_freeze = 0; // used to delay continuation of progra
 
     reg got_kill = 0; // 0xff has been received
     always @(posedge clk) begin
         reset = 0; // so setting it to 1 will be a pulse
         last_listen = listen;
         listen = 0; // so setting it to 1 will be a pulse
+        
+//        last_freeze = freeze;
+        
 
         // overrules anything and everything
         if (rx_data == 'hff && rx_done_receiving) begin

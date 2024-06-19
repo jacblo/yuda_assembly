@@ -115,9 +115,6 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
-set_msg_config -id {Common 17-41} -limit 10000000
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -127,8 +124,6 @@ set rc [catch {
   create_msg_db init_design.pb
   set_param xicom.use_bs_reader 1
   set_param chipscope.maxJobs 1
-  set_param checkpoint.writeSynthRtdsInDcp 1
-  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-9507-BSERVER05/incrSyn
   set_param runs.launchOptions { -jobs 6  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7s25csga225-1
@@ -148,6 +143,7 @@ OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
   add_files -quiet /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/top_level_circuit.dcp
 OPTRACE "read constraints: implementation" START { }
+  read_xdc -mode out_of_context /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/UART_wrapper_out_of_context/new/UART_wrapper_out_of_context_ooc.xdc
   read_xdc /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }

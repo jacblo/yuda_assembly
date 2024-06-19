@@ -72,11 +72,6 @@ proc create_report { reportName command } {
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param xicom.use_bs_reader 1
 set_param chipscope.maxJobs 1
-set_param checkpoint.writeSynthRtdsInDcp 1
-set_param synth.incrementalSynthesisCache ./.Xil/Vivado-9507-BSERVER05/incrSyn
-set_msg_config -id {Common 17-41} -limit 10000000
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7s25csga225-1
 
@@ -118,6 +113,9 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
+read_xdc -mode out_of_context /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/UART_wrapper_out_of_context/new/UART_wrapper_out_of_context_ooc.xdc
+set_property used_in_implementation false [get_files /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/UART_wrapper_out_of_context/new/UART_wrapper_out_of_context_ooc.xdc]
+
 read_xdc /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc
 set_property used_in_implementation false [get_files /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/constrs_1/Cmod-S7-25-Master.xdc]
 

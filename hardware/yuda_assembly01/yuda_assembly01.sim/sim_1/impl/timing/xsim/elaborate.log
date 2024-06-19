@@ -1,17 +1,30 @@
 Vivado Simulator v2023.2.2
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /home/y4/P1/applications02/vivado/Vivado/2023.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 --maxdelay -L xil_defaultlib -L uvm -L simprims_ver -L secureip --snapshot register_file_tb_time_impl -transport_int_delays -pulse_r 0 -pulse_int_r 0 -pulse_e 0 -pulse_int_e 0 xil_defaultlib.register_file_tb xil_defaultlib.glbl -log elaborate.log 
+Running: /home/y4/P1/applications02/vivado/Vivado/2023.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 --maxdelay -L xil_defaultlib -L uvm -L simprims_ver -L secureip --snapshot top_level_tb_time_impl -transport_int_delays -pulse_r 0 -pulse_int_r 0 -pulse_e 0 -pulse_int_e 0 xil_defaultlib.top_level_tb xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-Completed static elaboration
-Starting simulation data flow analysis
-WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/register_file.sv" Line 1. Module register_file doesn't have a timescale but at least one module in design has a timescale.
-WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/register_file.sv" Line 1. Module register_file doesn't have a timescale but at least one module in design has a timescale.
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.register_file
-Compiling module xil_defaultlib.register_file_tb
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot register_file_tb_time_impl
+WARNING: [VRFC 10-2861] module 'UART' does not have a parameter named CLK_FREQ [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_wrapper_out_of_context.v:16]
+WARNING: [VRFC 10-2861] module 'UART' does not have a parameter named BAUD_RATE [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_wrapper_out_of_context.v:17]
+ERROR: [VRFC 10-3180] cannot find port 'uart_tx_OBUF' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49307]
+ERROR: [VRFC 10-3180] cannot find port 'uart_send_ready' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49306]
+ERROR: [VRFC 10-3180] cannot find port 'uart_rx_IBUF' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49305]
+ERROR: [VRFC 10-3180] cannot find port 'uart_output_send' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49304]
+ERROR: [VRFC 10-3180] cannot find port 'uart_input_done_receiving' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49303]
+ERROR: [VRFC 10-3180] cannot find port 'tx_rdy_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49302]
+ERROR: [VRFC 10-3180] cannot find port 'tx_dv1__0' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49301]
+ERROR: [VRFC 10-3180] cannot find port 'tx_data_reg[7]' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49300]
+ERROR: [VRFC 10-3180] cannot find port 'tx_data_reg[0]' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49299]
+ERROR: [VRFC 10-3180] cannot find port 'tx_bit_index0' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49298]
+ERROR: [VRFC 10-3180] cannot find port 'rx_dv_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49297]
+ERROR: [VRFC 10-3180] cannot find port 'reset0' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49296]
+ERROR: [VRFC 10-3180] cannot find port 'pl_listen' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49295]
+ERROR: [VRFC 10-3180] cannot find port 'got_kill_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49294]
+ERROR: [VRFC 10-3180] cannot find port 'got_kill' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49293]
+ERROR: [VRFC 10-3180] cannot find port 'done_loading_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49292]
+ERROR: [VRFC 10-3180] cannot find port 'done_loading7_in' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49291]
+ERROR: [VRFC 10-3180] cannot find port 'done_loading' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49290]
+ERROR: [VRFC 10-3180] cannot find port 'Q' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/impl/timing/xsim/top_level_tb_time_impl.v:49289]
+INFO: [#UNDEF] Sorry, too many errors..
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.

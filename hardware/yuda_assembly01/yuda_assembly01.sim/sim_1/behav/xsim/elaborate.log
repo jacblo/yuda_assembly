@@ -5,9 +5,11 @@ Running: /home/y4/P1/applications02/vivado/Vivado/2023.2/bin/unwrapped/lnx64.o/x
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-5021] port 'uart_rx' is not connected on this instance [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:5]
+WARNING: [VRFC 10-5021] port 'btn' is not connected on this instance [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:32]
 Completed static elaboration
 Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_wrapper_out_of_context.v" Line 4. Module UART_wrapper_out_of_context doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv" Line 24. Module UART(BAUD_RATE=2000000,CLK_FREQ=12000000) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/top_level_circuit.sv" Line 1. Module top_level_circuit doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv" Line 24. Module UART(BAUD_RATE=2000000,CLK_FREQ=12000000) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/processor_internals.sv" Line 15. Module processor_internals doesn't have a timescale but at least one module in design has a timescale.
@@ -22,6 +24,8 @@ WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/y
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/input_output.sv" Line 1. Module input_output doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/exception_handler.sv" Line 1. Module exception_handler doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/IO_control.sv" Line 1. Module IO_control doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/UART_wrapper_out_of_context.v" Line 4. Module UART_wrapper_out_of_context doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv" Line 24. Module UART(BAUD_RATE=2000000,CLK_FREQ=12000000) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/top_level_circuit.sv" Line 1. Module top_level_circuit doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/imports/Downloads/UART.sv" Line 24. Module UART(BAUD_RATE=2000000,CLK_FREQ=12000000) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sources_1/new/processor_internals.sv" Line 15. Module processor_internals doesn't have a timescale but at least one module in design has a timescale.
@@ -40,6 +44,7 @@ Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
 Compiling package xil_defaultlib.$unit_ALU_sv_4252979772
 Compiling module xil_defaultlib.UART(BAUD_RATE=2000000,CLK_FREQ=...
+Compiling module xil_defaultlib.UART_wrapper_out_of_context
 Compiling module xil_defaultlib.memory_controller
 Compiling module xil_defaultlib.register_file
 Compiling module xil_defaultlib.adder

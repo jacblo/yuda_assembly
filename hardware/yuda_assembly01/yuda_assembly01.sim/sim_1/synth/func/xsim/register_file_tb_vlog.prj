@@ -1,9 +1,0 @@
-# compile verilog/system verilog design source files
-verilog xil_defaultlib  \
-"register_file_tb_func_synth.v" \
-
-sv xil_defaultlib  \
-"../../../../../yuda_assembly01.srcs/sim_1/new/register_file_tb.sv" \
-
-# Do not sort compile order
-nosort

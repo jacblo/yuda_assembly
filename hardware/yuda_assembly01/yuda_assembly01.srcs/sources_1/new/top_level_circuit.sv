@@ -19,6 +19,7 @@ module top_level_circuit(
     wire uart_input_done_receiving;
     wire [7:0] uart_input_data;
 
+    // UART_wrapper_out_of_context uart_controller(
     UART #(
         .CLK_FREQ(12_000_000),
         .BAUD_RATE(2_000_000)
@@ -32,12 +33,11 @@ module top_level_circuit(
         .i_tx_data(uart_output_data),
         .i_tx_dv(uart_output_send),
         .o_tx_rdy(uart_send_ready),
-        
+            
         // processor input
         .o_rx_dv(uart_input_done_receiving),
         .o_rx_data(uart_input_data)
     );
-    
 
     
     //          Processor
@@ -52,6 +52,7 @@ module top_level_circuit(
     wire [6:0] proc_override_mem_read_data[3];
     
     wire [6:0] proc_AX[3];
+    wire [6:0] proc_IP;
     wire proc_is_syscall, proc_unknown_reg, proc_unknown_op, proc_is_ret;
     wire [6:0] proc_syscall_constant;
 
@@ -65,6 +66,7 @@ module top_level_circuit(
         proc_override_mem_write,
         proc_override_mem_read_data,
         proc_AX,
+        proc_IP,
         proc_is_syscall,
         proc_unknown_reg,
         proc_unknown_op,
@@ -104,6 +106,8 @@ module top_level_circuit(
 
 
     //          IO from Syscalls handler
+    wire [6:0] syscall_current_IP;
+
     wire syscall_is_syscall;
     wire [6:0] syscall_syscall_number;
     wire [6:0] syscall_AX[3];
@@ -125,6 +129,7 @@ module top_level_circuit(
 
     input_output syscall_handler(
         clk,
+        syscall_current_IP,
         syscall_is_syscall,
         syscall_syscall_number,
         syscall_AX,
@@ -220,6 +225,8 @@ module top_level_circuit(
     assign io_cont_is_ret = proc_is_ret;
 
     // processor -> syscall
+    assign syscall_current_IP = proc_IP;
+
     assign syscall_is_syscall = proc_is_syscall;
     assign syscall_AX = proc_AX;
     assign syscall_syscall_number = proc_syscall_constant;
@@ -255,11 +262,14 @@ module top_level_circuit(
     assign pl_rx_data = uart_input_data;
     assign io_cont_rx_data = uart_input_data;
 
+    // writing ready not ignore what was just sent
+    wire uart_send_real_ready;
+    assign uart_send_real_ready = uart_send_ready && !uart_output_send;
 
     // override logic
-    assign pl_tx_ready = uart_send_ready && (io_cont_chip_select==0);
-    assign syscall_tx_ready = uart_send_ready && (io_cont_chip_select==1);
-    assign ex_tx_ready = uart_send_ready && (io_cont_chip_select==2);
+    assign pl_tx_ready = uart_send_real_ready && (io_cont_chip_select==0);
+    assign syscall_tx_ready = uart_send_real_ready && (io_cont_chip_select==1);
+    assign ex_tx_ready = uart_send_real_ready && (io_cont_chip_select==2);
 
     always_comb begin
         // memory override
@@ -302,9 +312,13 @@ module top_level_circuit(
 
 
     // testing leds
+    // reg [7:0] count = 0;
+    // always @(posedge proc_is_syscall) begin
+    //     count++;
+    // end
+    // assign ja = count;
     assign ja = {!proc_is_ret, proc_AX[2]};
     // assign ja = proc_AX[2];
-    // assign ja = {uart_send_ready, proc_is_ret, pl_done, ex_done, syscall_done ,io_cont_freeze,io_cont_chip_select};
     
     assign led = {io_cont_freeze, pl_done, ex_done, syscall_done};
 

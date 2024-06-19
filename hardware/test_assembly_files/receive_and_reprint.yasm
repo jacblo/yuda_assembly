@@ -1,0 +1,6 @@
+; asm               ; machine code
+mov AX, 5           ; 010105
+syscall 3           ; 260300
+syscall 2           ; 260200
+jmp 2               ; 100200
+ret                 ; 000000

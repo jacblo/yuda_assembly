@@ -1,4 +1,7 @@
 # compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../yuda_assembly01.srcs/sources_1/new/UART_wrapper_out_of_context.v" \
+
 sv xil_defaultlib  \
 "../../../../yuda_assembly01.srcs/sources_1/new/ALU.sv" \
 "../../../../yuda_assembly01.srcs/sources_1/new/IO_control.sv" \

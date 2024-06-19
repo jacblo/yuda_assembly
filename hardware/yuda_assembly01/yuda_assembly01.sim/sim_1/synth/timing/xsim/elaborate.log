@@ -5,10 +5,45 @@ Running: /home/y4/P1/applications02/vivado/Vivado/2023.2/bin/unwrapped/lnx64.o/x
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-ERROR: [VRFC 10-2991] 'rx_data' is not declared under prefix 'uart_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:18]
-ERROR: [VRFC 10-2991] 'o_rx_dv' is not declared under prefix 'uart_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:19]
-ERROR: [VRFC 10-2991] 'o_rx_dv' is not declared under prefix 'uart_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:28]
-ERROR: [VRFC 10-2991] 'rx_data' is not declared under prefix 'uart_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:41]
-ERROR: [VRFC 10-2991] 'o_rx_dv' is not declared under prefix 'uart_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:42]
-ERROR: [VRFC 10-2991] 'o_rx_dv' is not declared under prefix 'uart_controller' [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:47]
-ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.
+WARNING: [VRFC 10-5021] port 'btn[1]' is not connected on this instance [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.srcs/sim_1/new/top_level_tb.sv:32]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+INFO: [XSIM 43-3451] SDF backannotation process started with SDF file "top_level_tb_time_synth.sdf", for root module "top_level_tb/tester".
+INFO: [XSIM 43-3452] SDF backannotation was successful for SDF file "top_level_tb_time_synth.sdf", for root module "top_level_tb/tester".
+Time Resolution for simulation is 1ps
+Compiling module simprims_ver.LUT6
+Compiling module simprims_ver.LUT5
+Compiling module simprims_ver.LUT4
+Compiling module simprims_ver.FDRE_default
+Compiling module simprims_ver.x_lut3_mux8
+Compiling module simprims_ver.LUT3
+Compiling module simprims_ver.x_lut2_mux4
+Compiling module simprims_ver.LUT2
+Compiling module xil_defaultlib.UART_wrapper_out_of_context_UART
+Compiling module xil_defaultlib.UART_wrapper_out_of_context
+Compiling module simprims_ver.BUFG
+Compiling module simprims_ver.IBUF
+Compiling module xil_defaultlib.exception_handler
+Compiling module simprims_ver.x_lut1_mux2
+Compiling module simprims_ver.LUT1
+Compiling module xil_defaultlib.IO_control
+Compiling module simprims_ver.OBUF
+Compiling module simprims_ver.CARRY4
+Compiling module xil_defaultlib.program_loader
+Compiling module simprims_ver.latchsre_ldce
+Compiling module simprims_ver.LDCE
+Compiling module xil_defaultlib.adder
+Compiling module xil_defaultlib.ALU
+Compiling module simprims_ver.FDCE_default
+Compiling module xil_defaultlib.instruction_decoder
+Compiling module simprims_ver.MUXF7
+Compiling module simprims_ver.MUXF8
+Compiling module xil_defaultlib.memory_controller
+Compiling module xil_defaultlib.register_file
+Compiling module xil_defaultlib.processor_internals
+Compiling module xil_defaultlib.input_output
+Compiling module xil_defaultlib.top_level_circuit
+Compiling module xil_defaultlib.top_level_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot top_level_tb_time_synth

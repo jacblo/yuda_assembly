@@ -1,6 +1,7 @@
 module input_output(
         input clk,
         
+        input [6:0] current_IP, // for differentiating consecutive instructions
         input is_syscall, // set to 1 to mean syscall should be run
         input [6:0]syscall_number,
         input [6:0]AX[3],
@@ -28,7 +29,7 @@ module input_output(
         done = 1;
     end
 
-    reg [2:0] position_min; // at what point do we stop reading and repeat, 0 if reading whole words, 2 if one char per word.
+    reg [2:0] position_min; // at what point do we start reading from, end at 2. 0 if reading whole words, 2 if one char per word.
     reg sending; // 1 means sending stuff, 0 means receiving stuff
     reg one_word; // 1 means sending or receiving one unit (char or word), 0 means null-terminated
 
@@ -40,29 +41,28 @@ module input_output(
 
     reg [1:0] done_count = 0; // used to delay checking for syscall by a bit so processor continues and we don't run over and over
 
+    reg just_started_operation = 0; // some operations like reading need u to wait a cycle for first word
+    
+    reg [6:0] last_IP;
+
     reg sent_request = 0; // so we only start receiving after sending request to host
     reg handled = 0; // so we don't rerun syscall over and over
     always @(posedge clk) begin
         tx_dv = 0; // so setting it to 1 will pulse
         write = 0; // so setting it to 1 will pulse
+        just_started_operation = 0;
         
-        if (done && handled) // if we just finished running
-            done_count ++;
-        // get ready to run next syscall
-        if (done_count == 2) begin  // only a few cycles after finishing should we allow this to rerun by resetting handled so we
-            handled = 0;            // give the processor time to continue and don't rerun the same syscall over and over.
-            done_count = 0;
-        end
+        if (last_IP != current_IP)
+            handled = 0; // new instruction so can't possibly be handled
 
 
         // initial setup when syscall is called
         if (is_syscall && !handled) begin // unhandled syscall to deal with
+            just_started_operation = 1;
             sent_request = 0;
             done = 0;
             handled = 1; // we're handling it right now
             temp = {0,0,0};
-
-            position = 2;
 
             case (syscall_number)
                 0: begin // send char to host (computer that's connected) (AX is address to send)
@@ -133,6 +133,8 @@ module input_output(
                 end
             endcase
 
+            position = position_min;
+
             if (sending)
                 address = AX[2];
             else
@@ -153,8 +155,8 @@ module input_output(
                     if (rx_done_receiving) begin
                         temp[position] = rx_data;
                         
-                        if (position <= position_min) begin
-                            position = 2;
+                        if (position == 2) begin
+                            position = position_min;
                             address++;
                             write = 1;
 
@@ -163,34 +165,36 @@ module input_output(
                             end
                         end
                         else
-                            position--;
+                            position++;
                     end
                 end
             end
 
             else begin // sending
-                if (tx_ready) begin // wait to send until we can
+                // we don't run if just_started_operation because we need a cycle to have memory informed of first address
+                if (tx_ready && !just_started_operation) begin // wait to send until we can
                     tx_data = read_data[position];
                     tx_dv = 1; // send
                     
-                    if (position <= position_min) begin
+                    if (position == 2) begin
                         // if we're at null-terminator
                         if (((read_data[0] == 0 && read_data[1] == 0 && read_data[2] == 0) && position_min == 0)  || 
-                            (read_data[2] == 0 && position_min == 2)) begin
+                            (read_data[2] == 0 && position_min == 2) || one_word) begin
                             
                             done = 1;
                         end
 
                         // prep for next word
-                        position = 2;
+                        position = position_min;
                         address++;
                     end
                     else
-                        position--;
+                        position++;
 
                 end
             end
         end
 
+        last_IP = current_IP;
     end
 endmodule

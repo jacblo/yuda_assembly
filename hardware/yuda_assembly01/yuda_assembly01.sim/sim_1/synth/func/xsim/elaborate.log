@@ -1,28 +1,28 @@
 Vivado Simulator v2023.2.2
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /home/y4/P1/applications02/vivado/Vivado/2023.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L uvm -L unisims_ver -L secureip --snapshot register_file_tb_func_synth xil_defaultlib.register_file_tb xil_defaultlib.glbl -log elaborate.log 
+Running: /home/y4/P1/applications02/vivado/Vivado/2023.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L uvm -L unisims_ver -L secureip --snapshot top_level_tb_func_synth xil_defaultlib.top_level_tb xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module unisims_ver.OBUF
-Compiling module unisims_ver.latchsre_ldce
-Compiling module unisims_ver.LDCE
-Compiling module unisims_ver.LUT4
-Compiling module unisims_ver.x_lut2_mux4
-Compiling module unisims_ver.LUT2
-Compiling module unisims_ver.LUT5
-Compiling module unisims_ver.x_lut3_mux8
-Compiling module unisims_ver.LUT3
-Compiling module unisims_ver.LUT6(INIT=64'b100010111011101110...
-Compiling module unisims_ver.FDRE_default
-Compiling module unisims_ver.IBUF
-Compiling module unisims_ver.BUFG
-Compiling module xil_defaultlib.register_file
-Compiling module xil_defaultlib.register_file_tb
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot register_file_tb_func_synth
+ERROR: [VRFC 10-3180] cannot find port 'uart_tx_OBUF' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48883]
+ERROR: [VRFC 10-3180] cannot find port 'uart_send_ready' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48882]
+ERROR: [VRFC 10-3180] cannot find port 'uart_rx_IBUF' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48881]
+ERROR: [VRFC 10-3180] cannot find port 'uart_output_send' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48880]
+ERROR: [VRFC 10-3180] cannot find port 'uart_input_done_receiving' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48879]
+ERROR: [VRFC 10-3180] cannot find port 'tx_rdy_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48878]
+ERROR: [VRFC 10-3180] cannot find port 'tx_dv1__0' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48877]
+ERROR: [VRFC 10-3180] cannot find port 'tx_data_reg[7]' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48876]
+ERROR: [VRFC 10-3180] cannot find port 'tx_data_reg[0]' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48875]
+ERROR: [VRFC 10-3180] cannot find port 'tx_bit_index0' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48874]
+ERROR: [VRFC 10-3180] cannot find port 'rx_dv_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48873]
+ERROR: [VRFC 10-3180] cannot find port 'reset0' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48872]
+ERROR: [VRFC 10-3180] cannot find port 'pl_listen' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48871]
+ERROR: [VRFC 10-3180] cannot find port 'got_kill_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48870]
+ERROR: [VRFC 10-3180] cannot find port 'got_kill' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48869]
+ERROR: [VRFC 10-3180] cannot find port 'done_loading_reg' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48868]
+ERROR: [VRFC 10-3180] cannot find port 'done_loading7_in' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48867]
+ERROR: [VRFC 10-3180] cannot find port 'done_loading' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48866]
+ERROR: [VRFC 10-3180] cannot find port 'Q' on this module [/home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.sim/sim_1/synth/func/xsim/top_level_tb_func_synth.v:48865]
+INFO: [#UNDEF] Sorry, too many errors..
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.

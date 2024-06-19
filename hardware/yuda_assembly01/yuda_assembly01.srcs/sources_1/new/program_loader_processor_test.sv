@@ -68,13 +68,14 @@ module program_loader_processor_test(
     wire [6:0] override_mem_read_data[3]; // used during override, can be anything when override=0
 
     wire [6:0] AX[3]; // for syscall's to use as argument
-    
+    wire [6:0] IP;
+
     // to call syscalls, report exceptions, and end execution
     wire is_syscall, unknown_reg, unknown_op, is_ret; // all are set to 1 when encountered
     wire [6:0] syscall_constant; // constant, used in syscall
 
     processor_internals processor(processor_clk, mem_clk, reset, override, override_mem_address,
-        override_mem_write_data, override_mem_write, override_mem_read_data, AX, is_syscall,
+        override_mem_write_data, override_mem_write, override_mem_read_data, AX, IP, is_syscall,
         unknown_reg, unknown_op, is_ret, syscall_constant);
 
     reg running;

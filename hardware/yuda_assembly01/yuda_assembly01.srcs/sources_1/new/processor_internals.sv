@@ -27,6 +27,7 @@ module processor_internals(
     output [6:0] override_mem_read_data[3], // used during override, can be anything when override=0
 
     output [6:0] AX[3], // for syscall's to use as argument
+    output [6:0] IP, // so syscall can differentiate consecutive instructions
     
     // to call syscalls, report exceptions, and end execution
     output is_syscall, unknown_reg, unknown_op, is_ret, // all are set to 1 when encountered
@@ -50,6 +51,7 @@ module processor_internals(
     wire reg_RegWrite;
     wire [6:0] reg_Data1[3], reg_Data2[3];
     wire reg_override;
+    wire reg_dont_inc;
     wire reg_reset;
     wire [6:0] reg_newIP;
     wire reg_WriteIP;
@@ -57,7 +59,7 @@ module processor_internals(
     wire reg_running;
     wire [6:0] reg_AX[3];
     register_file registers(clk, reg_read1, reg_read2, reg_writeReg, reg_writeData, reg_RegWrite,
-        reg_Data1, reg_Data2, reg_AX, reg_override, reg_reset, reg_newIP, reg_WriteIP, reg_IP, reg_running);
+        reg_Data1, reg_Data2, reg_AX, reg_override, reg_dont_inc, reg_reset, reg_newIP, reg_WriteIP, reg_IP, reg_running);
     
     // ALU
     wire [1:0] alu_control_operation;
@@ -160,6 +162,7 @@ module processor_internals(
     assign reg_RegWrite = id_reg_write;
     assign reg_reset = reset; // for resetting processor, so from external control
     assign reg_override = override; // for not applying extra instruction while doing syscall
+    assign reg_dont_inc = id_is_syscall || id_is_ret; // is_syscall so we rerun next instruction after syscall
 
     // control -> FR (cmp_flags register)
     always @(posedge clk, posedge reset) begin
@@ -194,6 +197,6 @@ module processor_internals(
 
     // register -> external
     assign AX = reg_AX;
-    // assign AX = {0,0,reg_IP}; // for testing, when i want to view the current IP 
+    assign IP = reg_IP;
     
 endmodule

@@ -19,6 +19,7 @@ module register_file_tb();
 
     // register setting
     reg override;
+    reg dont_inc;
     reg reset;
     reg RegWrite; // 1 if register should be written
     reg [1:0] writeReg; // register to set
@@ -34,6 +35,7 @@ module register_file_tb();
         Data2,//[0], Data2[1], Data2[2],
         AX,//[0], AX[1], AX[2],
         override,
+        dont_inc,
         reset,
         newIP,
         WriteIP,
