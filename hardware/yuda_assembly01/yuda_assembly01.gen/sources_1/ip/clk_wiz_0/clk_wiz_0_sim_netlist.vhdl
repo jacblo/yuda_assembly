@@ -2,7 +2,7 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2023.2.2 (lin64) Build 4126759 Thu Feb  8 23:52:05 MST 2024
--- Date        : Wed Jun 19 18:59:31 2024
+-- Date        : Wed Jun 19 22:03:40 2024
 -- Host        : BSERVER05 running 64-bit Linux Mint 21.3
 -- Command     : write_vhdl -force -mode funcsim -rename_top clk_wiz_0 -prefix
 --               clk_wiz_0_ clk_wiz_0_sim_netlist.vhdl
@@ -17,13 +17,13 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity clk_wiz_0_clk_wiz_0_clk_wiz is
   port (
-    clk_50Mhz : out STD_LOGIC;
+    clk_70Mhz : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
 end clk_wiz_0_clk_wiz_0_clk_wiz;
 
 architecture STRUCTURE of clk_wiz_0_clk_wiz_0_clk_wiz is
-  signal clk_50Mhz_clk_wiz_0 : STD_LOGIC;
+  signal clk_70Mhz_clk_wiz_0 : STD_LOGIC;
   signal clk_in1_clk_wiz_0 : STD_LOGIC;
   signal clkfbout_buf_clk_wiz_0 : STD_LOGIC;
   signal clkfbout_clk_wiz_0 : STD_LOGIC;
@@ -71,18 +71,18 @@ clkin1_ibufg: unisim.vcomponents.IBUF
     );
 clkout1_buf: unisim.vcomponents.BUFG
      port map (
-      I => clk_50Mhz_clk_wiz_0,
-      O => clk_50Mhz
+      I => clk_70Mhz_clk_wiz_0,
+      O => clk_70Mhz
     );
 mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
-      CLKFBOUT_MULT_F => 62.500000,
+      CLKFBOUT_MULT_F => 61.250000,
       CLKFBOUT_PHASE => 0.000000,
       CLKFBOUT_USE_FINE_PS => false,
       CLKIN1_PERIOD => 83.333000,
       CLKIN2_PERIOD => 0.000000,
-      CLKOUT0_DIVIDE_F => 15.000000,
+      CLKOUT0_DIVIDE_F => 10.500000,
       CLKOUT0_DUTY_CYCLE => 0.500000,
       CLKOUT0_PHASE => 0.000000,
       CLKOUT0_USE_FINE_PS => false,
@@ -134,7 +134,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKIN2 => '0',
       CLKINSEL => '1',
       CLKINSTOPPED => NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED,
-      CLKOUT0 => clk_50Mhz_clk_wiz_0,
+      CLKOUT0 => clk_70Mhz_clk_wiz_0,
       CLKOUT0B => NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED,
       CLKOUT1 => NLW_mmcm_adv_inst_CLKOUT1_UNCONNECTED,
       CLKOUT1B => NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED,
@@ -167,7 +167,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity clk_wiz_0 is
   port (
-    clk_50Mhz : out STD_LOGIC;
+    clk_70Mhz : out STD_LOGIC;
     clk_in1 : in STD_LOGIC
   );
   attribute NotValidForBitStream : boolean;
@@ -178,7 +178,7 @@ architecture STRUCTURE of clk_wiz_0 is
 begin
 inst: entity work.clk_wiz_0_clk_wiz_0_clk_wiz
      port map (
-      clk_50Mhz => clk_50Mhz,
+      clk_70Mhz => clk_70Mhz,
       clk_in1 => clk_in1
     );
 end STRUCTURE;

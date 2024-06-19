@@ -2,7 +2,7 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2023.2.2 (lin64) Build 4126759 Thu Feb  8 23:52:05 MST 2024
-// Date        : Wed Jun 19 18:59:31 2024
+// Date        : Wed Jun 19 22:03:40 2024
 // Host        : BSERVER05 running 64-bit Linux Mint 21.3
 // Command     : write_verilog -force -mode synth_stub -rename_top clk_wiz_0 -prefix
 //               clk_wiz_0_ clk_wiz_0_stub.v
@@ -14,9 +14,9 @@
 // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
 // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
-module clk_wiz_0(clk_50Mhz, clk_in1)
+module clk_wiz_0(clk_70Mhz, clk_in1)
 /* synthesis syn_black_box black_box_pad_pin="clk_in1" */
-/* synthesis syn_force_seq_prim="clk_50Mhz" */;
-  output clk_50Mhz /* synthesis syn_isclock = 1 */;
+/* synthesis syn_force_seq_prim="clk_70Mhz" */;
+  output clk_70Mhz /* synthesis syn_isclock = 1 */;
   input clk_in1;
 endmodule

@@ -18,7 +18,7 @@ module comparison_checker(
             if (!equal) satisfied = 0;
         end
         else if (requires_ne) begin
-            if (equal) satisfied = 1;
+            if (equal) satisfied = 0;
         end
     end
 endmodule

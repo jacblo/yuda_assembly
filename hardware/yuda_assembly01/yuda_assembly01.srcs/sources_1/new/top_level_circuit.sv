@@ -14,7 +14,7 @@ module top_level_circuit(
     wire clk;
     clk_wiz_0 instance_name(
         // Clock out ports
-        .clk_50Mhz(clk),     // output clk_300Mhz
+        .clk_70Mhz(clk),     // output clk_300Mhz
         // Clock in ports
         .clk_in1(clk_in)      // input clk_in1
     );
@@ -29,7 +29,7 @@ module top_level_circuit(
 
     // UART_wrapper_out_of_context uart_controller(
     UART #(
-        .CLK_FREQ(50_000_000),
+        .CLK_FREQ(70_000_000),
         .BAUD_RATE(2_000_000)
         ) uart_controller(
         // physical ports

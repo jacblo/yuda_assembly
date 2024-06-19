@@ -24,15 +24,13 @@ def callback(ser):
         print("stopping and closing...")
 
 
-# receive and reprint
+# receive and reprint, no ret because program never ends
 data = [
     "010105",
     "260300",
     "010105",
-    # "260200",
     "260200",
     "100100",
-    "000000"
 ]
 
 if __name__ == "__main__":
