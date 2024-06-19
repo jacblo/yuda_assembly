@@ -84,7 +84,7 @@ module top_level_tb();
             end
             #10
             clk = 0;
-            uart_output_data = 91; // 01 is opcode for mov reg, const
+            uart_output_data = 1; // 01 is opcode for mov reg, const
             uart_output_send = 1;
             #10
             clk = 1;
@@ -514,31 +514,31 @@ module top_level_tb();
                 #10
                 clk = 0;
                 
-                // // input from user for the test_user_input.py echo program
-                // if (j == 168 || j == 500) begin
-                //     uart_output_data = 32;
-                //     uart_output_send = 1;
-                //     #10
-                //     clk = 1;
-                //     #10
-                //     clk = 0;
-                //     uart_output_send = 0;
-                //     while (1) begin
-                //         #10
-                //         clk = 0;
-                //         #10
-                //         clk = 1;
-                //         if (uart_send_ready)
-                //             break;
-                //     end
-                //     uart_output_data = 0;
-                //     uart_output_send = 1;
-                //     #10
-                //     clk = 1;
-                //     #10
-                //     clk = 0;
-                //     uart_output_send = 0;
-                // end
+                // input from user for the test_user_input.py echo program
+                if (j == 168 || j == 500) begin
+                    uart_output_data = 32;
+                    uart_output_send = 1;
+                    #10
+                    clk = 1;
+                    #10
+                    clk = 0;
+                    uart_output_send = 0;
+                    while (1) begin
+                        #10
+                        clk = 0;
+                        #10
+                        clk = 1;
+                        if (uart_send_ready)
+                            break;
+                    end
+                    uart_output_data = 0;
+                    uart_output_send = 1;
+                    #10
+                    clk = 1;
+                    #10
+                    clk = 0;
+                    uart_output_send = 0;
+                end
                 
                 #10
                 clk = 1;

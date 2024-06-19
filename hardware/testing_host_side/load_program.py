@@ -50,18 +50,18 @@ def send_program(data, after_run_callback, clear_received = True):
 data = [ # assuming all are 6 digits
     "010100",
     "010201",
-    "040230", # last two digits here are index into fibo
-    "052202",
+    "042430", # fibo index
+    "052502",
     "070201",
-    "030102",
+    "030124",
     "170101",
-    "050201",
-    "030122",
+    "052401",
+    "030125",
     "240300",
-    "010122",
+    "010125",
     "260400",
-    "260400", # send twice in a row to test that capability
-    "030122",
+    "260400",
+    "030125",
     "000000",
     "010199",
 ]
@@ -70,7 +70,7 @@ data = [ # assuming all are 6 digits
 data = [
     "100300",
     "499999",
-    "000048",
+    "000012", # 12 loops is one second (almost exactly) at 12Mhz, so we get speedup factor with other clock speeds
     "030101",
     "030202",
     "170101",
@@ -82,13 +82,13 @@ data = [
     "000000",
 ]
 
-# skip a few lines
-data = [
-    "010102", # mov AX, 2
-    "100300", # jmp 3
-    "010106", # mov AX, 6
-    "000000"
-]
+# # skip a few lines
+# data = [
+#     "010102", # mov AX, 2
+#     "100300", # jmp 3
+#     "010106", # mov AX, 6
+#     "000000"
+# ]
 
 # # no 00s
 # data = [
@@ -102,7 +102,7 @@ data = [
 #     "260600", # syscall
 #     "000000", # ret
 #     "123456", # the number
-#     "011235",
+#     "011235", # (fibonacci lol)
 #     "000000"
 # ]
 

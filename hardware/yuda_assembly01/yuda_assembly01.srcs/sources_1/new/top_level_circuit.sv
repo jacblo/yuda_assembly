@@ -1,5 +1,5 @@
 module top_level_circuit(
-    input clk, // clock
+    input clk_in, // clock
 
     // for communication (I/O)
     input uart_rx,
@@ -9,6 +9,14 @@ module top_level_circuit(
     output led[3:0], // 4 output leds for testing
     output[7:0] ja, // 8 output leds for testing
     input btn[1:0] // two input buttons for testing
+    );
+    
+    wire clk;
+    clk_wiz_0 instance_name(
+        // Clock out ports
+        .clk_50Mhz(clk),     // output clk_300Mhz
+        // Clock in ports
+        .clk_in1(clk_in)      // input clk_in1
     );
 
     //          UART Controller
@@ -21,7 +29,7 @@ module top_level_circuit(
 
     // UART_wrapper_out_of_context uart_controller(
     UART #(
-        .CLK_FREQ(12_000_000),
+        .CLK_FREQ(50_000_000),
         .BAUD_RATE(2_000_000)
         ) uart_controller(
         // physical ports

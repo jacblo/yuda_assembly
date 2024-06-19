@@ -36,13 +36,14 @@ module processor_internals(
     
     //          Datapath parts
     // memory_controller
+    wire mem_reset;
     wire [6:0] mem_IP;
     wire [6:0] mem_instruction[3];
     reg [6:0] mem_address;
     reg mem_write;
     reg [6:0] mem_write_data[3];
     wire [6:0] mem_read_data[3];
-    memory_controller memory(mem_clk, mem_IP, mem_instruction, mem_address, mem_write,
+    memory_controller memory(mem_clk, mem_reset, mem_IP, mem_instruction, mem_address, mem_write,
         mem_write_data, mem_read_data);
     
     // register_file
@@ -133,6 +134,7 @@ module processor_internals(
     assign override_mem_read_data = mem_read_data;
 
     // override / control -> memory
+    assign mem_reset = reset; // for resetting processor, from external control
     always_comb begin
         if (override) begin
             mem_address = override_mem_address;
@@ -160,7 +162,7 @@ module processor_internals(
     assign reg_writeReg = id_write_reg;
     assign reg_writeData = alu_out;
     assign reg_RegWrite = id_reg_write;
-    assign reg_reset = reset; // for resetting processor, so from external control
+    assign reg_reset = reset; // for resetting processor, from external control
     assign reg_override = override; // for not applying extra instruction while doing syscall
     assign reg_dont_inc = id_is_syscall || id_is_ret; // is_syscall so we rerun next instruction after syscall
 

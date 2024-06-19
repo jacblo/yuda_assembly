@@ -1,5 +1,8 @@
 module memory_controller(
     input clk,
+    
+    input reset, // when set to 1, all memory is cleared on next clock cycle.
+
     input [6:0] IP, // instruction pointer
     output reg [6:0] instruction[3], // instruction at that position
     
@@ -30,7 +33,10 @@ module memory_controller(
     end
     
     always @(posedge clk) begin
-        if (write) begin
+        if (reset) begin
+            memory = '{default: '0}; // clear array
+        end
+        else if (write) begin
             memory[address] = write_data;
         end
     end

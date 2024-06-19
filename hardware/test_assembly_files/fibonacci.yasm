@@ -1,21 +1,22 @@
 ; simple asm                      machine code
 mov AX, 0                       ; 010100
 mov BX, 1                       ; 010201
-mov [2], 9 ; fib index          ; 040209
+mov [24], 9 ; fib index         ; 042409
 
-mov [22], BX ; temp location    ; 052202
+mov [25], BX ; temp location    ; 052502
 add BX, AX                      ; 070201
 
-mov AX, [2]                     ; 030102
+mov AX, [24]                    ; 030124
 sub AX, 1                       ; 170101
-mov [2], AX                     ; 050201
+mov [24], AX                    ; 052401
 
-mov AX, [22]                    ; 030122
+mov AX, [25]                    ; 030125
 jg 3                            ; 240300
 
-mov AX, 22 ; address            ; 010122
+mov AX, 25 ; address            ; 010125
 syscall 4 ; send word           ; 260400
+syscall 4 ; send word again     ; 260400
 
-mov AX, [22] ; for debug led    ; 030122
+mov AX, [25] ; for debug led    ; 030125
 ret                             ; 000000
 mov AX, 99 ; shouldn't run      ; 010199

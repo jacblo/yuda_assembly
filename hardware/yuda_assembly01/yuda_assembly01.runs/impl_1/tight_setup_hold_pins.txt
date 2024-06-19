@@ -1,0 +1,14 @@
++=====================+=====================+==============================================+
+| Launch Setup Clock  | Launch Hold Clock   | Pin                                          |
++=====================+=====================+==============================================+
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/cmp_flags_reg[0]/D                 |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/cmp_flags_reg[1]/D                 |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/memory/memory_reg[48][0][2]/D      |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/memory/memory_reg[48][0][4]/D      |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/registers/registers_reg[0][0][5]/D |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/registers/registers_reg[1][0][5]/D |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/registers/registers_reg[1][0][4]/D |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/registers/registers_reg[0][0][4]/D |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/registers/registers_reg[1][0][3]/D |
+| clk_50Mhz_clk_wiz_0 | clk_50Mhz_clk_wiz_0 | processor/registers/registers_reg[0][0][3]/D |
++---------------------+---------------------+----------------------------------------------+
