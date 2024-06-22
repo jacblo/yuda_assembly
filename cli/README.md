@@ -1,5 +1,6 @@
 This is a cli to communicate with the hardware or simulation of the yuda-assembly processor.
-for documentation use the 'docs' command from the client.
+
+for documentation and explanations use the 'docs' command from the client.
 
 # Usage
 from the parent yuda_assembly directory run `python -m cli.server`
