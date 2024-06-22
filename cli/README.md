@@ -1,4 +1,4 @@
-This is a cli to communicate with the program.
+This is a cli to communicate with the hardware or simulation of the yuda-assembly processor.
 for documentation use the 'docs' command from the client.
 
 # Usage
