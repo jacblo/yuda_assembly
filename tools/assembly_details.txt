@@ -1,0 +1,60 @@
+instructions:
+    list of instructions defined seperately in [hardware/instruction set details.txt].
+    every instruction must start with an instruction code (case is ignored), and then have the
+    relevant arguments.
+    the arguments are seperated by commas.
+    for example:
+    mov AX, BX
+
+registers:
+    registers are written as AX, BX, or IP, and are used as arguments for instructions.
+    as usual, case is ignored
+
+numbers:
+    numbers may be standalone in a line, or as arguments for a command.
+    if they're standalone they must be in range 0-999999, if they're an argument the range is 0-99.
+    they can be written as a regular base 10 number, in binary with 0bXXXX, or in hexadecimal
+    which is written as 0xXXXX.
+    underscores are allowed anywhere in the number after the first digit, they're ignored.
+    also case is ignored.
+
+    examples:
+    0x12_4f
+    0b010_1
+    12_3
+    0X3
+
+    note that if all three numbers are in 0-99 range, you can do the thing written in the chars
+    section, and write something like:
+    0x12 42 9
+    which would represent the number 184209
+
+labels:
+    labels must start with a letter or underscore and only contain those or digits.
+    they must have a colon after them, they represent the address of the first real thing after them
+    in the assembly, such as an instruction or a number.
+    they are used exactly like numbers.
+    note that labels are the ONLY CASE SENSITIVE object here - different cases are different labels.
+
+chars:
+    characters that are put between ' symbols, are translated into a number using the special
+    character set defined in [hardware/communication_design.txt]
+    only one character allowed between ' symbols.
+    \n, \t, and all such escape sequences work, and are interpreted exactly as in python.
+
+    since chars are numbers, they can be arguments or standalone.
+    if you want to fill all digits of a number using 3 chars, they should be put one after another
+    in one line. you may not use 2 chars. of course this is only usable as standalone number,
+    because argument numbers are in range 0-99
+
+    examples:
+    '1'
+    'b'
+    '\x21'
+    '\n'
+    'a' 'b' 'c'         # all of these are packed in order into one number
+
+
+comments:
+    after any line, or by itself, a ; symbol is used to mean that everything after it in that line
+    is to be ignored - is a comment.

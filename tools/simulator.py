@@ -343,24 +343,12 @@ def seek_until_zero(memory, starting_address, full_words) -> bytes:
             break
         length += 1
     
-    # cut out the section we need
+    # cut out the section we need, and add null terminator
     section = memory[starting_address:starting_address+length]+[0]
     
-    # flatten if necessary
-    if full_words:
-        # seperate into list of two digit numbers in big endian (in base 10) format
-        to_send = zip(
-            (a//10000 for a in section),        # left two digits
-            ((a//100)%100 for a in section),    # middle two digits
-            (a%100 for a in section)            # right two digits
-        )
-    else:
-        to_send = section # already in sets of two digits if it's not full_words
-    
-    # make into a set of bytes, we know numbers are in range 0-99 so can be one byte
-    return b"".join(a.to_bytes(1, 'big') for a in to_send)
+    return section
 
-def write_into_mem(memory, starting_address, full_words, data):
+def write_into_mem(memory, starting_address, data: bytes | list):
     """
     Writes data into memory at the specified starting address.
     
@@ -368,27 +356,17 @@ def write_into_mem(memory, starting_address, full_words, data):
         memory (list): The memory to write into.
         starting_address (int): The starting address to begin writing.
         full_words (bool): Indicates whether to consider full words or just last char in each.
-        data (bytes): The data to write into memory.
+        data (bytes | list): The data to write into memory, if full words then it's a list of
+                            numbers. they should be checked for range 0-999999 already.
     """
-    numbers = list(data)
-    if full_words:
-        to_write = []
-        for chunk in chunks(numbers, 3):
-            temp = 0
-            multiplier = 1
-            for number in reversed(chunk):
-                temp += number * multiplier
-                multiplier *= 100
-            to_write.append(temp)
-    else:
-        to_write = numbers
     
-    for i, number in enumerate(to_write):
+    for i, number in enumerate(data):
         if starting_address+i >= MEMSIZE:
             break
         memory[starting_address+i] = number
 
 
+# numerical vs string based, string based may be implemented soon
 def simulate_numerical(machine_code_str: str, print_callback, input_callback) -> None:
     """Simulates the execution of base 10 machine code for the base 10 processor. expects a bunch of
     lines, each one 6 digits in base 10. each line being one word in the machine code ofc.
@@ -398,13 +376,15 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
     Args:
         machine_code_str (str): the machine code input
         print_callback (function): when the processor prints somthing, it runs print_callback with
-                                    a bytes object of the data to be output
+                                    print_type=0: bytes string, 1: number list. and the relvant
+                                    thing to be printed
         input_callback (function): when the processor wants input, it runs the input_callback with
-                                    input_type= 0:input char, 1: input 3 chars=1 word, 2:input line, 
-                                    3:input line of words, 4:check waiting input expects the result
-                                    to be returned as a bytes object to be saved in memory.
+                                    input_type= 0:input char, 1: input number=1 word, 2:input line, 
+                                    3:input list of numbers, 4:check waiting input expects the
+                                    result to be returned as a bytes object to be saved in memory.
                                     note that waiting input should be capped at 99, if there's more
-                                    than that should still just be 99
+                                    than that should still just be 99. list of numbers should be
+                                    a list, list of chars should be char string.
     """
     # state
     memory = [0]*(MEMSIZE+1)    # +1 so if you load position 100 which is illegal you'll get 0 which
@@ -440,7 +420,7 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
         
         # return
         if is_ret:
-            print_callback(b'\xff')
+            print_callback(0, b'\xff')
             break
         
         # syscall
@@ -449,7 +429,7 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
             match constant:
                 case 0: # send char to host (computer that's connected) (AX is address to send)
                     to_send = memory[registers[0]] % 100 # load the right two digits of mem[AX]
-                    print_callback(to_send.to_bytes(1, 'big')) # mod 100 so we know it can be in one byte
+                    print_callback(0, to_send.to_bytes(1, 'big')) # mod 100 so we know it can be in one byte
                     
                 case 1: # wait to receive a char from host (computer that's connected) (AX is address to save in)
                     data = input_callback(0)
@@ -457,16 +437,15 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
                     
                 case 2: # send null terminated string to host (AX is the address to send)
                     to_send = seek_until_zero(memory, registers[0], False)
-                    print_callback(to_send)
+                    print_callback(0, to_send)
                 
                 case 3: # receive null-terminated char string from host (AX is address to write to) 
                     data = input_callback(2)
-                    write_into_mem(memory, registers[0], False, data)
+                    write_into_mem(memory, registers[0], data)
                 
                 case 4: # send word to host (AX is address to send)
                     word = memory[registers[0]] # load mem[AX]
-                    to_send = (word//10000, (word//100)%100, word%100)
-                    print_callback(b"".join(a.to_bytes(1, 'big') for a in to_send))
+                    print_callback(1, (word,))
                     
                 case 5: # wait to receive word from host (AX is address to save in)
                     data = input_callback(1)
@@ -478,8 +457,8 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
                     print_callback(to_send)
                     
                 case 7: # receive null-terminated string of whole words from host (AX is address to write to)
-                    data = input_callback(2)
-                    write_into_mem(memory, registers[0], True, data)
+                    data = input_callback(3)
+                    write_into_mem(memory, registers[0], data)
                 
                 case 8: # check if there's a word waiting to be received (AX is address to write result to)
                     data = input_callback(4)

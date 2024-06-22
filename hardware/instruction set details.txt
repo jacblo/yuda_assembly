@@ -11,7 +11,7 @@ registers:
 AX, BX : general purpose. coding: 01 for AX and 02 for BX, initialized to 000000 for convenience
 FR : flag register, for internal use in cmp and je commands, not really a register
                     it is just a component, inline - not a register
-IP : instruction pointer, we'll allow this to be addressed as 99
+IP : instruction pointer, we'll allow this to be pointed to as register 99
 IR : instruction register, stores the current instruction, not really implemented
 
 opcode: instruction (explanation, optional)
@@ -54,18 +54,17 @@ my additions:
 24: jg constant (if greater than, then IP = constant)
 25: jg register (if greater than, then IP = register)
 
-26: syscall code  // handled as such, AX is the address, in all of them where ax is address, first 4 digits are ignored.
+26: syscall <constant - syscall number>  // handled as such, AX is the address, in all of them where ax is address, first 4 digits are ignored.
 index of syscall codes:
     0: send char to host (computer that's connected) (AX is address to send)
     1: wait to receive a char from host (computer that's connected) (AX is address to save in)
     2: send null terminated string to host (AX is the address to send)
     3: receive null-terminated char string from host (AX is address to write to) 
-    4: send word to host (AX is address to send)
-    5: wait to receive word from host (AX is address to save in)
-    6: send null terminated string of whole words to host (AX is the address to send)
-    7: receive null-terminated string of whole words from host (AX is address to write to)
+    4: send word to host (AX is address to send) (used for sending numbers)
+    5: wait to receive word from host (AX is address to save in) (used for getting number directly)
+    6: send null terminated string of whole words to host (AX is the address to send) (used for sending numbers)
+    7: receive null-terminated string of whole words from host (AX is address to write to) (used for getting array of numbers directly)
     8: check if there's a word waiting to be received (AX is address to write result to)
- 
 
 allow IP access through register 99, adds complexity but very useful, replaces jump register
     and also allows calculations on IP, for specialized jumping

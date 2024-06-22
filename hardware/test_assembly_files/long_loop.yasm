@@ -1,13 +1,13 @@
-jmp 3                           ; 100200
+jmp 3                           ; 100300
 ;data
 499999                          ; 499999
-000012                          ; 000012 ; so we run around 12*500K loops, so we run a few seconds
+000012                          ; 000012 ; makes hardware at 12Mhz run for almost exactly 1 second
 ;program
-mov AX, [1]                     ; 030100
-mov BX, [2]                     ; 030201
+mov AX, [1]                     ; 030101
+mov BX, [2]                     ; 030202
 sub AX, 1                       ; 170101
 jg 5                            ; 240500
-mov AX, [1]                     ; 030100
+mov AX, [1]                     ; 030101
 sub BX, 1                       ; 170201
 jg 5                            ; 240500
 ret                             ; 000000

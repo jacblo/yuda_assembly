@@ -1,0 +1,18 @@
+mov AX, 0
+mov BX, 1
+mov [var1], 9 ; fib index
+loop:
+    mov [var2], BX ; temp location
+    add BX, AX
+    mov AX, [var1]
+    sub AX, 1
+    mov [var1], AX
+    mov AX, [var2]
+    jg loop
+mov AX, var2 ; address
+syscall 4 ; send word
+syscall 4 ; send word again
+mov AX, [var2] ; for debug led
+ret
+var1: 0
+var2: 0

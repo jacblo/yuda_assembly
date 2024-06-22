@@ -1,0 +1,18 @@
+; this may not be runnable, but it should be possible to assemble.
+
+some_label ; forward label reference, as value
+
+some_label:
+    mov AX, BX
+mOV bX, PTR [AX]
+    add BX, other_label ; pointing forward
+    ret
+    other_label:syscall 12
+    15 023 3
+    0x23 0b101 0b0
+'c' 'x' 't'
+jmp other_label
+mov AX, [some_label]
+mov BX, other_label
+other_label 12 13 ; normal label reference, as value in list
+; just a comment

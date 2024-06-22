@@ -8,7 +8,7 @@ character set is all printable ascii values with a few exceptions, so 32-127, th
 special translations:    
     96: carriage return (\r)
     97: line feed / newline (\n)
-    98: tab
+    98: tab (\t)
     99: bell (because why noooooooooot lmao)
 
 

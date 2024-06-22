@@ -3,15 +3,28 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python Debugger: Current File",
+    "configurations": [{
+            "name": "Python Debugger: assembler",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "test_program.txt"
+                // "tests/assembly.yasm",
+                // "tests/assembly_output.txt"
+                "tests/fibonacci.yasm",
+                "tests/fibonacci_output.txt"
+            ]
+        },
+        {
+            "name": "Python Debugger: simulator",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                // "tests/test_program.txt"
+                "tests/fibonacci_output.txt"
             ]
         }
     ]

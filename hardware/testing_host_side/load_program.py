@@ -8,7 +8,7 @@ def send_program(data, after_run_callback, clear_received = True):
     if len(ports) == 1:
         port = ports[0]
     else:
-        print("available ports are: \n","\n".join(f"{i+1}: port" for i, port in enumerate(ports)))
+        print("available ports are: \n","\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
         port = ports[int(input("select one of them (by number before it in list): "))] # error if illegal input, that's good.
     
     # connect and send
@@ -105,6 +105,27 @@ data = [
 #     "011235", # (fibonacci lol)
 #     "000000"
 # ]
+
+# assembled version of fibonacci
+data = [
+    "010100",
+    "010201",
+    "041509",
+    "051602",
+    "070201",
+    "030115",
+    "170101",
+    "051501",
+    "030116",
+    "240300",
+    "010116",
+    "260400",
+    "260400",
+    "030116",
+    "000000",
+    "000000",
+    "000000",
+]
 
 if __name__ == "__main__":
     def callback(ser):
