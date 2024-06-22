@@ -2,6 +2,8 @@
 
 This project is a web-based assembly language interpreter for Yuda's Assembly. It allows you to write and run Yuda's Assembly code directly in your browser.
 
+THE WEBSITE IS NON FUNCTIONAL AS OF NOW
+
 ## Getting Started
 
 To get started with yuda_assembly, follow these steps:
