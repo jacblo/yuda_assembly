@@ -6,7 +6,7 @@ Currently it has a cli instead of web based interface. the web based interface i
 
 ## Getting Started
 
-The hardware requires vivado and the cmod-s7 fpga. if you replace the xdc constraint file with a fitting one for your fpga which also support uart then you can use it too.
+The hardware requires vivado and the cmod-s7 fpga. if you replace the xdc constraint file with a fitting one for your fpga which also has a uart connection (through usb ideally) then you can use it too.
 The website side is explained in the [website's readme](website/README.md)
 
 
