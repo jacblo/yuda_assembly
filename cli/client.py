@@ -36,6 +36,7 @@ def main():
                     protocol.send_encrypted_message(client_socket, aes_key, to_send.encode('utf-8'))
                 
                 case b"stop":
+                    print("Exited.")
                     break
                 
     except KeyboardInterrupt:

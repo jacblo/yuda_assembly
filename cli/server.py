@@ -19,7 +19,8 @@ class HardwareManager:
             print("available ports are: \n","\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
             port = ports[int(input("select one of them (by number before it in list): "))] # error if illegal input, that's good.
 
-        self.ser_connection = serial.Serial(port, 2_000_000, timeout=0.01) # very short timeout so we can do other things
+        self.ser_connection = serial.Serial(port, 2_000_000, timeout=0.05) # very short timeout so we can do other things
+        self.test_hardware()
 
         # every item in queue is tuple or list of shape (<client_socket>, <aes_key>, <machine code to be run>)
         self.queue = [] # using list as queue, doesn't matter for performance really
@@ -31,6 +32,14 @@ class HardwareManager:
         
         self.running = False # is hardware currently running someone's code
     
+    
+    def test_hardware(self):
+        """makes sure the hardware is responding correctly to trivial input, to make sure it's running
+        """
+        self.ser_connection.write(b"\xff") # start sending something
+        self.ser_connection.write(b"\xfa") # stop sending after nothing
+        dat = self.ser_connection.read(2)
+        assert dat == b'\0\xff' # checksum of nothing is 0, and 0xff for done running
     
     def send_program(self, machine_code, clear_received = True):
         """runs the program on hardware
@@ -71,7 +80,7 @@ class HardwareManager:
         if checksum == int.from_bytes(dat, 'big'): # byte order doesn't matter - one byte
             print("Checksum matches")
         else:
-            raise Exception("Checsum failed to match!!")
+            raise RuntimeError("Checksum failed to match!! Try again? Maybe Restart server?")
 
     def run_next(self):
         next = self.queue.pop(0) # get and remove first in queue
@@ -86,13 +95,24 @@ class HardwareManager:
             print_to_client(client_socket, aes_key, f"Position in Queue: {i+1}")
         
         # actually start running
-        self.handle_running_program(*next) # assuming queue is shaped
+        self.handle_running_program(*next)
 
     def handle_running_program(self, client_socket, aes_key, machine_code):
         self.running = True
         print_to_client(client_socket, aes_key, "Program has begun running on hardware!")
         
-        self.send_program(machine_code)
+        try:
+            self.send_program(machine_code)
+        except SyntaxError as err:
+            print_to_client(client_socket, aes_key, "Error: "+err.msg)
+            # restart thread
+            threading.Thread(target=client_communication_thread, args=(client_socket, self, aes_key, machine_code), daemon=True).start()
+            return # no use in trying to run
+        except RuntimeError as err:
+            print_to_client(client_socket, aes_key, "Unkown server side error while sending program: "+str(err))
+            disconnect_from_client(client_socket, aes_key) # stop the client
+            raise err # stop
+            
         start_time = time.time() # immediately after loading the program, so we time execution time
         
         last_ping = time.time()
@@ -109,123 +129,127 @@ class HardwareManager:
             if len(hardware_first_byte) < 1: # nothing was sent this time
                 continue # nothing to do
             
-            if hardware_first_byte[0] & 0x80: # command of some sort if MSB is on.
-                
-                if hardware_first_byte[0] & 0xf0 == 0x80: # it's an input command
-                    while True: # keep asking for input until it's legal
-                        match hardware_first_byte[0]:
-                            case 0x80:
-                                input_value = input_from_client(client_socket, aes_key, "Hardware waiting for one char of input: ")
-                                if len(input_value) != 1:
-                                    print_to_client(client_socket, aes_key, "More than one character was given, inputting first of them")
-                                
-                                try:
-                                    to_send = input_converter(0, input_value)
-                                except SyntaxError:
-                                    print_to_client(client_socket, aes_key,"Error: Not representable by char set! (is it even in ascii?)")
-                                else:
-                                    self.ser_connection.write(to_send.to_bytes(1, 'big'))
-                                    break
-                            
-                            case 0x81:
-                                input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a line of input: ")
-                                
-                                try:
-                                    to_send = input_converter(2, input_value)
-                                except SyntaxError:
-                                    print_to_client(client_socket, aes_key,"Error: Not representable by char set! (is it even in ascii?)")
-                                else:
-                                    self.ser_connection.write(to_send)
-                                    break
-                            
-                            case 0x82:
-                                input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a number input: ")
-                                
-                                try:
-                                    to_send = input_converter(1, input_value)
-                                except ValueError:
-                                    print_to_client(client_socket, aes_key,"Error: Not a number")
-                                else:
-                                    if to_send > 999999 or to_send < 0:
-                                        print_to_client(client_socket, aes_key,"Error: Number must be in range 0-999999")
+            try:
+                if hardware_first_byte[0] & 0x80: # command of some sort if MSB is on.
+                    
+                    if hardware_first_byte[0] & 0xf0 == 0x80: # it's an input command
+                        while True: # keep asking for input until it's legal
+                            match hardware_first_byte[0]:
+                                case 0x80:
+                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for one char of input: ")
+                                    if len(input_value) != 1:
+                                        print_to_client(client_socket, aes_key, "More than one character was given, inputting first of them")
+                                    
+                                    try:
+                                        to_send = input_converter(0, input_value)
+                                    except SyntaxError:
+                                        print_to_client(client_socket, aes_key,"Error: Not representable by char set! (is it even in ascii?)")
                                     else:
-                                        self.ser_connection.write(split_into_bytes(to_send))
+                                        self.ser_connection.write(to_send.to_bytes(1, 'big'))
                                         break
-                            
-                            case 0x83:
-                                input_value = input_from_client(client_socket, aes_key, "Hardware waiting for list of numbers as input: ")
                                 
-                                try:
-                                    to_send = input_converter(3, input_value)
-                                except ValueError:
-                                    print_to_client(client_socket, aes_key,"Error: Not a valid list of numbers")
-                                else:
-                                    for number in to_send:
-                                        if number > 999999 or number < 0:
-                                            print_to_client(client_socket, aes_key,"Error: Numbers must be in range 0-999999")
-                                            break
-                                    else: # all were in range
-                                        for number in to_send:
-                                            self.ser_connection.write(split_into_bytes(number))
+                                case 0x81:
+                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a line of input: ")
+                                    
+                                    try:
+                                        to_send = input_converter(2, input_value)
+                                    except SyntaxError:
+                                        print_to_client(client_socket, aes_key,"Error: Not representable by char set! (is it even in ascii?)")
+                                    else:
+                                        self.ser_connection.write(to_send)
                                         break
-                            
-                            case 0x84:
-                                print_to_client(client_socket, aes_key,"Warning: Waiting input not implemeneted, returned 0.")
-                                self.ser_connection.write(0)
-                                break
-                            
-                        print_to_client(client_socket, aes_key,"Try again.")
-                
-                elif hardware_first_byte[0] & 0xf0 == 0x90: # it's printing numbers
-                    if hardware_first_byte[0] == 0x90: # only one number
-                        # keep getting input until we are at 3, needed because of timeout
-                        decimal_number = b""
-                        while len(decimal_number) < 3:
-                            decimal_number += self.ser_connection.read(3 - len(decimal_number))
-
-                        # convert it
-                        number = decimal_number[0]*10000 + decimal_number[1]*100 + decimal_number[2]
-                        print_to_client(client_socket, aes_key,str(number)+"\n")
+                                
+                                case 0x82:
+                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a number input: ")
+                                    
+                                    try:
+                                        to_send = input_converter(1, input_value)
+                                    except ValueError:
+                                        print_to_client(client_socket, aes_key,"Error: Not a number")
+                                    else:
+                                        if to_send > 999999 or to_send < 0:
+                                            print_to_client(client_socket, aes_key,"Error: Number must be in range 0-999999")
+                                        else:
+                                            self.ser_connection.write(split_into_bytes(to_send))
+                                            break
+                                
+                                case 0x83:
+                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for list of numbers as input: ")
+                                    
+                                    try:
+                                        to_send = input_converter(3, input_value)
+                                    except ValueError:
+                                        print_to_client(client_socket, aes_key,"Error: Not a valid list of numbers")
+                                    else:
+                                        for number in to_send:
+                                            if number > 999999 or number < 0:
+                                                print_to_client(client_socket, aes_key,"Error: Numbers must be in range 0-999999")
+                                                break
+                                        else: # all were in range
+                                            for number in to_send:
+                                                self.ser_connection.write(split_into_bytes(number))
+                                            break
+                                
+                                case 0x84:
+                                    print_to_client(client_socket, aes_key,"Warning: Waiting input not implemeneted, returned 0.")
+                                    self.ser_connection.write(0)
+                                    break
+                                
+                            print_to_client(client_socket, aes_key,"Try again.")
                     
-                    elif hardware_first_byte[0] == 0x91: # list of numbers
-                        # keep getting input until we have null terminator, needed because of timeout
-                        decimal_numbers = b""
-                        while decimal_numbers[-3:] != b"\0\0\0": # triple null terminator because it's a whole word
-                            decimal_numbers += self.ser_connection.read_until(b"\0\0\0")
+                    elif hardware_first_byte[0] & 0xf0 == 0x90: # it's printing numbers
+                        if hardware_first_byte[0] == 0x90: # only one number
+                            # keep getting input until we are at 3, needed because of timeout
+                            decimal_number = b""
+                            while len(decimal_number) < 3:
+                                decimal_number += self.ser_connection.read(3 - len(decimal_number))
+
+                            # convert it
+                            number = decimal_number[0]*10000 + decimal_number[1]*100 + decimal_number[2]
+                            print_to_client(client_socket, aes_key,str(number)+"\n")
                         
-                        # convert it
-                        decimal_numbers = decimal_numbers[:-3] # cut off null terminator
-                        to_print = []
-                        for i in range(decimal_numbers//3): # convert each number seperately
-                            number = decimal_numbers[3*i]*10000 + decimal_numbers[3*i + 1]*100 + decimal_numbers[3*i + 2]
-                            to_print.append(str(number))
-
-                        print_to_client(client_socket, aes_key,"["+", ".join(to_print)+"]\n") # print as a list
-                
-                elif hardware_first_byte[0] & 0xf0 == 0xf0: # it's an exception
-                    match hardware_first_byte[0]:
-                        # runtime exceptions
-                        case 0xf0:
-                            print_to_client(client_socket, aes_key,"Error: Unkown opcode was reached.")
-                        case 0xf1:
-                            print_to_client(client_socket, aes_key,"Error: Unkown register was reached.")
-                        case 0xf2:
-                            print_to_client(client_socket, aes_key,"Error: Unkown syscall number was reached.")
-                        case 0xff:
-                            elapsed = time.time() - start_time
-                            print_to_client(client_socket, aes_key,f"Program ended in {elapsed} seconds.")
+                        elif hardware_first_byte[0] == 0x91: # list of numbers
+                            # keep getting input until we have null terminator, needed because of timeout
+                            decimal_numbers = b""
+                            while decimal_numbers[-3:] != b"\0\0\0": # triple null terminator because it's a whole word
+                                decimal_numbers += self.ser_connection.read_until(b"\0\0\0")
                             
+                            # convert it
+                            decimal_numbers = decimal_numbers[:-3] # cut off null terminator
+                            to_print = []
+                            for i in range(decimal_numbers//3): # convert each number seperately
+                                number = decimal_numbers[3*i]*10000 + decimal_numbers[3*i + 1]*100 + decimal_numbers[3*i + 2]
+                                to_print.append(str(number))
+
+                            print_to_client(client_socket, aes_key,"["+", ".join(to_print)+"]\n") # print as a list
                     
-                    break # we have ended execution
-        
-            else: # just a regular char
-                if hardware_first_byte[0] != 0: # ignore the null-terminator
-                    print_to_client(client_socket, aes_key, reverse_char_representation(hardware_first_byte[0]),end="")
-        
+                    elif hardware_first_byte[0] & 0xf0 == 0xf0: # it's an exception
+                        match hardware_first_byte[0]:
+                            # runtime exceptions
+                            case 0xf0:
+                                print_to_client(client_socket, aes_key,"Error: Unkown opcode was reached.")
+                            case 0xf1:
+                                print_to_client(client_socket, aes_key,"Error: Unkown register was reached.")
+                            case 0xf2:
+                                print_to_client(client_socket, aes_key,"Error: Unkown syscall number was reached.")
+                            case 0xff:
+                                elapsed = time.time() - start_time
+                                print_to_client(client_socket, aes_key,f"Program ended in {elapsed} seconds.")
+                                
+                        
+                        break # we have ended execution
+            
+                else: # just a regular char
+                    if hardware_first_byte[0] != 0: # ignore the null-terminator
+                        print_to_client(client_socket, aes_key, reverse_char_representation(hardware_first_byte[0]),end="")
+            except (ConnectionResetError, BrokenPipeError):
+                print("Client disconnected. stopping execution")
+                break
+            
         self.running = False
         
         # recreate client thread, so they can continue running
-        threading.Thread(target=client_communication_thread, args=(client_socket, self, aes_key), daemon=True).start()
+        threading.Thread(target=client_communication_thread, args=(client_socket, self, aes_key, machine_code), daemon=True).start()
         # run next in queue if it's there
         if len(self.queue) > 0:
             if not self.running: # here in case somehow in that short span, a thread ran add_to_queue and started running
@@ -373,7 +397,7 @@ exit: exit the program
 you can press Ctrl+C at any point to kill the program.
 """
 # thread that does everything
-def client_communication_thread(client_socket, hardware: HardwareManager, aes_key=None):
+def client_communication_thread(client_socket, hardware: HardwareManager, aes_key=None, last_machine_code=None):
     """
     Handles the communication with a client in a separate thread.
     Can be given aes_key to start from middle, or if not given, it starts a new connection by getting an aes key from the client.
@@ -383,7 +407,8 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
         aes_key (bytes, optional): The AES encryption key. Defaults to None.
                                     if it is none, a handshake is done to get one
         hardware (HardwareManager): The hardware manager to hand control over to if trying to run program on hardware
-
+        last_machine_code (str): The machine code to run if user asks to run somewhere. None requires user to provide it
+        
     Returns:
         None
     """
@@ -391,7 +416,6 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
         aes_key = protocol.server_side_handshake(client_socket)
         print_to_client(client_socket, aes_key, "Welcome to the interactive yuda's-assembly runner!")
 
-    last_machine_code = None
     while True:
         if protocol.is_socket_closed(client_socket):
             print("Client disconnected with KeyboardInterrupt")
@@ -420,6 +444,9 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                     
                 
                 case "run sim":
+                    if last_machine_code is None:
+                        print_to_client(client_socket, aes_key, "Error: no machine code to run")
+                        continue
                     start_time = time.time()
                     tools.simulator.simulate_numerical(
                         last_machine_code,
@@ -432,8 +459,9 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                 case "run hardware":
                     if last_machine_code is None:
                         print_to_client(client_socket, aes_key, "Error: no machine code to run")
+                        continue
                     hardware.add_to_queue(client_socket, aes_key, last_machine_code)
-                    break # we're waiting in the queue, this thread can stop now, the hardware manager will handle everything now.
+                    return # we're waiting in the queue, this thread can stop now, the hardware manager will handle everything now.
                 
                 case "exit":
                     print("Client disconnected")
@@ -442,13 +470,13 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                 case _:
                     print_to_client(client_socket, aes_key, "Unkown command. try again")
         
-        except BrokenPipeError: # client disconnected in the middle
+        except (ConnectionResetError, BrokenPipeError): # client disconnected in the middle
             print("Client disconnected in the middle of command, stopping.")
             break
     try:
         disconnect_from_client(client_socket, aes_key)
         
-    except BrokenPipeError:
+    except (ConnectionResetError, BrokenPipeError):
         pass # if they disconnected we don't care at this point
 
 
@@ -470,9 +498,7 @@ def main():
         client_socket, addr = server_socket.accept()
         print("Client connected:", addr)
 
-        threading.Thread(
-            target = client_communication_thread, args = (client_socket,hardware), daemon = True
-        ).start()
+        threading.Thread(target = client_communication_thread, args = (client_socket, hardware), daemon = True).start()
 
 
 if __name__ == "__main__":

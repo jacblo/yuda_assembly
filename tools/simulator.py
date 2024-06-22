@@ -365,7 +365,7 @@ def write_into_mem(memory, starting_address, data: bytes | list):
             break
         memory[starting_address+i] = number
 
-
+JUMPS = 0 # for debug purposes, we count JUMPS, very little overhead to speed (i tested)
 # numerical vs string based, string based may be implemented soon
 def simulate_numerical(machine_code_str: str, print_callback, input_callback) -> None:
     """Simulates the execution of base 10 machine code for the base 10 processor. expects a bunch of
@@ -386,6 +386,8 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
                                     than that should still just be 99. list of numbers should be
                                     a list, list of chars should be char string.
     """
+    global JUMPS
+    
     # state
     memory = [0]*(MEMSIZE+1)    # +1 so if you load position 100 which is illegal you'll get 0 which
                                 # will stop syscalls and also be the same as ret and stop the
@@ -555,13 +557,14 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
             if (requires_less):
                 if (last_cmp_result >= 0): satisfied = 0
             elif (requires_greater):
-                if (last_cmp_result <= 0): satisfied = 0
+                if (last_cmp_result >= 500000): satisfied = 0 # in 10's complement that's the smallest number
             elif (requires_eq):
                 if (last_cmp_result != 0): satisfied = 0
             elif (requires_ne):
                 if (last_cmp_result == 0): satisfied = 0
             
             if satisfied:
+                JUMPS += 1
                 IP = alu_out % 100 # right most two digits
             else:
                 IP += 1
@@ -584,3 +587,4 @@ if __name__ == "__main__":
             # this testing env doesn't support text that's waiting and such.
             _, regs, _ = simulate_numerical(machine_code, print, lambda _: input(": "))
             print("AX =", str(regs[0]).zfill(6))
+    print(f"{JUMPS=}")

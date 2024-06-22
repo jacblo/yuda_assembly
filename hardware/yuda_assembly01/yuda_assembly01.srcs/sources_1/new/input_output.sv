@@ -174,6 +174,7 @@ module input_output(
             else begin // sending
                 // we don't run if just_started_operation because we need a cycle to have memory informed of first address
                 if (tx_ready && !just_started_operation) begin // wait to send until we can
+                    // if (0);
                     if (!sent_request && position_min == 0) begin // if it's whole words first we send the special code
                         tx_dv = 1; // send
                         sent_request = 1; // only send this once
