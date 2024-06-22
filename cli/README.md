@@ -7,3 +7,6 @@ that's the server
 
 from the parent yuda_assembly directory run `python -m cli.client`
 that's the client.
+
+# Limitations
+this doesn't yet always handle errors correctly... so for example giving not a number to the hardware is caught but not in simulation. this will be fixed of course
