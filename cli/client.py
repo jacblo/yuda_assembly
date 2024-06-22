@@ -4,7 +4,10 @@ import threading
 
 def main():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect(('localhost', 8800))
+    try:
+        client_socket.connect(('localhost', 8800))
+    except ConnectionRefusedError:
+        client_socket.connect((input("what ip is the server on: "), 8800))
 
     aes_key = protocol.client_side_handshake(client_socket)
     

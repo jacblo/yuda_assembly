@@ -490,7 +490,7 @@ def main():
     # on computers that don't free the port right after running.
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     
-    server_socket.bind(('localhost', 8800))
+    server_socket.bind(('0.0.0.0', 8800)) # not localhost, so it can accept traffic from lan
     server_socket.listen(1)
     print("Server listening...")
     
