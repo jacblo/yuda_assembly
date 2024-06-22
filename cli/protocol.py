@@ -3,7 +3,6 @@ from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 import socket
-import select
 
 #               socket communication
 def recvall(sock: socket.socket, length):
@@ -104,7 +103,3 @@ def get_encrypted_message(sock: socket.socket, aes_key: bytes) -> bytes:
     iv = ciphertext[:AES.block_size]
     message = aes_decrypt(ciphertext[AES.block_size:], aes_key, iv)
     return message
-
-def is_input_available(socket: socket.socket):
-    readable, _, _ = select.select([socket], [], [], 0)
-    return bool(readable)
