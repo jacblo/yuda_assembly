@@ -1,0 +1,7 @@
+mov ax, save_location
+syscall 3
+syscall 2
+syscall 7
+syscall 6
+ret
+save_location: 0

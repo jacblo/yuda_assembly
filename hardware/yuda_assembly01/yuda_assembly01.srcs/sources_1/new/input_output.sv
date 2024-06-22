@@ -95,6 +95,7 @@ module input_output(
                     position_min = 0; // so we send full word
                     one_word = 1;
                     sending = 1;
+                    tx_data = 'h90; // sending a number
                 end
 
                 5: begin // wait to receive word from host (AX is address to save in)
@@ -108,6 +109,7 @@ module input_output(
                     position_min = 0; // so we send full words
                     one_word = 0;
                     sending = 1;
+                    tx_data = 'h91; // sending numbers
                 end
                 
                 7: begin // receive null-terminated string of whole words from host (AX is address to write to)
@@ -122,7 +124,6 @@ module input_output(
                     position_min = 2; // so we get only a char
                     one_word = 1;
                     sending = 0;
-
                     tx_data = 'h84; // waiting for amount of waiting input
                 end
                 
@@ -173,23 +174,29 @@ module input_output(
             else begin // sending
                 // we don't run if just_started_operation because we need a cycle to have memory informed of first address
                 if (tx_ready && !just_started_operation) begin // wait to send until we can
-                    tx_data = read_data[position];
-                    tx_dv = 1; // send
-                    
-                    if (position == 2) begin
-                        // if we're at null-terminator
-                        if (((read_data[0] == 0 && read_data[1] == 0 && read_data[2] == 0) && position_min == 0)  || 
-                            (read_data[2] == 0 && position_min == 2) || one_word) begin
-                            
-                            done = 1;
-                        end
-
-                        // prep for next word
-                        position = position_min;
-                        address++;
+                    if (!sent_request && position_min == 0) begin // if it's whole words first we send the special code
+                        tx_dv = 1; // send
+                        sent_request = 1; // only send this once
                     end
-                    else
-                        position++;
+                    else begin
+                        tx_data = read_data[position];
+                        tx_dv = 1; // send
+                        
+                        if (position == 2) begin
+                            // if we're at null-terminator
+                            if (((read_data[0] == 0 && read_data[1] == 0 && read_data[2] == 0) && position_min == 0)  || 
+                                (read_data[2] == 0 && position_min == 2) || one_word) begin
+                                
+                                done = 1;
+                            end
+
+                            // prep for next word
+                            position = position_min;
+                            address++;
+                        end
+                        else
+                            position++;
+                    end
 
                 end
             end

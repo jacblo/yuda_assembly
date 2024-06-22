@@ -22,6 +22,20 @@ def get_message(sock: socket.socket) -> bytes:
     length = int.from_bytes(length_bytes, 'big')
     return recvall(sock, length)
 
+# This is based on StackOverflow https://stackoverflow.com/a/62277798/14103406
+def is_socket_closed(sock: socket.socket) -> bool:
+    try:
+        # this will try to read bytes without blocking and also without removing them from buffer (peek only)
+        data = sock.recv(16, socket.MSG_DONTWAIT | socket.MSG_PEEK)
+        if len(data) == 0:
+            return True
+    except BlockingIOError:
+        return False  # socket is open and reading from it would block
+    except ConnectionResetError:
+        return True  # socket was closed for some other reason
+    return False
+
+
 #                   Encryption
 # Server side
 def generate_rsa_key_pair():

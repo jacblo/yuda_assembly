@@ -454,7 +454,7 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
                     
                 case 6: # send null terminated string of whole words to host (AX is the address to send)
                     to_send = seek_until_zero(memory, registers[0], True)
-                    print_callback(to_send)
+                    print_callback(1, to_send)
                     
                 case 7: # receive null-terminated string of whole words from host (AX is address to write to)
                     data = input_callback(3)
@@ -469,13 +469,13 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
             
         # exceptions
         if unknown_op:
-            print_callback(b'\xf0')
+            print_callback(0, b'\xf0')
             break
         if unknown_reg:
-            print_callback(b'\xf1')
+            print_callback(0, b'\xf1')
             break
         if unknown_syscall:
-            print_callback(b'\xf2')
+            print_callback(0, b'\xf2')
             break
         
         

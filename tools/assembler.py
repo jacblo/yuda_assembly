@@ -30,7 +30,11 @@ def char_representation(char, line=None):
         7: 99, # BEL
     }
     
-    ascii = ord(char)
+    if type(char) in (bytes, str):
+        ascii = ord(char)
+    else:
+        ascii = char
+        
     if ascii > 126: # not in ascii, and 0x7f isn't printable either
         raise SyntaxError(f"Character isn't part of character set. line {line}")
     if ascii in special_translations:

@@ -36,6 +36,9 @@ overview of messages:
         0x82: waiting for 3 chars - meaning one word of input
         0x83: waiting for null-terminated input of words, so null-terminator is a word of 3 zeros.
         0x84: is there input waiting?
+        
+        0x90: sending a whole number/word, not just single value
+        0x91: sending word list, not just char
 
         // exceptions & control
         0xf0: unknown opcode
