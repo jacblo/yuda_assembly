@@ -33,8 +33,8 @@ def main():
                             with open(file_path, "r") as f:
                                 to_send = f.read()
                                 break
-                        except FileNotFoundError:
-                            print("File not found. try again")
+                        except (FileNotFoundError, IsADirectoryError):
+                            print("File not found or isn't a file. try again")
                     
                     protocol.send_encrypted_message(client_socket, aes_key, to_send.encode('utf-8'))
                 

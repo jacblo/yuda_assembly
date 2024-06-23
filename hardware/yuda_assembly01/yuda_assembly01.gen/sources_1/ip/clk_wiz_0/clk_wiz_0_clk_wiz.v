@@ -88,7 +88,7 @@ wire clk_in2_clk_wiz_0;
   //    * Unused outputs are labeled unused
 
   wire        clk_50Mhz_clk_wiz_0;
-  wire        clk_out2_clk_wiz_0;
+  wire        clk_25Mhz_clk_wiz_0;
   wire        clk_out3_clk_wiz_0;
   wire        clk_out4_clk_wiz_0;
   wire        clk_out5_clk_wiz_0;
