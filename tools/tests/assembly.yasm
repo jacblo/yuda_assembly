@@ -10,7 +10,7 @@ mOV bX, PTR [AX]
     other_label:syscall 12
     15 023 3
     0x23 0b101 0b0
-'c' 'x' 't'
+'c' 'x' 't' ; this tests putting a few chars together into one word
 jmp other_label
 mov AX, [some_label]
 mov BX, other_label
