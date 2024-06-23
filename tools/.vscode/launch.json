@@ -23,8 +23,8 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "tests/test_program.txt"
-                // "tests/fibonacci_output.txt"
+                // "tests/test_program.txt"
+                "tests/fibonacci_output.txt"
             ]
         }
     ]

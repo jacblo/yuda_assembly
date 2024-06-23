@@ -17,42 +17,42 @@ IR : instruction register, stores the current instruction, not really implemente
 opcode: instruction (explanation, optional)
 -------------------------------------------
 00: ret (simply ends program)
-01: mov register, constant
-02: mov register, register
-03: mov register, memory
-04: mov memory, constant
-05: mov memory, register
+01: mov register, constant (register = constant)
+02: mov registerA, registerB (registerA = registerB)
+03: mov register, memory_address (register = memory[memory_address])
+04: mov memory_address, constant (memory[memory_address] = constant)
+05: mov memory_address, register (memory[memory_address] = register)
 
-06: add register, constant
-07: add register, register
+06: add register, constant (register = register + constant)
+07: add registerA, registerB (registerA = registerA + registerB)
 
-08: cmp register, constant
-09: cmp register, register
+08: cmp register, constant (register - constant, only updating cmp flags, not saving anywhere)
+09: cmp registerA, registerB (registerA - registerB, only updating cmp flags, not saving anywhere)
 
-10: jmp constant
-11: jmp register
-12: je constant
-13: je register
+10: jmp constant (IP = constant)
+11: jmp register (IP = register)
+12: je constant (if (last calculation was equal to 0) IP = constant)
+13: je register (if (last calculation was equal to 0) IP = register)
 
 
 
-// notes, i've added many repetative instructions because they make coding simpler, and since there are only 100 words of memory, being a CISC is better, so this is closer to a CISC, with many slightly redundant instructions, all have had a lot of thought put into them though, so please refer questions to me if i forgot to document some decisions here.
+// note: i've added many repetative instructions because they make coding simpler, and since there are only 100 words of memory, being a CISC is better, so this is closer to a CISC, with many slightly redundant instructions, all have had a lot of thought put into them though, so please refer questions to me if i forgot to document some decisions here.
 
 my additions:
 14: mov registerA, PTR [registerB] (registerA = mem[registerB])
 15: mov PTR [registerA], registerB (mem[registerA] = registerB)
-16: sub register, register
+16: sub registerA, registerB (registerA = registerA - registerB)
 17: sub register, constant (can't be replaced by addition with 10's complement because that would require signed vs unsigned stuff regarding sign extension which is hard in base 10, this is better)
 18: sub constant, register (seperate because order matters in subtraction, still saves to register)
 19: cmp constant, register (same reason, matters for jl)
-20: jne constant (if not equal, then IP = constant)
-21: jne register (if not equal, then IP = register)
-22: jl constant (if less than, then IP = constant)
-23: jl register (if less than, then IP = register)
+20: jne constant (if not equal to 0, then IP = constant)
+21: jne register (if not equal to 0, then IP = register)
+22: jl constant (if less than 0, then IP = constant)
+23: jl register (if less than 0, then IP = register)
 
 (these are included because it shortens a few instructions down into one, worth it when there are only 100 words of memory... e.g. when doing binary search, reduces cmp operations needed)
-24: jg constant (if greater than, then IP = constant)
-25: jg register (if greater than, then IP = register)
+24: jg constant (if greater than 0, then IP = constant)
+25: jg register (if greater than 0, then IP = register)
 
 26: syscall <constant - syscall number>  // handled as such, AX is the address, in all of them where ax is address, first 4 digits are ignored.
 index of syscall codes:
@@ -66,5 +66,4 @@ index of syscall codes:
     7: receive null-terminated string of whole words from host (AX is address to write to) (used for getting array of numbers directly)
     8: check if there's a word waiting to be received (AX is address to write result to)
 
-allow IP access through register 99, adds complexity but very useful, replaces jump register
-    and also allows calculations on IP, for specialized jumping
+u can access IP through register 99. allows calculations on IP, for specialized jumping

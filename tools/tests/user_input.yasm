@@ -1,7 +1,10 @@
 mov ax, save_location
 syscall 3
+; mov ax, save_location
 syscall 2
+mov ax, save_location
 syscall 7
+; mov ax, save_location
 syscall 6
 ret
 save_location: 0

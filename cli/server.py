@@ -36,10 +36,16 @@ class HardwareManager:
     def test_hardware(self):
         """makes sure the hardware is responding correctly to trivial input, to make sure it's running
         """
+        self.ser_connection.reset_input_buffer() # clear the input buffer
         self.ser_connection.write(b"\xff") # start sending something
-        self.ser_connection.write(b"\xfa") # stop sending after nothing
+        self.ser_connection.write(b"\0\0\0") # one word - 0
+        self.ser_connection.write(b"\xfa") # stop sending
         dat = self.ser_connection.read(2)
-        assert dat == b'\0\xff' # checksum of nothing is 0, and 0xff for done running
+        try:
+            assert dat == b'\0\xff' # checksum of nothing is 0, and 0xff for done running
+        except AssertionError as err:
+            print(f"Assert failed. didn't get b'\\0\\xff', instead got {dat!r}. Error was:")
+            raise err
     
     def send_program(self, machine_code, clear_received = True):
         """runs the program on hardware
@@ -206,7 +212,7 @@ class HardwareManager:
 
                             # convert it
                             number = decimal_number[0]*10000 + decimal_number[1]*100 + decimal_number[2]
-                            print_to_client(client_socket, aes_key,str(number)+"\n")
+                            print_to_client(client_socket, aes_key,str(number))
                         
                         elif hardware_first_byte[0] == 0x91: # list of numbers
                             # keep getting input until we have null terminator, needed because of timeout
@@ -217,11 +223,11 @@ class HardwareManager:
                             # convert it
                             decimal_numbers = decimal_numbers[:-3] # cut off null terminator
                             to_print = []
-                            for i in range(decimal_numbers//3): # convert each number seperately
+                            for i in range(len(decimal_numbers)//3): # convert each number seperately
                                 number = decimal_numbers[3*i]*10000 + decimal_numbers[3*i + 1]*100 + decimal_numbers[3*i + 2]
                                 to_print.append(str(number))
 
-                            print_to_client(client_socket, aes_key,"["+", ".join(to_print)+"]\n") # print as a list
+                            print_to_client(client_socket, aes_key,"["+", ".join(to_print)+"]") # print as a list
                     
                     elif hardware_first_byte[0] & 0xf0 == 0xf0: # it's an exception
                         match hardware_first_byte[0]:
@@ -234,7 +240,7 @@ class HardwareManager:
                                 print_to_client(client_socket, aes_key,"Error: Unkown syscall number was reached.")
                             case 0xff:
                                 elapsed = time.time() - start_time
-                                print_to_client(client_socket, aes_key,f"Program ended in {elapsed} seconds.")
+                                print_to_client(client_socket, aes_key,f"Program ended in {elapsed:.5f} seconds.")
                                 
                         
                         break # we have ended execution
@@ -368,10 +374,12 @@ def input_converter(input_type, input_value):
         case 1:
             return int(input_value)
         case 2:
-            return b"".join(tools.assembler.char_representation(char).to_bytes(1,'big') for char in input_value)
+            return b"".join(tools.assembler.char_representation(char).to_bytes(1,'big') for char in input_value)+b"\0"
         case 3:
+            if input_value.strip() == b"": # empty line
+                return [0]
             split_input = re.split(b'[, \t]+', input_value)
-            return [int(val) for val in split_input]
+            return [int(val) for val in split_input] + [0] # add null terminator to the end
         case 4:
             return 0 # not implemented, so always nothing is waiting
         case _:
@@ -381,6 +389,10 @@ def input_converter(input_type, input_value):
 documentation = """List of commands
 ---------------------------
 docs: get these docs
+instruction docs: get the documentation on the instruction set
+                  and how to write machine code or assembly for
+                  this processor.
+
 asm file: given an assembly file in yuda's assembly format,
           it will be assembled and the machine code returned
 machine code: given a machine code file, which is just a file
@@ -426,6 +438,12 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
             match user_command.lower(): # we're case insensitive
                 case "docs":
                     print_to_client(client_socket, aes_key, documentation)
+                
+                case "instruction docs":
+                    with open("hardware/instruction set details.txt", "r") as f:
+                        docs = f.read()
+                    print_to_client(client_socket, aes_key, docs)
+                
                 case "asm file": # assemble file
                     asm_file = ask_for_file_from_client(client_socket, aes_key, "file to assemble: ").decode("utf-8")
                     try:
@@ -454,7 +472,7 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                         lambda a: input_converter(a, input_from_client(client_socket, aes_key, "Program asking for input: "))
                     )
                     elapsed = time.time() - start_time
-                    print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed} seconds")
+                    print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed:.5f} seconds")
                 
                 case "run hardware":
                     if last_machine_code is None:

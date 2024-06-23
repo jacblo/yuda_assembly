@@ -555,9 +555,9 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
         if is_jmp:
             satisfied = 1
             if (requires_less):
-                if (last_cmp_result >= 0): satisfied = 0
+                if (500000 > last_cmp_result >= 0): satisfied = 0
             elif (requires_greater):
-                if (last_cmp_result >= 500000): satisfied = 0 # in 10's complement that's the smallest number
+                if (last_cmp_result > 500000 or last_cmp_result == 0): satisfied = 0 # in 10's complement that's the smallest number
             elif (requires_eq):
                 if (last_cmp_result != 0): satisfied = 0
             elif (requires_ne):
