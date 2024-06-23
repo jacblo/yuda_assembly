@@ -129,6 +129,7 @@ class HardwareManager:
                 if protocol.is_socket_closed(client_socket):
                     print("Client killed by disconnecting. stopping execution")
                     break
+                last_ping = time.time()
         
             
             hardware_first_byte = self.ser_connection.read(1)
@@ -143,7 +144,13 @@ class HardwareManager:
                         while True: # keep asking for input until it's legal
                             match hardware_first_byte[0]:
                                 case 0x80:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for one char of input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for one char of input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
+                                    
                                     if len(input_value) != 1:
                                         print_to_client(client_socket, aes_key, "More than one character was given, inputting first of them")
                                     
@@ -156,7 +163,12 @@ class HardwareManager:
                                         break
                                 
                                 case 0x81:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a line of input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a line of input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
                                     
                                     try:
                                         to_send = input_converter(2, input_value)
@@ -167,7 +179,12 @@ class HardwareManager:
                                         break
                                 
                                 case 0x82:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a number input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a number input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
                                     
                                     try:
                                         to_send = input_converter(1, input_value)
@@ -181,7 +198,13 @@ class HardwareManager:
                                             break
                                 
                                 case 0x83:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for list of numbers as input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for list of numbers as input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
+                                    
                                     
                                     try:
                                         to_send = input_converter(3, input_value)
@@ -498,11 +521,17 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                         print_to_client(client_socket, aes_key, "Error: no machine code to run")
                         continue
                     start_time = time.time()
-                    tools.simulator.simulate_numerical(
-                        last_machine_code,
-                        lambda print_type, to_print: print_to_client(client_socket, aes_key, runner_print(print_type, to_print)),
-                        lambda input_type: client_input_getter(client_socket, aes_key, input_type)
-                    )
+                    try:
+                        tools.simulator.simulate_numerical(
+                            last_machine_code,
+                            lambda print_type, to_print: print_to_client(client_socket, aes_key, runner_print(print_type, to_print)),
+                            lambda input_type: client_input_getter(client_socket, aes_key, input_type),
+                            lambda: not protocol.is_socket_closed(client_socket) # fast enough to not affect runtime
+                        )
+                    except RuntimeError:
+                        print("Client killed by disconnecting. stopping execution of simulation")
+                        break
+                        
                     elapsed = time.time() - start_time
                     print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed:.5f} seconds")
                 
@@ -520,7 +549,7 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                 case _:
                     print_to_client(client_socket, aes_key, "Unkown command. try again")
         
-        except (ConnectionResetError, BrokenPipeError): # client disconnected in the middle
+        except (ConnectionResetError, BrokenPipeError, RuntimeError): # client disconnected in the middle
             print("Client disconnected in the middle of command, stopping.")
             break
     try:

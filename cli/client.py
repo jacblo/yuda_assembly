@@ -43,7 +43,6 @@ def main():
                     break
                 
     except KeyboardInterrupt:
-        protocol.send_encrypted_message(client_socket, aes_key, b"exit") # in case waiting for input
         print("Stopped.")
 
 if __name__ == "__main__":

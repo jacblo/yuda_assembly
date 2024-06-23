@@ -3,6 +3,7 @@ This module is used to simulate the execution of base 10 machine code for the ba
 If the file is run directly - expects a command line argument of the file path to the machine code.
 """
 MEMSIZE = 100
+import time # for periodic running of check_running
 
 def decode_instruction(opcode, operand1, operand2):
     """given 3 parts of instruction, outputs what to do as tuple
@@ -360,7 +361,7 @@ def write_into_mem(memory, starting_address, data: bytes | list):
         memory[starting_address+i] = number
 
 JUMPS = 0 # for debug purposes, we count JUMPS, very little overhead to speed (i tested)
-def simulate_numerical(machine_code_str: str, print_callback, input_callback) -> None:
+def simulate_numerical(machine_code_str: str, print_callback, input_callback, check_running):
     """Simulates the execution of base 10 machine code for the base 10 processor. expects a bunch of
     lines, each one 6 digits in base 10. each line being one word in the machine code ofc.
     it does not handle converting of the character set, as it doesn't assume that i/o is characters.
@@ -379,6 +380,9 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
                                     note that waiting input should be capped at 99, if there's more
                                     than that should still just be 99. list of numbers should be
                                     a list, list of chars should be char string.
+        check_running (function): when run, it should return a boolean saying whether to continue
+                                    running, this way the user can kill execution or whatever. it's
+                                    checked periodically
     """
     global JUMPS
     JUMPS = 0
@@ -403,8 +407,18 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback) ->
         
         memory[i] = int(line)
 
+    last_checked_running = time.time()
+
     # running
     while True:
+        # doesn't meaningfully affect runtime, i tested on very long running programs. as long as
+        # check_running is quick
+        if time.time() - last_checked_running > 1: # check around once per second
+            if not check_running():
+                print("Simulation stopped in the middle")
+                break
+            last_checked_running = time.time()
+        
         instruction = memory[IP] # assumed to be integer in range [0-999999]
         opcode = instruction//10000 # right most two digits
         operand1 = (instruction//100)%100 # middle two digits
@@ -615,7 +629,7 @@ def write_into_mem_strings(memory, starting_address, data: bytes | list):
         memory[starting_address+i] = str(number).zfill(6)
 
 
-def simulate_strings(machine_code_str: str, print_callback, input_callback) -> None:
+def simulate_strings(machine_code_str: str, print_callback, input_callback, check_running):
     """Simulates the execution of base 10 machine code for the base 10 processor. expects a bunch of
     lines, each one 6 digits in base 10. each line being one word in the machine code ofc.
     it does not handle converting of the character set, as it doesn't assume that i/o is characters.
@@ -636,6 +650,9 @@ def simulate_strings(machine_code_str: str, print_callback, input_callback) -> N
                                     note that waiting input should be capped at 99, if there's more
                                     than that should still just be 99. list of numbers should be
                                     a list, list of chars should be char string.
+        check_running (function): when run, it should return a boolean saying whether to continue
+                                    running, this way the user can kill execution or whatever. it's
+                                    checked periodically
     """
     global JUMPS
     JUMPS = 0
@@ -661,8 +678,18 @@ def simulate_strings(machine_code_str: str, print_callback, input_callback) -> N
         
         memory[i] = line
 
+    last_checked_running = time.time()
+
     # running
     while True:
+        # doesn't meaningfully affect runtime, i tested on very long running programs. as long as
+        # check_running is quick
+        if time.time() - last_checked_running > 1: # check around once per second
+            if not check_running():
+                print("Simulation stopped in the middle")
+                break
+            last_checked_running = time.time()
+            
         instruction = memory[IP] # assumed to be integer in range [0-999999]
         opcode = instruction[:2] # right most two digits
         operand1 = instruction[2:4] # middle two digits
@@ -840,7 +867,7 @@ if __name__ == "__main__":
             machine_code = file.read()
             
             # this testing env doesn't support text that's waiting and such.
-            _, regs, _ = simulate_numerical(machine_code, print, lambda _: input(": "))
-            # _, regs, _ = simulate_strings(machine_code, print, lambda _: input(": "))
+            _, regs, _ = simulate_numerical(machine_code, print, lambda _: input(": "), lambda: True)
+            # _, regs, _ = simulate_strings(machine_code, print, lambda _: input(": "), lambda: True) # turns out it's slower
             print("AX =", str(regs[0]).zfill(6))
     print(f"{JUMPS=}")
