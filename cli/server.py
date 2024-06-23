@@ -373,19 +373,43 @@ def input_converter(input_type, input_value):
         case 0:
             return tools.assembler.char_representation(input_value[0])
         case 1:
-            return int(input_value)
+            result = int(input_value)
+            if result < 0 or result > 999999:
+                raise ValueError(f"Number was outside of range 0-999999")
+            return result
         case 2:
             return b"".join(tools.assembler.char_representation(char).to_bytes(1,'big') for char in input_value)+b"\0"
         case 3:
             if input_value.strip() == b"": # empty line
                 return [0]
-            split_input = re.split(b'[, \t]+', input_value)
-            return [int(val) for val in split_input] + [0] # add null terminator to the end
+            split_input = re.split(b'[, \t]+', input_value.strip())
+            results = [int(val) for val in split_input] + [0] # add null terminator to the end
+            for res in results:
+                if res < 0 or res > 999999:
+                    raise ValueError(f"Number was outside of range 0-999999")
+            return results
         case 4:
             return 0 # not implemented, so always nothing is waiting
         case _:
             raise ValueError(f"Unkown {input_type=}, expects 0-4")
 
+def client_input_getter(sock: socket.socket, aes_key: bytes, input_type):
+    prompts = (
+        "Program asking for one char: ",
+        "Program asking for a number: ",
+        "Program asking for line of input: ",
+        "program asking for list of number: ",
+        None
+    )
+    prompt = prompts[input_type]
+    if prompt is None:
+        return 0 # not implemented, so always nothing is waiting
+    
+    while True:
+        try:
+            return input_converter(input_type, input_from_client(sock, aes_key, prompt))
+        except (ValueError, SyntaxError):
+            print_to_client(sock, aes_key, "Invalid input. try again.")
 
 documentation = """List of commands
 ---------------------------
@@ -476,8 +500,8 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                     start_time = time.time()
                     tools.simulator.simulate_numerical(
                         last_machine_code,
-                        lambda a,b: print_to_client(client_socket, aes_key, runner_print(a,b)),
-                        lambda a: input_converter(a, input_from_client(client_socket, aes_key, "Program asking for input: "))
+                        lambda print_type, to_print: print_to_client(client_socket, aes_key, runner_print(print_type, to_print)),
+                        lambda input_type: client_input_getter(client_socket, aes_key, input_type)
                     )
                     elapsed = time.time() - start_time
                     print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed:.5f} seconds")
