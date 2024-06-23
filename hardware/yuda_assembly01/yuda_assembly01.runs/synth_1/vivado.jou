@@ -3,12 +3,12 @@
 # SW Build 4126759 on Thu Feb  8 23:52:05 MST 2024
 # IP Build 4126054 on Fri Feb  9 11:39:09 MST 2024
 # SharedData Build 4115275 on Tue Jan 30 00:40:57 MST 2024
-# Start of session at: Sun Jun 23 16:41:15 2024
-# Process ID: 900462
+# Start of session at: Sun Jun 23 22:19:17 2024
+# Process ID: 1100396
 # Current directory: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1
 # Command line: vivado -log top_level_circuit.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top_level_circuit.tcl
 # Log file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/top_level_circuit.vds
 # Journal file: /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/synth_1/vivado.jou
-# Running On: BSERVER05, OS: Linux, CPU Frequency: 3799.995 MHz, CPU Physical cores: 6, Host memory: 33561 MB
+# Running On: BSERVER05, OS: Linux, CPU Frequency: 3800.006 MHz, CPU Physical cores: 6, Host memory: 33561 MB
 #-----------------------------------------------------------
 source top_level_circuit.tcl -notrace

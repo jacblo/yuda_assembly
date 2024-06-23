@@ -18,6 +18,7 @@ module top_level_circuit(
         // Clock in ports
         .clk_in1(clk_in)
     );
+    // assign clk = clk_in;
 
     //          UART Controller
     reg [7:0] uart_output_data;
@@ -187,6 +188,8 @@ module top_level_circuit(
     wire io_cont_unknown_op;
     wire io_cont_is_ret;
 
+    wire [6:0] io_cont_current_IP;
+
     wire io_cont_io_done;
     wire io_cont_exception_done;
     wire io_cont_loader_done;
@@ -205,6 +208,7 @@ module top_level_circuit(
         io_cont_unknown_reg,
         io_cont_unknown_op,
         io_cont_is_ret,
+        io_cont_current_IP,
         io_cont_io_done,
         io_cont_exception_done,
         io_cont_loader_done,
@@ -231,6 +235,7 @@ module top_level_circuit(
     assign io_cont_unknown_reg = proc_unknown_reg;
     assign io_cont_unknown_op = proc_unknown_op;
     assign io_cont_is_ret = proc_is_ret;
+    assign io_cont_current_IP = proc_IP;
 
     // processor -> syscall
     assign syscall_current_IP = proc_IP;

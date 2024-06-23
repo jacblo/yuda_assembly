@@ -46,6 +46,7 @@ class HardwareManager:
         except AssertionError as err:
             print(f"Assert failed. didn't get b'\\0\\xff', instead got {dat!r}. Error was:")
             raise err
+        print("Hardware connected and running correctly")
     
     def send_program(self, machine_code, clear_received = True):
         """runs the program on hardware

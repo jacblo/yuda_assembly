@@ -59,8 +59,9 @@ module register_file(
         endcase
     end
 
+    reg changed_ip_last = 0; // 1 if ip changed in last cycle
+
     // register setting
-    reg last_dont_inc = 0;
     always @(posedge clk, posedge reset) begin
         if (reset) begin // if was just reset
             IP_reg = 0;
@@ -72,12 +73,15 @@ module register_file(
         
         else begin
             if (WriteIP) begin
+                changed_ip_last = 1;
                 IP_reg = newIP;
             end
-            else if (running && !(dont_inc && !last_dont_inc)) begin // if new dont_inc
+            else if (running && !(dont_inc && changed_ip_last)) begin // if dont_inc is on a new instruction, we don't increment
+                changed_ip_last = 1;
                 IP_reg ++;
             end
-            last_dont_inc = dont_inc; // update it
+            else
+                changed_ip_last = 0;
         
             if (RegWrite) begin
                 case (writeReg)
@@ -89,5 +93,6 @@ module register_file(
             
             running = IP_reg < 100;
         end
+
     end
 endmodule
