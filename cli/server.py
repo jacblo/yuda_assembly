@@ -46,6 +46,7 @@ class HardwareManager:
         except AssertionError as err:
             print(f"Assert failed. didn't get b'\\0\\xff', instead got {dat!r}. Error was:")
             raise err
+        print("Hardware connected and running correctly")
     
     def send_program(self, machine_code, clear_received = True):
         """runs the program on hardware
@@ -128,6 +129,7 @@ class HardwareManager:
                 if protocol.is_socket_closed(client_socket):
                     print("Client killed by disconnecting. stopping execution")
                     break
+                last_ping = time.time()
         
             
             hardware_first_byte = self.ser_connection.read(1)
@@ -142,7 +144,13 @@ class HardwareManager:
                         while True: # keep asking for input until it's legal
                             match hardware_first_byte[0]:
                                 case 0x80:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for one char of input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for one char of input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
+                                    
                                     if len(input_value) != 1:
                                         print_to_client(client_socket, aes_key, "More than one character was given, inputting first of them")
                                     
@@ -155,7 +163,12 @@ class HardwareManager:
                                         break
                                 
                                 case 0x81:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a line of input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a line of input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
                                     
                                     try:
                                         to_send = input_converter(2, input_value)
@@ -166,7 +179,12 @@ class HardwareManager:
                                         break
                                 
                                 case 0x82:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a number input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for a number input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
                                     
                                     try:
                                         to_send = input_converter(1, input_value)
@@ -180,7 +198,13 @@ class HardwareManager:
                                             break
                                 
                                 case 0x83:
-                                    input_value = input_from_client(client_socket, aes_key, "Hardware waiting for list of numbers as input: ")
+                                    try:
+                                        input_value = input_from_client(client_socket, aes_key, "Hardware waiting for list of numbers as input: ")
+                                    except RuntimeError:
+                                        print("Client killed by disconnecting. stopping execution")
+                                        self.max_runtime = 0 # so we stop running completely
+                                        break
+                                    
                                     
                                     try:
                                         to_send = input_converter(3, input_value)
@@ -372,19 +396,43 @@ def input_converter(input_type, input_value):
         case 0:
             return tools.assembler.char_representation(input_value[0])
         case 1:
-            return int(input_value)
+            result = int(input_value)
+            if result < 0 or result > 999999:
+                raise ValueError(f"Number was outside of range 0-999999")
+            return result
         case 2:
             return b"".join(tools.assembler.char_representation(char).to_bytes(1,'big') for char in input_value)+b"\0"
         case 3:
             if input_value.strip() == b"": # empty line
                 return [0]
-            split_input = re.split(b'[, \t]+', input_value)
-            return [int(val) for val in split_input] + [0] # add null terminator to the end
+            split_input = re.split(b'[, \t]+', input_value.strip())
+            results = [int(val) for val in split_input] + [0] # add null terminator to the end
+            for res in results:
+                if res < 0 or res > 999999:
+                    raise ValueError(f"Number was outside of range 0-999999")
+            return results
         case 4:
             return 0 # not implemented, so always nothing is waiting
         case _:
             raise ValueError(f"Unkown {input_type=}, expects 0-4")
 
+def client_input_getter(sock: socket.socket, aes_key: bytes, input_type):
+    prompts = (
+        "Program asking for one char: ",
+        "Program asking for a number: ",
+        "Program asking for line of input: ",
+        "program asking for list of number: ",
+        None
+    )
+    prompt = prompts[input_type]
+    if prompt is None:
+        return 0 # not implemented, so always nothing is waiting
+    
+    while True:
+        try:
+            return input_converter(input_type, input_from_client(sock, aes_key, prompt))
+        except (ValueError, SyntaxError):
+            print_to_client(sock, aes_key, "Invalid input. try again.")
 
 documentation = """List of commands
 ---------------------------
@@ -473,11 +521,17 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                         print_to_client(client_socket, aes_key, "Error: no machine code to run")
                         continue
                     start_time = time.time()
-                    tools.simulator.simulate_numerical(
-                        last_machine_code,
-                        lambda a,b: print_to_client(client_socket, aes_key, runner_print(a,b)),
-                        lambda a: input_converter(a, input_from_client(client_socket, aes_key, "Program asking for input: "))
-                    )
+                    try:
+                        tools.simulator.simulate_numerical(
+                            last_machine_code,
+                            lambda print_type, to_print: print_to_client(client_socket, aes_key, runner_print(print_type, to_print)),
+                            lambda input_type: client_input_getter(client_socket, aes_key, input_type),
+                            lambda: not protocol.is_socket_closed(client_socket) # fast enough to not affect runtime
+                        )
+                    except RuntimeError:
+                        print("Client killed by disconnecting. stopping execution of simulation")
+                        break
+                        
                     elapsed = time.time() - start_time
                     print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed:.5f} seconds")
                 
@@ -495,7 +549,7 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                 case _:
                     print_to_client(client_socket, aes_key, "Unkown command. try again")
         
-        except (ConnectionResetError, BrokenPipeError): # client disconnected in the middle
+        except (ConnectionResetError, BrokenPipeError, RuntimeError): # client disconnected in the middle
             print("Client disconnected in the middle of command, stopping.")
             break
     try:

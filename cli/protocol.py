@@ -8,6 +8,8 @@ import socket
 def recvall(sock: socket.socket, length):
     out = b""
     while len(out) < length:
+        if is_socket_closed(sock):
+            raise RuntimeError("Socket disconnected")
         out += sock.recv(length - len(out))
     return out
 

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2.2 (lin64) Build 4126759 Thu Feb  8 23:52:05 MST 2024
-| Date         : Sun Jun 23 16:44:24 2024
+| Date         : Mon Jun 24 00:38:29 2024
 | Host         : BSERVER05 running 64-bit Linux Mint 21.3
 | Command      : report_control_sets -verbose -file top_level_circuit_control_sets_placed.rpt
 | Design       : top_level_circuit
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |   136 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |   453 |
+| Unused register locations in slices containing registers |   458 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -43,10 +43,10 @@ Table of Contents
 | >= 0 to < 4        |    17 |
 | >= 4 to < 6        |     4 |
 | >= 6 to < 8        |     2 |
-| >= 8 to < 10       |     4 |
+| >= 8 to < 10       |     5 |
 | >= 10 to < 12      |     0 |
 | >= 12 to < 14      |     0 |
-| >= 14 to < 16      |     1 |
+| >= 14 to < 16      |     0 |
 | >= 16              |   108 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
@@ -58,157 +58,157 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |             205 |           88 |
+| No           | No                    | No                     |             205 |           77 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |              79 |           27 |
-| Yes          | No                    | Yes                    |              65 |           31 |
-| Yes          | Yes                   | No                     |            2110 |          701 |
+| Yes          | No                    | No                     |              79 |           35 |
+| Yes          | No                    | Yes                    |              60 |           10 |
+| Yes          | Yes                   | No                     |            2110 |          711 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------------------------------------------+----------------------------------------------+-------------------------------+------------------+----------------+--------------+
-|                    Clock Signal                    |                 Enable Signal                |        Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------------------------------------------+----------------------------------------------+-------------------------------+------------------+----------------+--------------+
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[5]_i_1_n_0           |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[4]_i_1_n_0           |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[6]_i_1_n_0           |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[1]_i_1_n_0           |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[2]_i_1_n_0           |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[3]_i_1_n_0           |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_dv                        |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[0]_i_1_n_0           |                               |                1 |              1 |         1.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/tx_i_1_n_0                   |                               |                1 |              1 |         1.00 |
-|  proc_clk_BUFG                                     |                                              |                               |                2 |              2 |         1.00 |
-|  proc_clk_BUFG                                     | processor/registers/ja_OBUF[7]_inst_i_2_0[0] | io_cont/proc_reset            |                1 |              2 |         2.00 |
-|  processor/memory/write_reg_reg[1]_i_3[0]          |                                              |                               |                1 |              2 |         2.00 |
-|  processor/registers/internal_reg1_reg[1]_i_6_0[0] |                                              |                               |                1 |              2 |         2.00 |
-|  processor/registers/internal_reg2_reg[1]_i_1_0[0] |                                              |                               |                1 |              2 |         2.00 |
-|  processor/registers/ja_OBUF[7]_inst_i_2_0[0]      |                                              |                               |                1 |              2 |         2.00 |
-|  processor/registers/read2_reg[1]_i_4_0[0]         |                                              |                               |                1 |              2 |         2.00 |
-|  processor/registers/read1_reg[1]_i_9_0[0]         |                                              |                               |                1 |              2 |         2.00 |
-|  processor/registers/ja_OBUF[7]_inst_i_2_1[0]      |                                              |                               |                2 |              4 |         2.00 |
-|  instance_name/inst/clk_50Mhz                      | syscall_handler/unknown_syscall_reg_0        |                               |                2 |              4 |         2.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/tx_clk_count[4]_i_2_n_0      | uart_controller/SR[0]         |                1 |              5 |         5.00 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_clk_count[4]_i_1_n_0      | uart_controller/rx_bit_index0 |                1 |              5 |         5.00 |
-|  processor/registers/read1_reg[1]_i_8_0[0]         |                                              |                               |                2 |              7 |         3.50 |
-|  processor/registers/ja_OBUF[7]_inst_i_2_2[0]      |                                              |                               |                2 |              7 |         3.50 |
-|  io_cont/chip_select_reg[0]_2[0]                   |                                              |                               |                3 |              8 |         2.67 |
-|  instance_name/inst/clk_50Mhz                      | processor/id/constant_reg[0]_0[0]            |                               |                3 |              8 |         2.67 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/tx_dv_reg[0]                         |                               |                2 |              8 |         4.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/listen_reg_0[0]                      |                               |                1 |              8 |         8.00 |
-|  proc_clk_BUFG                                     | io_cont/last_dont_inc                        | io_cont/proc_reset            |                5 |             14 |         2.80 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_22[0]         | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_32[0]         | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_30[0]         | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_29[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_31[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_28[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_26[0]         | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_27[0]         | io_cont/proc_reset            |               12 |             21 |         1.75 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_24[0]         | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_47[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_23[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_44[0]         | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_25[0]         | io_cont/proc_reset            |                3 |             21 |         7.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_21[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_2[0]          | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_20[0]         | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_66[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_65[0]         | io_cont/proc_reset            |                4 |             21 |         5.25 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_64[0]         | io_cont/proc_reset            |               10 |             21 |         2.10 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_19[0]         | io_cont/proc_reset            |                4 |             21 |         5.25 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_63[0]         | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_6[0]          | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_59[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_62[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  proc_clk_BUFG                                     | processor/id/freeze_reg_0[0]                 | io_cont/proc_reset            |               11 |             21 |         1.91 |
-|  processor/id/read2_reg[0]_0[0]                    |                                              |                               |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/E[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_15[0]         | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_14[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_13[0]         | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_17[0]         | io_cont/proc_reset            |                3 |             21 |         7.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_12[0]         | io_cont/proc_reset            |               11 |             21 |         1.91 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_10[0]         | io_cont/proc_reset            |               10 |             21 |         2.10 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_60[0]         | io_cont/proc_reset            |               10 |             21 |         2.10 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_61[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_42[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_46[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_10[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_34[0]         | io_cont/proc_reset            |               11 |             21 |         1.91 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_25[0]                     | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | uart_controller/temp                         |                               |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_51[0]                     | io_cont/proc_reset            |               10 |             21 |         2.10 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_50[0]                     | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_5[0]                      | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_49[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_48[0]                     | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_47[0]                     | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_24[0]                     | io_cont/proc_reset            |                4 |             21 |         5.25 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_23[0]                     | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_22[0]                     | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_18[0]         | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_9[0]                      | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_46[0]         | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_31[0]                     | io_cont/proc_reset            |                3 |             21 |         7.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_30[0]                     | io_cont/proc_reset            |                3 |             21 |         7.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_3[0]                      | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_29[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_28[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_44[0]                     | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_43[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | pl/write_data                                |                               |                4 |             21 |         5.25 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_1[0]                      | io_cont/proc_reset            |               13 |             21 |         1.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_26[0]                     | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_27[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/E[0]                                 | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_32[0]                     | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_8[0]                      | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_7[0]                      | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_6[0]                      | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_21[0]                     | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_20[0]                     | io_cont/proc_reset            |                4 |             21 |         5.25 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_19[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_18[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_17[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_16[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_15[0]                     | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_11[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_12[0]                     | io_cont/proc_reset            |               11 |             21 |         1.91 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_13[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_45[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_14[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_45[0]         | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_42[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_40[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_38[0]         | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_43[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_36[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_35[0]         | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_71[0]         | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_70[0]         | io_cont/proc_reset            |                4 |             21 |         5.25 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_7[0]          | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_69[0]         | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_68[0]         | io_cont/proc_reset            |                3 |             21 |         7.00 |
-|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_67[0]         | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_33[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  processor/id/E[0]                                 |                                              |                               |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_41[0]                     | io_cont/proc_reset            |                4 |             21 |         5.25 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_40[0]                     | io_cont/proc_reset            |                9 |             21 |         2.33 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_4[0]                      | io_cont/proc_reset            |                7 |             21 |         3.00 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_39[0]                     | io_cont/proc_reset            |                8 |             21 |         2.62 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_38[0]                     | io_cont/proc_reset            |                5 |             21 |         4.20 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_37[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_36[0]                     | io_cont/proc_reset            |               10 |             21 |         2.10 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_35[0]                     | io_cont/proc_reset            |                6 |             21 |         3.50 |
-|  instance_name/inst/clk_50Mhz                      | io_cont/freeze_reg_34[0]                     | io_cont/proc_reset            |               11 |             21 |         1.91 |
-|  proc_clk_BUFG                                     | processor/id/freeze_reg_1[0]                 | io_cont/proc_reset            |               14 |             28 |         2.00 |
-| ~io_cont/io_cont_chip_select[1]                    |                                              |                               |               12 |             29 |         2.42 |
-|  instance_name/inst/clk_50Mhz                      |                                              |                               |               44 |             94 |         2.14 |
-+----------------------------------------------------+----------------------------------------------+-------------------------------+------------------+----------------+--------------+
++----------------------------------------------------+-------------------------------------------+-------------------------------+------------------+----------------+--------------+
+|                    Clock Signal                    |               Enable Signal               |        Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------------------------------------------+-------------------------------------------+-------------------------------+------------------+----------------+--------------+
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_dv                     |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[0]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[1]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[4]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/tx_i_1_n_0                |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[2]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[3]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[5]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_data[6]_i_1_n_0        |                               |                1 |              1 |         1.00 |
+|  processor/registers/reg_RegWrite                  |                                           |                               |                1 |              2 |         2.00 |
+|  proc_clk_BUFG                                     |                                           |                               |                2 |              2 |         1.00 |
+|  proc_clk_BUFG                                     | processor/registers/read1_reg[1]_i_7_0[0] | io_cont/proc_reset            |                1 |              2 |         2.00 |
+|  processor/registers/read1_reg[1]_i_7_0[0]         |                                           |                               |                1 |              2 |         2.00 |
+|  processor/registers/read1_reg[1]_i_11_0[0]        |                                           |                               |                1 |              2 |         2.00 |
+|  processor/registers/read1_reg[1]_i_11_1[0]        |                                           |                               |                1 |              2 |         2.00 |
+|  processor/registers/internal_reg2_reg[1]_i_1_0[0] |                                           |                               |                1 |              2 |         2.00 |
+|  processor/registers/internal_reg1_reg[1]_i_6_0[0] |                                           |                               |                1 |              2 |         2.00 |
+|  instance_name/inst/clk_50Mhz                      | syscall_handler/unknown_syscall_reg_0     |                               |                2 |              4 |         2.00 |
+|  processor/registers/read1_reg[1]_i_7[0]           |                                           |                               |                3 |              4 |         1.33 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/rx_clk_count[4]_i_1_n_0   | uart_controller/rx_bit_index0 |                1 |              5 |         5.00 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/tx_clk_count[4]_i_2_n_0   | uart_controller/SR[0]         |                1 |              5 |         5.00 |
+|  processor/registers/read1_reg[1]_i_5_0[0]         |                                           |                               |                2 |              7 |         3.50 |
+|  processor/registers/read1_reg[1]_i_7_1[0]         |                                           |                               |                2 |              7 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | io_cont/listen_reg_1[0]                   |                               |                3 |              8 |         2.67 |
+|  instance_name/inst/clk_50Mhz                      | io_cont/tx_dv_reg[0]                      |                               |                4 |              8 |         2.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/id/handled_reg[0]               |                               |                2 |              8 |         4.00 |
+|  io_cont/chip_select_reg[0]_2[0]                   |                                           |                               |                4 |              8 |         2.00 |
+|  proc_clk_BUFG                                     | io_cont/E[0]                              | io_cont/proc_reset            |                2 |              9 |         4.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_66[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_39[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_42[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_38[0]      | io_cont/proc_reset            |               10 |             21 |         2.10 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_41[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_43[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_58[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_57[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_56[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_27[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_55[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_54[0]      | io_cont/proc_reset            |                4 |             21 |         5.25 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_44[0]      | io_cont/proc_reset            |                9 |             21 |         2.33 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_64[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_32[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_65[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_68[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_67[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_6[0]       | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_60[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_61[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_37[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_63[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_62[0]      | io_cont/proc_reset            |                4 |             21 |         5.25 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_26[0]      | io_cont/proc_reset            |               11 |             21 |         1.91 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_82[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/E[0]                  | io_cont/proc_reset            |               12 |             21 |         1.75 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_53[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_52[0]      | io_cont/proc_reset            |                9 |             21 |         2.33 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_51[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_50[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_5[0]       | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_49[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_48[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  processor/id/read2_reg[0]_0[0]                    |                                           |                               |                6 |             21 |         3.50 |
+|  processor/id/E[0]                                 |                                           |                               |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_47[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  proc_clk_BUFG                                     | processor/id/freeze_reg_0[0]              | io_cont/proc_reset            |                3 |             21 |         7.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_46[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_4[0]       | io_cont/proc_reset            |               10 |             21 |         2.10 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_36[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_25[0]      | io_cont/proc_reset            |               14 |             21 |         1.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_24[0]      | io_cont/proc_reset            |               10 |             21 |         2.10 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_34[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_40[0]      | io_cont/proc_reset            |               10 |             21 |         2.10 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_35[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_28[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_30[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_29[0]      | io_cont/proc_reset            |               10 |             21 |         2.10 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_31[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_33[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_104[0]     | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_15[0]      | io_cont/proc_reset            |                4 |             21 |         5.25 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_87[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_84[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_45[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_23[0]      | io_cont/proc_reset            |               12 |             21 |         1.75 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_22[0]      | io_cont/proc_reset            |               12 |             21 |         1.75 |
+|  instance_name/inst/clk_50Mhz                      | pl/write_data                             |                               |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_21[0]      | io_cont/proc_reset            |               12 |             21 |         1.75 |
+|  instance_name/inst/clk_50Mhz                      | uart_controller/temp                      |                               |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_20[0]      | io_cont/proc_reset            |                9 |             21 |         2.33 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_2[0]       | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_18[0]      | io_cont/proc_reset            |                4 |             21 |         5.25 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_17[0]      | io_cont/proc_reset            |                4 |             21 |         5.25 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_16[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_80[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_14[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_13[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_12[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_107[0]     | io_cont/proc_reset            |               10 |             21 |         2.10 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_106[0]     | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_0[0]       | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_10[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_100[0]     | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_101[0]     | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_102[0]     | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_103[0]     | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_105[0]     | io_cont/proc_reset            |               10 |             21 |         2.10 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_7[0]       | io_cont/proc_reset            |                9 |             21 |         2.33 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_79[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_59[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_76[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_8[0]       | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_81[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_78[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_74[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_77[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_72[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_73[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_75[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_71[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_85[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_69[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_70[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_83[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_97[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_99[0]      | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_98[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_96[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_89[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_95[0]      | io_cont/proc_reset            |                6 |             21 |         3.50 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_9[0]       | io_cont/proc_reset            |                7 |             21 |         3.00 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_86[0]      | io_cont/proc_reset            |                5 |             21 |         4.20 |
+|  instance_name/inst/clk_50Mhz                      | processor/registers/freeze_reg_90[0]      | io_cont/proc_reset            |                8 |             21 |         2.62 |
+|  proc_clk_BUFG                                     | processor/id/freeze_reg[0]                | io_cont/proc_reset            |                4 |             28 |         7.00 |
+| ~io_cont/io_cont_chip_select[1]                    |                                           |                               |                9 |             29 |         3.22 |
+|  instance_name/inst/clk_50Mhz                      |                                           |                               |               36 |             94 |         2.61 |
++----------------------------------------------------+-------------------------------------------+-------------------------------+------------------+----------------+--------------+
 
 

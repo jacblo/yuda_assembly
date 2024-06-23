@@ -176,144 +176,6 @@ module top_level_tb();
             end
             #10
             clk = 0;
-            uart_output_data = 3;
-            uart_output_send = 1;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            uart_output_send = 0;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            #10
-            clk = 1;
-            while (1) begin
-                #10
-                clk = 0;
-                #10
-                clk = 1;
-                if (uart_send_ready)
-                    break;
-            end
-            #10
-            clk = 0;
-            uart_output_data = 0;
-            uart_output_send = 1;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            uart_output_send = 0;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            #10
-            clk = 1;
-            while (1) begin
-                #10
-                clk = 0;
-                #10
-                clk = 1;
-                if (uart_send_ready)
-                    break;
-            end
-            // #10
-            // clk = 0;
-            // uart_output_data = 1;
-            // uart_output_send = 1;
-            // #10
-            // clk = 1;
-            // #10
-            // clk = 0;
-            // uart_output_send = 0;
-            // #10
-            // clk = 1;
-            // #10
-            // clk = 0;
-            // #10
-            // clk = 1;
-            // while (1) begin
-            //     #10
-            //     clk = 0;
-            //     #10
-            //     clk = 1;
-            //     if (uart_send_ready)
-            //         break;
-            // end
-            // #10
-            // clk = 0;
-            // uart_output_data = 1;
-            // uart_output_send = 1;
-            // #10
-            // clk = 1;
-            // #10
-            // clk = 0;
-            // uart_output_send = 0;
-            // #10
-            // clk = 1;
-            // #10
-            // clk = 0;
-            // #10
-            // clk = 1;
-            // while (1) begin
-            //     #10
-            //     clk = 0;
-            //     #10
-            //     clk = 1;
-            //     if (uart_send_ready)
-            //         break;
-            // end
-            // #10
-            // clk = 0;
-            // uart_output_data = 5;
-            // uart_output_send = 1;
-            // #10
-            // clk = 1;
-            // #10
-            // clk = 0;
-            // uart_output_send = 0;
-            // #10
-            // clk = 1;
-            // #10
-            // clk = 0;
-            // #10
-            // clk = 1;
-            // while (1) begin
-            //     #10
-            //     clk = 0;
-            //     #10
-            //     clk = 1;
-            //     if (uart_send_ready)
-            //         break;
-            // end
-            #10
-            clk = 0;
-            uart_output_data = 26;
-            uart_output_send = 1;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            uart_output_send = 0;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            #10
-            clk = 1;
-            while (1) begin
-                #10
-                clk = 0;
-                #10
-                clk = 1;
-                if (uart_send_ready)
-                    break;
-            end
-            #10
-            clk = 0;
             uart_output_data = 2;
             uart_output_send = 1;
             #10
@@ -360,7 +222,191 @@ module top_level_tb();
             end
             #10
             clk = 0;
-            uart_output_data = 10;
+            uart_output_data = 26;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 7;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 0;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 26;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 6;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 0;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 0;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 0;
+            uart_output_send = 1;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            uart_output_send = 0;
+            #10
+            clk = 1;
+            #10
+            clk = 0;
+            #10
+            clk = 1;
+            while (1) begin
+                #10
+                clk = 0;
+                #10
+                clk = 1;
+                if (uart_send_ready)
+                    break;
+            end
+            #10
+            clk = 0;
+            uart_output_data = 0;
             uart_output_send = 1;
             #10
             clk = 1;
@@ -406,7 +452,7 @@ module top_level_tb();
             end
             #10
             clk = 0;
-            uart_output_data = 0;
+            uart_output_data = 1;
             uart_output_send = 1;
             #10
             clk = 1;
@@ -429,53 +475,7 @@ module top_level_tb();
             end
             #10
             clk = 0;
-            uart_output_data = 0;
-            uart_output_send = 1;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            uart_output_send = 0;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            #10
-            clk = 1;
-            while (1) begin
-                #10
-                clk = 0;
-                #10
-                clk = 1;
-                if (uart_send_ready)
-                    break;
-            end
-            #10
-            clk = 0;
-            uart_output_data = 0;
-            uart_output_send = 1;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            uart_output_send = 0;
-            #10
-            clk = 1;
-            #10
-            clk = 0;
-            #10
-            clk = 1;
-            while (1) begin
-                #10
-                clk = 0;
-                #10
-                clk = 1;
-                if (uart_send_ready)
-                    break;
-            end
-            #10
-            clk = 0;
-            uart_output_data = 0;
+            uart_output_data = 1;
             uart_output_send = 1;
             #10
             clk = 1;
@@ -515,29 +515,41 @@ module top_level_tb();
                 clk = 0;
                 
                 // input from user for the test_user_input.py echo program
-                if (j == 168 || j == 500) begin
-                    uart_output_data = 32;
-                    uart_output_send = 1;
-                    #10
-                    clk = 1;
-                    #10
-                    clk = 0;
-                    uart_output_send = 0;
-                    while (1) begin
-                        #10
-                        clk = 0;
+                if (j == 500) begin
+                    for (int k = 0; k<3; k++) begin
+                        uart_output_data = 32;
+                        uart_output_send = 1;
                         #10
                         clk = 1;
-                        if (uart_send_ready)
-                            break;
+                        #10
+                        clk = 0;
+                        uart_output_send = 0;
+                        while (1) begin
+                            #10
+                            clk = 0;
+                            #10
+                            clk = 1;
+                            if (uart_send_ready)
+                                break;
+                        end
                     end
-                    uart_output_data = 0;
-                    uart_output_send = 1;
-                    #10
-                    clk = 1;
-                    #10
-                    clk = 0;
-                    uart_output_send = 0;
+                    for (int k = 0; k<3; k++) begin
+                        uart_output_data = 0;
+                        uart_output_send = 1;
+                        #10
+                        clk = 1;
+                        #10
+                        clk = 0;
+                        uart_output_send = 0;
+                        while (1) begin
+                            #10
+                            clk = 0;
+                            #10
+                            clk = 1;
+                            if (uart_send_ready)
+                                break;
+                        end
+                    end
                 end
                 
                 #10

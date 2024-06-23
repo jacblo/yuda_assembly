@@ -5,6 +5,7 @@ module IO_control(
         // these are here so we can freeze processor and cede writing and sending control
         // immediately without waiting for io chips to tell us to
         input is_syscall, unknown_reg, unknown_op, is_ret,
+        input [6:0] current_IP,
 
         // chips done output
         input io_done,
@@ -31,6 +32,9 @@ module IO_control(
         freeze = 1;
     end
     
+
+    reg [6:0] last_IP;
+
     reg started = 0; // so program doesn't start running before first one is sent, also so exception can kill execution completely
     reg last_listen = 0;
 //    reg last_freeze = 0; // used to delay continuation of progra
@@ -74,8 +78,9 @@ module IO_control(
             chip_select = 2;
         end
 
-        // if doing something, but will next cycle, immediately handle freezing and giving control
-        else if ((is_syscall || unknown_reg || unknown_op || is_ret) && !freeze) begin
+        // if not freezing and doing something, but will next cycle, immediately handle freezing and giving control
+        // only do this once per instruction, don't redo this over and over, so needs to be new IP
+        else if ((is_syscall || unknown_reg || unknown_op || is_ret) && (last_IP != current_IP)) begin
             freeze = 1;
             if (unknown_reg || unknown_op || is_ret)
                 chip_select = 2;
@@ -88,6 +93,7 @@ module IO_control(
             freeze = 0;
         end
 
+        last_IP = current_IP;
     end
 
 endmodule
