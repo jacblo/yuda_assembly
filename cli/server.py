@@ -392,6 +392,8 @@ docs: get these docs
 instruction docs: get the documentation on the instruction set
                   and how to write machine code or assembly for
                   this processor.
+assembly docs: get the documentation for how to use labels and
+               other similar assembly features.
 
 asm file: given an assembly file in yuda's assembly format,
           it will be assembled and the machine code returned
@@ -441,6 +443,11 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                 
                 case "instruction docs":
                     with open("hardware/instruction set details.txt", "r") as f:
+                        docs = f.read()
+                    print_to_client(client_socket, aes_key, docs)
+                
+                case "assembly docs":
+                    with open("tools/assembly_details.txt", "r") as f:
                         docs = f.read()
                     print_to_client(client_socket, aes_key, docs)
                 

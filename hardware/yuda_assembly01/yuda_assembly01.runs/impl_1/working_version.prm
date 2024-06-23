@@ -1,0 +1,14 @@
+===================================
+Configuration Memory information
+===================================
+File Format        MCS
+Interface          SPIX4
+Size               4M
+Start Address      0x00000000
+End Address        0x003FFFFF
+Checksum           0x38D05E2C
+Fill Value         0xFF
+
+Addr1         Addr2         Date                    File(s)                                                                                                                                           Checksum
+0x00000000    0x00076393    Jun 23 16:48:04 2024    /home/y4/Documents/school/cyber-studies/final_project/yuda_assembly/hardware/yuda_assembly01/yuda_assembly01.runs/impl_1/top_level_circuit.bit    0x006C8E98
+File Checksum Total                                                                                                                                                                                   0x006C8E98
