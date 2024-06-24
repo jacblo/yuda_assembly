@@ -11,6 +11,8 @@ import serial
 # for talking to hardware, might be moved to its own module soon
 class HardwareManager:
     def __init__(self):
+        self.no_hardware = False # default is to connect to hardware
+        
         # find the port
         ports = glob.glob('/dev/ttyUSB[0-9]*') # for linux/mac systems, i have no clue how to do this on windows machine
         if len(ports) == 1:
@@ -19,7 +21,12 @@ class HardwareManager:
             print("available ports are: \n","\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
             while True:
                 try:
-                    port_number = int(input("select one of them (by number before it in list): "))
+                    user_input = input("select one of them (by number before it in list), or n for no hardware: ")
+                    if user_input.lower().strip() == "n":
+                        self.no_hardware = True
+                        break
+                    else:
+                        port_number = int(user_input)
                 except ValueError:
                     print("Not a number or not an integer, try again.")
                 else:
@@ -28,10 +35,12 @@ class HardwareManager:
                     else:
                         print("Not in range of the list, try again.")
         
-            port = ports[port_number-1]
+            if not self.no_hardware:
+                port = ports[port_number-1]
 
-        self.ser_connection = serial.Serial(port, 2_000_000, timeout=0.05) # very short timeout so we can do other things
-        self.test_hardware()
+        if not self.no_hardware:
+            self.ser_connection = serial.Serial(port, 2_000_000, timeout=0.05) # very short timeout so we can do other things
+            self.test_hardware()
 
         # every item in queue is tuple or list of shape (<client_socket>, <aes_key>, <machine code to be run>)
         self.queue = [] # using list as queue, doesn't matter for performance really
@@ -113,6 +122,13 @@ class HardwareManager:
             print_to_client(client_socket, aes_key, f"Position in Queue: {i+1}")
         
         # actually start running
+        if self.no_hardware:
+            client_socket, aes_key, _ = next
+            print_to_client(client_socket, aes_key, "No hardware connected to server. can't run on hardware")
+            disconnect_from_client(client_socket, aes_key)
+            print("disconnected from client because no hardware is present and they attempted to 'run hardware'")
+            return
+        
         self.handle_running_program(*next)
 
     def handle_running_program(self, client_socket, aes_key, machine_code):
