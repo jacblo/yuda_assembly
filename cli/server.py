@@ -17,7 +17,18 @@ class HardwareManager:
             port = ports[0]
         else:
             print("available ports are: \n","\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
-            port = ports[int(input("select one of them (by number before it in list): "))] # error if illegal input, that's good.
+            while True:
+                try:
+                    port_number = int(input("select one of them (by number before it in list): "))
+                except ValueError:
+                    print("Not a number or not an integer, try again.")
+                else:
+                    if 0 < port_number <= len(ports):
+                        break
+                    else:
+                        print("Not in range of the list, try again.")
+        
+            port = ports[port_number-1]
 
         self.ser_connection = serial.Serial(port, 2_000_000, timeout=0.05) # very short timeout so we can do other things
         self.test_hardware()
@@ -531,6 +542,10 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                     except RuntimeError:
                         print("Client killed by disconnecting. stopping execution of simulation")
                         break
+                    
+                    except ValueError:
+                        print_to_client(client_socket, aes_key, "Error: machine code was illegal")
+                        continue
                         
                     elapsed = time.time() - start_time
                     print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed:.5f} seconds")

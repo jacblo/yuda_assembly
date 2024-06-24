@@ -5,7 +5,7 @@
 <!-- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.        -->
 
 <hwsession version="1" minor="2">
-  <device name="xc7s25_0" gui_info=""/>
+  <device name="xc7s25_0" gui_info="dashboard1=dashboard_1[xc7s25_0/XADC=XADC_PLOT_1;]"/>
   <ObjectList object_type="hw_cfgmem" gui_info="">
     <Object name="" gui_info="">
       <Properties Property="PROGRAM.ADDRESS_RANGE" value="use_file"/>
@@ -23,13 +23,13 @@
     <Object name="xc7s25_0" gui_info="">
       <Properties Property="FULL_PROBES.FILE" value=""/>
       <Properties Property="PROBES.FILE" value=""/>
-      <Properties Property="PROGRAM.HW_BITSTREAM" value=""/>
+      <Properties Property="PROGRAM.HW_BITSTREAM" value="/home/y4/P1/applications02/vivado/Vivado/2023.2/data/xicom/cfgmem/bitfile/spi_xc7s25_pullnone.bit"/>
       <Properties Property="PROGRAM.HW_CFGMEM_PART" value="mx25l3273f-spi-x1_x2_x4"/>
       <Properties Property="SLR.COUNT" value="1"/>
     </Object>
   </ObjectList>
   <ObjectList object_type="hw_sysmon" gui_info="">
-    <Object name="XADC" gui_info="dashboard_1=[TEMPERATURE=-65281;VCCPINT=-16738817;VAUXP5_VAUXN5=-8388353;VAUXP0_VAUXN0=-14336;VAUXP1_VAUXN1=-65536;VAUXP2_VAUXN2=-16711681;VAUXP3_VAUXN3=-3355393;VAUXP4_VAUXN4=-15815424;VAUXP6_VAUXN6=-3212288;VAUXP7_VAUXN7=-6410818;VAUXP8_VAUXN8=-4560343;VAUXP9_VAUXN9=-261752;VAUXP10_VAUXN10=-16582256;VAUXP11_VAUXN11=-256;VAUXP12_VAUXN12=-937733;VAUXP13_VAUXN13=-81916;VAUXP14_VAUXN14=-15426561;VAUXP15_VAUXN15=-8388353;VCCAUX=-14336;VCCBRAM=-65536;VCCINT=-16711681;VCCO_DDR=-65281;VCCPAUX=-3355393;VP_VN=-16711936;SCAN_RATE=1000;TRACK_TIME=1;]"/>
+    <Object name="XADC" gui_info="dashboard_1=[TEMPERATURE=-65281;SCAN_RATE=1000;TRACK_TIME=1;]"/>
   </ObjectList>
   <probeset name="hw project" active="false"/>
 </hwsession>

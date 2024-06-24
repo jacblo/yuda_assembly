@@ -1,0 +1,155 @@
+; assumes legal input that's up to 5 chars
+; too tight to fit program that does more than that
+
+mov AX, string1
+syscall 3
+mov AX, string2
+syscall 3
+
+mov [current_address], first_address ; set it up
+
+loop3:
+    ; find minimum of three surrounding loop
+    loop4:
+        ; find value to subtract
+        mov BX, [sub_addr]
+        mov BX, PTR [BX]
+
+        ; check left
+        mov AX, [current_address]
+        sub AX, BX ; AX points at left
+        
+        ; go to next value to subtract
+        mov BX, [sub_addr]
+        add BX, 1 ; increment to second
+        mov [sub_addr], BX
+
+        mov BX, PTR [AX]
+        mov AX, [min]
+        cmp BX, AX
+        jg greater1 ; not less than min
+        mov [min], BX ; update minimum
+        greater1:
+
+        ; check next
+        mov BX, [sub_addr]
+        cmp BX, sub_addr
+        jne loop4
+
+    ; calculate current
+    mov AX, [i]
+    mov BX, [j]
+    cmp AX, BX
+
+    mov BX, [min]
+
+    je equal ; if *i == *j, there's no need to add
+    add BX, 1 ; if different we add 1 to edit difference
+    equal:
+
+    mov AX, [current_address]
+    mov PTR [AX], BX ; update current
+    
+    mov [min], 99 ; prep for next time
+    mov [sub_addr], subtractions
+
+    ; go to next
+    mov BX, [j] ; we also need to add to j
+    add BX, 1
+    mov [j], BX
+
+    add AX, 1
+    mov BX, PTR [AX]
+    ; if it's already set, and isn't 0 we incrememt again because
+    ; we just went down a line
+    cmp BX, 0
+    je didnt_row_down ; if it's 0 then we didn't go down a line
+    add AX, 1   ; if we went down a row we move once more to skip first item which is 
+                ; already set
+    mov BX, [i] ; we also need to add to i
+    add BX, 1
+    mov [i], BX
+    mov [j], string2  ; reset j
+    didnt_row_down:
+    mov [current_address], AX
+
+    ; if we got to the end, and looped around.
+    ; meaning we're at 100 or more
+    cmp AX, 99
+    je loop3 ; if we didn't we loop
+    jl loop3
+
+; ; print result
+; mov AX, final_pos
+; syscall 4 ; print number
+; ret
+
+current_address:0 ; in the matrix
+i:string1 ; position in string1
+j:string2 ; position in string2
+
+min: 99 ; min value for current number, starts at highest number
+
+subtractions:   ; the three values to subtract from every position to get up
+                ; keft and up left
+1
+6
+7
+sub_addr: subtractions
+
+string1:
+0
+0
+0
+0
+0
+string2:
+0
+0
+0
+0
+0
+matrix:
+0
+1
+2
+3
+4
+5
+
+1
+first_address:
+0
+0
+0
+0
+0
+
+2
+0
+0
+0
+0
+0
+
+3
+0
+0
+0
+0
+0
+
+4
+0
+0
+0
+0
+0
+
+5
+0
+0
+0
+0
+final_pos:
+0

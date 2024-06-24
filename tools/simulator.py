@@ -510,7 +510,7 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback, ch
             else:
                 address = data1
 
-        mem_read_data = memory[address]
+        mem_read_data = memory[address%100]
         
         # alu
         alu_A_value = 0
@@ -823,7 +823,7 @@ def simulate_strings(machine_code_str: str, print_callback, input_callback, chec
         
         # saving
         if mem_write:
-            memory[address] = str(alu_out).zfill(6)
+            memory[address%100] = str(alu_out).zfill(6)
         
         if reg_write:
             if write_reg == 2:
@@ -867,7 +867,7 @@ if __name__ == "__main__":
             machine_code = file.read()
             
             # this testing env doesn't support text that's waiting and such.
-            _, regs, _ = simulate_numerical(machine_code, print, lambda _: input(": "), lambda: True)
+            mem, regs, IP = simulate_numerical(machine_code, print, lambda _: input(": ").encode("ascii"), lambda: True)
             # _, regs, _ = simulate_strings(machine_code, print, lambda _: input(": "), lambda: True) # turns out it's slower
-            print("AX =", str(regs[0]).zfill(6))
+            print(f"{regs=}, {IP=},\n{mem=}")
     print(f"{JUMPS=}")

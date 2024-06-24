@@ -213,6 +213,7 @@ def assemble(assembly_string: str) -> str:
         if current_address > 99:
             raise SyntaxError(
                 "Program too long. only 100 addresses exist, so that's the length limit on programs"
+                +f"Stopped at this line: {line}"
             )
         
         # line traits
@@ -423,7 +424,7 @@ def assemble(assembly_string: str) -> str:
             
             # build instruction
             instruction = str(opcode).zfill(2)
-            for arg in args:
+            for i, arg in enumerate(args):
                 # first item in every arg item is always enough to get the value
                 if arg[0].kind == "REGISTER":
                     instruction += str(arg[0].value).zfill(2)
@@ -441,9 +442,8 @@ def assemble(assembly_string: str) -> str:
                     if arg[0].string in labels:
                         instruction += str(labels[arg[0].string]).zfill(2)
                     else:
-                        # length of instruction is used because that's first index after instruction,
-                        # which is where the value should be added
-                        position = (current_address, len(instruction))
+                        # i+1 * 2 is the position of the current argument
+                        position = (current_address, (i+1)*2)
                         unhandled_labels[position] = (arg[0].string, line_idx+1)
                 
                 else:
@@ -484,7 +484,7 @@ def assemble(assembly_string: str) -> str:
             elif len(args) == 3:
                 # 3 small numbers combining to make one bigger number.
                 number = ""
-                for arg in args:
+                for i, arg in enumerate(args):
                     if len(arg) != 1: # means it's a memory address
                         raise SyntaxError(
                             f"only numbers allowed in constant values. line {line_idx+1}")
@@ -500,7 +500,7 @@ def assemble(assembly_string: str) -> str:
                         if num_token.string in labels:
                             number += str(labels[num_token.string]).zfill(2)
                         else:
-                            position = (current_address, len(number))
+                            position = (current_address, (i+1)*2)
                             unhandled_labels[position] = num_token.string, line_idx+1
                         
                     else: # means it's a register
