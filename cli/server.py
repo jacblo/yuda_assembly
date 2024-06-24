@@ -17,7 +17,18 @@ class HardwareManager:
             port = ports[0]
         else:
             print("available ports are: \n","\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
-            port = ports[int(input("select one of them (by number before it in list): "))+1] # error if illegal input, that's good.
+            while True:
+                try:
+                    port_number = int(input("select one of them (by number before it in list): "))
+                except ValueError:
+                    print("Not a number or not an integer, try again.")
+                else:
+                    if 0 < port_number <= len(ports):
+                        break
+                    else:
+                        print("Not in range of the list, try again.")
+        
+            port = ports[port_number-1]
 
         self.ser_connection = serial.Serial(port, 2_000_000, timeout=0.05) # very short timeout so we can do other things
         self.test_hardware()

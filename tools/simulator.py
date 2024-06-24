@@ -510,7 +510,7 @@ def simulate_numerical(machine_code_str: str, print_callback, input_callback, ch
             else:
                 address = data1
 
-        mem_read_data = memory[address]
+        mem_read_data = memory[address%100]
         
         # alu
         alu_A_value = 0

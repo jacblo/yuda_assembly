@@ -1,6 +1,11 @@
 ; assumes legal input that's up to 5 chars
 ; too tight to fit program that does more than that
 
+mov AX, string1
+syscall 3
+mov AX, string2
+syscall 3
+
 mov [current_address], first_address ; set it up
 
 loop3:
@@ -8,12 +13,14 @@ loop3:
     loop4:
         ; find value to subtract
         mov BX, [sub_addr]
+        mov BX, PTR [BX]
 
         ; check left
         mov AX, [current_address]
         sub AX, BX ; AX points at left
         
-        ; update the value to subtract
+        ; go to next value to subtract
+        mov BX, [sub_addr]
         add BX, 1 ; increment to second
         mov [sub_addr], BX
 
@@ -36,9 +43,11 @@ loop3:
     mov PTR [AX], BX ; update current
     
     mov [min], 99 ; prep for next time
-    
+    mov [sub_addr], subtractions
+
     ; go to next
     add AX, 1
+    mov [current_address], AX
     mov BX, PTR [AX]
     ; if it's already set, and isn't 0 we incrememt again because
     ; we just went down a line
@@ -47,7 +56,7 @@ loop3:
     add AX, 1 ; if we went down a row we move once more
     didnt_row_down:
 
-    cmp AX, 99 ; if we got to the end
+    cmp AX, after_final ; if we got to the end
     jne loop3 ; if we didn't we loop
 
 
@@ -66,13 +75,13 @@ subtractions:   ; the three values to subtract from every position to get up
 7
 sub_addr: subtractions
 
-word1:
+string1:
 0
 0
 0
 0
 0
-word2:
+string2:
 0
 0
 0
@@ -85,35 +94,42 @@ matrix:
 3
 4
 5
-first_address:
+
 1
+first_address:
 0
 0
 0
 0
 0
+
 2
 0
 0
 0
 0
 0
+
 3
 0
 0
 0
 0
 0
+
 4
 0
 0
 0
 0
 0
+
 5
 0
 0
 0
 0
 final_pos:
+0
+after_final:
 0

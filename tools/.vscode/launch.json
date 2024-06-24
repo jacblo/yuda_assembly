@@ -26,7 +26,8 @@
             "console": "integratedTerminal",
             "args": [
                 // "tests/test_program.txt"
-                "tests/fibonacci_output.txt"
+                // "tests/fibonacci_output.txt"
+                "tests/long_calculation_output.txt",
             ]
         }
     ]
