@@ -1,75 +1,33 @@
-; edit distance for two words up to 5 letters (no more memory after that...)
-; get first string
-mov ax, 51 ; first position
-syscall 3 ; receive string from host
-mov [56], 0 ; null terminate it if it's more than 5 chars
+; assumes legal input that's up to 5 chars
+; too tight to fit program that does more than that
 
-; get second string
-mov ax, 57
-syscall 3 ; recv string
-mov [62], 0 ; null terminate if too long
-
-; A is (5+1)x(5+1) array, starting at 63
-
-; initialize A with values on first row and column
-; starting at i=1 because A[0,0]=0 already
-mov AX, 64 ; ptr to A[1,0]
-mov BX, 1 ; i
-loop1:
-    ; A[i, 0] = i
-    mov PTR [AX], BX
-
-    ; i++
-    add BX, 1
-    add AX, 1
-    cmp BX, 6 ; so we run 5 times
-    jne loop1
-add AX, 1
-
-; starting at j=1 because A[0,0]=0 already
-mov AX, 69 ; ptr to A[0,1]
-mov BX, 1 ; j
-loop2:
-    ; A[0, j] = j
-    mov PTR [AX], BX
-
-    ; i++
-    add BX, 1
-    add AX, 6 ; so we go down a row
-    cmp BX, 6 ; so we run 5 times
-    jne loop2
-add AX, 1
+mov [current_address], first_address ; set it up
 
 loop3:
-    ; check left
-    mov AX, [current_address]
-    sub AX, 1 ; AX points at left
-    mov BX, PTR [AX]
-    mov AX, [min]
-    cmp BX, AX
-    jg greater1 ; not less than min
-    mov [min], BX ; update minimum
-    greater1:
+    ; find minimum of three surrounding loop
+    loop4:
+        ; find value to subtract
+        mov BX, [sub_addr]
 
-    ; check up
-    mov AX, [current_address]
-    sub AX, 6 ; AX points at up
-    mov BX, PTR [AX]
-    mov AX, [min]
-    cmp BX, AX
-    jg greater2 ; not less than min
-    mov [min], BX ; update minimum
-    greater2:
+        ; check left
+        mov AX, [current_address]
+        sub AX, BX ; AX points at left
+        
+        ; update the value to subtract
+        add BX, 1 ; increment to second
+        mov [sub_addr], BX
 
-    ; check up left
-    mov AX, [current_address]
-    sub AX, 7 ; AX points at up left
-    mov BX, PTR [AX]
-    mov AX, [min]
-    cmp BX, AX
-    jg greater3 ; not less than min
-    mov [min], BX ; update minimum
-    greater3:
+        mov BX, PTR [AX]
+        mov AX, [min]
+        cmp BX, AX
+        jg greater1 ; not less than min
+        mov [min], BX ; update minimum
+        greater1:
+
+        ; check next
+        mov BX, [sub_addr]
+        cmp BX, sub_addr
+        jne loop4
 
     ; calculate current
     mov BX, [min]
@@ -92,7 +50,70 @@ loop3:
     cmp AX, 99 ; if we got to the end
     jne loop3 ; if we didn't we loop
 
+
+; print result
+mov AX, final_pos
+syscall 4 ; print number
 ret
 
-current_address:70 ; first internal location A[1,1]
+current_address:0
 min: 99 ; min value for current number, starts at highest number
+
+subtractions:   ; the three values to subtract from every position to get up
+                ; keft and up left
+1
+6
+7
+sub_addr: subtractions
+
+word1:
+0
+0
+0
+0
+0
+word2:
+0
+0
+0
+0
+0
+matrix:
+0
+1
+2
+3
+4
+5
+first_address:
+1
+0
+0
+0
+0
+0
+2
+0
+0
+0
+0
+0
+3
+0
+0
+0
+0
+0
+4
+0
+0
+0
+0
+0
+5
+0
+0
+0
+0
+final_pos:
+0

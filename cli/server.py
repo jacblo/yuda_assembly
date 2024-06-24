@@ -531,6 +531,10 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                     except RuntimeError:
                         print("Client killed by disconnecting. stopping execution of simulation")
                         break
+                    
+                    except ValueError:
+                        print_to_client(client_socket, aes_key, "Error: machine code was illegal")
+                        continue
                         
                     elapsed = time.time() - start_time
                     print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed:.5f} seconds")
