@@ -7,6 +7,7 @@ import re
 import time
 import glob
 import serial
+import sys
 
 # for talking to hardware, might be moved to its own module soon
 class HardwareManager:
@@ -551,6 +552,10 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
                     print_to_client(client_socket, aes_key, f"Program in simulation completed in {elapsed:.5f} seconds")
                 
                 case "run hardware":
+                    if hardware is None:
+                        print_to_client(client_socket, aes_key, "Error: hardware unavailable. no-hardware setting is on (on the server)")
+                        continue
+                        
                     if last_machine_code is None:
                         print_to_client(client_socket, aes_key, "Error: no machine code to run")
                         continue
@@ -576,7 +581,10 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
 
 # dispatches threads whenever clients connect
 def main():
-    hardware = HardwareManager()
+    if len(sys.argv) == 2 and sys.argv[1] == "--no-hardware":
+        hardware = None
+    else:
+        hardware = HardwareManager()
     
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
