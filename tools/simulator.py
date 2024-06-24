@@ -867,7 +867,7 @@ if __name__ == "__main__":
             machine_code = file.read()
             
             # this testing env doesn't support text that's waiting and such.
-            _, regs, _ = simulate_numerical(machine_code, print, lambda _: input(": "), lambda: True)
+            mem, regs, IP = simulate_numerical(machine_code, print, lambda _: input(": ").encode("ascii"), lambda: True)
             # _, regs, _ = simulate_strings(machine_code, print, lambda _: input(": "), lambda: True) # turns out it's slower
-            print("AX =", str(regs[0]).zfill(6))
+            print(f"{regs=}, {IP=},\n{mem=}")
     print(f"{JUMPS=}")
