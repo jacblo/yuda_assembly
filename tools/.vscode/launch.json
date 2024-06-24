@@ -14,8 +14,8 @@
                 // "tests/assembly_output.txt"
                 // "tests/fibonacci.yasm",
                 // "tests/fibonacci_output.txt"
-                "tests/long_calculation.yasm",
-                "tests/long_calculation_output.txt",
+                "tests/long_calc.yasm",
+                "tests/long_calc_output.txt",
             ]
         },
         {
@@ -27,7 +27,7 @@
             "args": [
                 // "tests/test_program.txt"
                 // "tests/fibonacci_output.txt"
-                "tests/long_calculation_output.txt",
+                "tests/long_calc_output.txt",
             ]
         }
     ]

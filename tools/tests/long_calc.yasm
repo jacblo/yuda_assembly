@@ -1,0 +1,71 @@
+; count how many prime numbers are there up to max_value (including max_value)
+
+main_loop:
+    mov [divisor], 1; start checking from 2, we start by incrementing, so this 
+                    ; is set to start from is 2-1=1 - when we inc we'll get 2.
+    prime_check_loop:
+        ; increment divisor
+        mov AX, [divisor]
+        add AX, 1
+        mov [divisor], AX
+
+        ; setup
+        mov AX, [testing] ; number to divide
+        
+        ; this divides AX by the divisor and stores the result in div_result
+        mov [div_result], 0 ; clear counter
+        div_loop:
+            ; inc result
+            mov BX, [div_result]
+            add BX, 1
+            mov [div_result], BX
+            
+            ; subtract & compare to 0
+            mov BX, [divisor]
+            sub AX, BX
+            jg div_loop
+        
+        je not_prime ; if it was divisible it's not prime
+
+        ; otherwise to get the actual division result we subtract one from the
+        ; counter because last addition to it was incorrect
+        mov BX, [div_result]
+        sub BX, 1
+
+        ; cmp the division result to the divisor, if we get to (or pass) sqrt(n)
+        ; meaning result < divisor we stop, no need to check higher numbers
+        mov AX, [divisor]
+        cmp BX, AX
+        jg prime_check_loop
+        je prime_check_loop
+
+    ; if it passed all the checks, then it's prime
+    mov AX, [current_count]
+    add AX, 1
+    mov [current_count], AX
+
+    not_prime:
+
+    ; prep to check next number
+    mov AX, [testing]
+    add AX, 1
+    mov [testing], AX
+
+    mov BX, [max_value]
+    cmp AX, BX
+    ; if less than or equal to max_value, test it too 
+    jl main_loop
+    je main_loop
+
+mov AX, current_count
+syscall 4 ; print number
+ret
+
+
+testing: 3  ; we start from checking 3, otherwise since we start dividing by 2,
+            ; we'd say that 2 isn't prime, so instead we count it ahead of time.
+divisor: 0 ; value is replaced immediately so doesn't matter what it starts at
+div_result: 0
+current_count: 1 ; we already counted 2
+
+max_value: 1000
