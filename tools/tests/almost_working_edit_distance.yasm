@@ -37,8 +37,16 @@ loop3:
         jne loop4
 
     ; calculate current
+    mov AX, [i]
+    mov BX, [j]
+    cmp AX, BX
+
     mov BX, [min]
-    add BX, 1
+
+    je equal ; if *i == *j, there's no need to add
+    add BX, 1 ; if different we add 1 to edit difference
+    equal:
+
     mov AX, [current_address]
     mov PTR [AX], BX ; update current
     
@@ -46,26 +54,40 @@ loop3:
     mov [sub_addr], subtractions
 
     ; go to next
+    mov BX, [j] ; we also need to add to j
+    add BX, 1
+    mov [j], BX
+
     add AX, 1
-    mov [current_address], AX
     mov BX, PTR [AX]
     ; if it's already set, and isn't 0 we incrememt again because
     ; we just went down a line
     cmp BX, 0
     je didnt_row_down ; if it's 0 then we didn't go down a line
-    add AX, 1 ; if we went down a row we move once more
+    add AX, 1   ; if we went down a row we move once more to skip first item which is 
+                ; already set
+    mov BX, [i] ; we also need to add to i
+    add BX, 1
+    mov [i], BX
+    mov [j], string2  ; reset j
     didnt_row_down:
+    mov [current_address], AX
 
-    cmp AX, after_final ; if we got to the end
-    jne loop3 ; if we didn't we loop
+    ; if we got to the end, and looped around.
+    ; meaning we're at 100 or more
+    cmp AX, 99
+    je loop3 ; if we didn't we loop
+    jl loop3
 
+; ; print result
+; mov AX, final_pos
+; syscall 4 ; print number
+; ret
 
-; print result
-mov AX, final_pos
-syscall 4 ; print number
-ret
+current_address:0 ; in the matrix
+i:string1 ; position in string1
+j:string2 ; position in string2
 
-current_address:0
 min: 99 ; min value for current number, starts at highest number
 
 subtractions:   ; the three values to subtract from every position to get up
@@ -130,6 +152,4 @@ first_address:
 0
 0
 final_pos:
-0
-after_final:
 0

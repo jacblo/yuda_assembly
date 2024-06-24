@@ -823,7 +823,7 @@ def simulate_strings(machine_code_str: str, print_callback, input_callback, chec
         
         # saving
         if mem_write:
-            memory[address] = str(alu_out).zfill(6)
+            memory[address%100] = str(alu_out).zfill(6)
         
         if reg_write:
             if write_reg == 2:

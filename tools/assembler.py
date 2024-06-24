@@ -213,6 +213,7 @@ def assemble(assembly_string: str) -> str:
         if current_address > 99:
             raise SyntaxError(
                 "Program too long. only 100 addresses exist, so that's the length limit on programs"
+                +f"Stopped at this line: {line}"
             )
         
         # line traits
