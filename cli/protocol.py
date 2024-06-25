@@ -3,6 +3,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 import socket
+import sys
 
 #               socket communication
 def recvall(sock: socket.socket, length):
@@ -23,18 +24,36 @@ def get_message(sock: socket.socket) -> bytes:
     length = int.from_bytes(length_bytes, 'big')
     return recvall(sock, length)
 
-# This is based on StackOverflow https://stackoverflow.com/a/62277798/14103406
-def is_socket_closed(sock: socket.socket) -> bool:
-    try:
-        # this will try to read bytes without blocking and also without removing them from buffer (peek only)
-        data = sock.recv(16, socket.MSG_DONTWAIT | socket.MSG_PEEK)
-        if len(data) == 0:
-            return True
-    except BlockingIOError:
-        return False  # socket is open and reading from it would block
-    except ConnectionResetError:
-        return True  # socket was closed for some other reason
-    return False
+if sys.platform != "win32": # MSG_DONTWAIT isn't supported on windows, blocking needs to be enabled and disabled explicately
+    # This is based on StackOverflow https://stackoverflow.com/a/62277798/14103406
+    def is_socket_closed(sock: socket.socket) -> bool:
+        try:
+            # this will try to read bytes without blocking and also without removing them from buffer (peek only)
+            data = sock.recv(16, socket.MSG_DONTWAIT | socket.MSG_PEEK)
+            if len(data) == 0:
+                return True
+        except BlockingIOError:
+            return False  # socket is open and reading from it would block
+        except ConnectionResetError:
+            return True  # socket was closed for some other reason
+        return False
+else:
+    # modified to have explicit blocking disabling for windows
+    def is_socket_closed(sock: socket.socket) -> bool:
+        try:
+            # this will try to read bytes without blocking and also without removing them from buffer (peek only)
+            sock.set_blocking(0)
+            data = sock.recv(16, socket.MSG_PEEK)
+            sock.set_blocking(1)
+            if len(data) == 0:
+                return True
+        except BlockingIOError:
+            sock.set_blocking(1)
+            return False  # socket is open and reading from it would block
+        except ConnectionResetError:
+            sock.set_blocking(1)
+            return True  # socket was closed for some other reason
+        return False
 
 
 #                   Encryption
