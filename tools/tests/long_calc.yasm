@@ -68,4 +68,4 @@ divisor: 0 ; value is replaced immediately so doesn't matter what it starts at
 div_result: 0
 current_count: 1 ; we already counted 2
 
-max_value: 1000
+max_value: 1000 ; value to count primes up to
