@@ -70,4 +70,4 @@ current_count: 1 ; we already counted 2
 
 ; primes up to 1000 should be 168, primes up to 10k is 1229 (both of these i
 ; checked online.)
-max_value: 1000 ; value to count primes up to
+max_value: 10000 ; value to count primes up to
