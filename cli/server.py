@@ -346,6 +346,7 @@ def ask_for_file_from_client(sock: socket.socket, aes_key: bytes, prompt: bytes 
 
 def disconnect_from_client(sock: socket.socket, aes_key: bytes):
     protocol.send_encrypted_message(sock, aes_key, b"stop")
+    sock.close()
 
 
 # functions to print and read input from sim or hardware and return the string to print
@@ -506,12 +507,19 @@ def client_communication_thread(client_socket: socket.socket, hardware: Hardware
         None
     """
     if aes_key is None:
-        aes_key = protocol.server_side_handshake(client_socket)
+        try:
+            aes_key = protocol.server_side_handshake(client_socket)
+        except RuntimeError:
+            print("Client disconnected during handshake, killing connection")
+            client_socket.close()
+            return
+        
         print_to_client(client_socket, aes_key, "Welcome to the interactive yuda's-assembly runner!")
 
     while True:
         if protocol.is_socket_closed(client_socket):
             print("Client disconnected with KeyboardInterrupt")
+            client_socket.close()
             break
         
         try:
@@ -561,6 +569,7 @@ def client_communication_thread(client_socket: socket.socket, hardware: Hardware
                         )
                     except RuntimeError:
                         print("Client killed by disconnecting. stopping execution of simulation")
+                        client_socket.close()
                         break
                     
                     except ValueError:
@@ -583,6 +592,7 @@ def client_communication_thread(client_socket: socket.socket, hardware: Hardware
                 
                 case "exit":
                     print("Client disconnected")
+                    client_socket.close()
                     break
                 
                 case _:
@@ -590,6 +600,7 @@ def client_communication_thread(client_socket: socket.socket, hardware: Hardware
         
         except (ConnectionResetError, BrokenPipeError, RuntimeError): # client disconnected in the middle
             print("Client disconnected in the middle of command, stopping.")
+            client_socket.close()
             break
     try:
         disconnect_from_client(client_socket, aes_key)
