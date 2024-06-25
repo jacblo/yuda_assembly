@@ -17,7 +17,7 @@ class HardwareManager:
         if len(ports) == 1:
             port = ports[0]
         else:
-            print("available ports are: \n","\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
+            print("available ports are: \n"+ "\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
             while True:
                 try:
                     port_number = int(input("select one of them (by number before it in list): "))
@@ -50,11 +50,11 @@ class HardwareManager:
         """
         self.ser_connection.reset_input_buffer() # clear the input buffer
         self.ser_connection.write(b"\xff") # start sending something
-        self.ser_connection.write(b"\0\0\0") # one word - 0
+        self.ser_connection.write(b"\0\0\x05") # one word - 5
         self.ser_connection.write(b"\xfa") # stop sending
         dat = self.ser_connection.read(2)
         try:
-            assert dat == b'\0\xff' # checksum of nothing is 0, and 0xff for done running
+            assert dat == b'\x05\xff' # checksum of nothing is 0, and 0xff for done running
         except AssertionError as err:
             print(f"Assert failed. didn't get b'\\0\\xff', instead got {dat!r}. Error was:")
             raise err
