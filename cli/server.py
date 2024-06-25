@@ -130,7 +130,7 @@ class HardwareManager:
         except SyntaxError as err:
             print_to_client(client_socket, aes_key, "Error: "+err.msg)
             # restart thread
-            threading.Thread(target=client_communication_thread, args=(client_socket, self, aes_key, machine_code), daemon=True).start()
+            spin_up_client_coms_thread(client_socket, self, aes_key, machine_code)
             return # no use in trying to run
         except RuntimeError as err:
             print_to_client(client_socket, aes_key, "Unkown server side error while sending program: "+str(err))
@@ -296,7 +296,7 @@ class HardwareManager:
         self.running = False
         
         # recreate client thread, so they can continue running
-        threading.Thread(target=client_communication_thread, args=(client_socket, self, aes_key, machine_code), daemon=True).start()
+        spin_up_client_coms_thread(client_socket, self, aes_key, machine_code)
         # run next in queue if it's there
         if len(self.queue) > 0:
             if not self.running: # here in case somehow in that short span, a thread ran add_to_queue and started running
@@ -480,10 +480,10 @@ you can press Ctrl+C at any point to kill the program.
 MULTIPROCESSING = False
 def spin_up_client_coms_thread(client_socket: socket.socket, hardware: HardwareManager, aes_key=None, last_machine_code=None):
     global MULTIPROCESSING
-    
     args = (client_socket, hardware, aes_key, last_machine_code)
     if MULTIPROCESSING:
-        p = multiprocessing.Process(target=time.sleep, args=args)
+        print("spinning up new process for client")
+        p = multiprocessing.Process(target=client_communication_thread, args=args)
         p.daemon = True
         p.start()
     else:
@@ -500,7 +500,7 @@ def client_communication_thread(client_socket: socket.socket, hardware: Hardware
         aes_key (bytes, optional): The AES encryption key. Defaults to None.
                                     if it is none, a handshake is done to get one
         hardware (HardwareManager): The hardware manager to hand control over to if trying to run program on hardware
-        last_machine_code (str): The machine code to run if user asks to run somewhere. None requires user to provide it
+        last_machine_code (str): The default machine code to run if user asks to run somewhere. None requires user to provide it
         
     Returns:
         None
@@ -618,6 +618,8 @@ def main():
     else:
         hardware = HardwareManager(args["port"]) # port is None if not given, at which point HardwareManager finds port by itself
     
+    
+    # setup socket and port for tcp connections
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     # set SO_REUSEADDR option. this allows us to rerun the server immediately after closing, even
@@ -632,7 +634,7 @@ def main():
         client_socket, addr = server_socket.accept()
         print("Client connected:", addr)
 
-        threading.Thread(target=client_communication_thread, args = (client_socket, hardware), daemon = True).start()
+        spin_up_client_coms_thread(client_socket, hardware)
 
 
 if __name__ == "__main__":
