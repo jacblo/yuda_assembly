@@ -42,7 +42,8 @@ class HardwareManager:
         self.test_hardware()
 
         # every item in queue is tuple or list of shape (<client_socket>, <aes_key>, <machine code to be run>)
-        self.queue = [] # using list as queue, doesn't matter for performance really
+        self.queue = multiprocessing.Manager().list()   # using list as queue, doesn't matter for performance really
+                                                        # it's a multiprocessing list so it can be updated in multiple processes
         
         self.default_max_runtime = 20*60 # default max runtime is 20 minutes
         self.queued_max_runtime = 3*60 # if someone's waiting in the queue then max runtime is only 3 minutes
@@ -134,7 +135,10 @@ class HardwareManager:
             return # no use in trying to run
         except RuntimeError as err:
             print_to_client(client_socket, aes_key, "Unkown server side error while sending program: "+str(err))
-            disconnect_from_client(client_socket, aes_key) # stop the client
+            try:
+                disconnect_from_client(client_socket, aes_key) # stop the client
+            except:
+                pass # if unable to tell client to disconnect, it doesn't matter, we need to stop one way or another.
             raise err # stop
             
         start_time = time.time() # immediately after loading the program, so we time execution time
@@ -297,11 +301,28 @@ class HardwareManager:
         
         # recreate client thread, so they can continue running
         spin_up_client_coms_thread(client_socket, self, aes_key, machine_code)
-        # run next in queue if it's there
-        if len(self.queue) > 0:
-            if not self.running: # here in case somehow in that short span, a thread ran add_to_queue and started running
-                self.run_next() # recursive, not great, but it's fine for a few thousand users in queue so i won't worry about it right now
 
+    def handle_queue(self):
+        """whenever there's something in the queue and the program isn't running it moves the queue forward"""
+        last_run = time.time()
+        while True:
+            if len(self.queue) > 0:
+                if not self.running:    # just in case, nothing should be running if not in this function but easy to check and 
+                    self.run_next()     # all of this is running on multiple cores and such, i don't want race conditions
+                    last_run = time.time()
+            
+
+            # sleep for performance, no need to check the same thing billions of times per second...
+            
+            # don't sleep if there are more people in the queue
+            if len(self.queue) > 0:
+                continue
+            
+            # we recently ran a program, we don't sleep as much so we respond faster
+            if time.time()-last_run > 5:
+                time.sleep(0.1)
+            else:
+                time.sleep(0.001)
 
     def add_to_queue(self, client_socket, aes_key, machine_code):
         # add to queue
@@ -314,10 +335,6 @@ class HardwareManager:
             self.max_runtime = self.queued_max_runtime
         else:
             self.max_runtime = self.default_max_runtime
-        
-        # run next waiting person in queue if relevant
-        if not self.running:
-            self.run_next()
 
 
 #       UTILITY FUNCTIONS
@@ -628,6 +645,10 @@ def main():
         hardware = None
     else:
         hardware = HardwareManager(args["port"]) # port is None if not given, at which point HardwareManager finds port by itself
+        
+        # set up hardware queue listener on new thread
+        # (doesn't need its own process even when multiprocessing iss on, that's for client handlers)
+        threading.Thread(target=hardware.handle_queue, daemon=True).start()
     
     
     # setup socket and port for tcp connections
