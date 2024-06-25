@@ -8,28 +8,35 @@ import time
 import glob
 import serial
 import sys
+import multiprocessing
+import argparse
+
 
 # for talking to hardware, might be moved to its own module soon
 class HardwareManager:
-    def __init__(self):
+    def __init__(self, port=None):
         # find the port
-        ports = glob.glob('/dev/ttyUSB[0-9]*') # for linux/mac systems, i have no clue how to do this on windows machine
-        if len(ports) == 1:
-            port = ports[0]
-        else:
-            print("available ports are: \n","\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
-            while True:
-                try:
-                    port_number = int(input("select one of them (by number before it in list): "))
-                except ValueError:
-                    print("Not a number or not an integer, try again.")
-                else:
-                    if 0 < port_number <= len(ports):
-                        break
+        if port is None:
+            ports = sorted(glob.glob('/dev/ttyUSB[0-9]*')) # for linux/mac systems, i have no clue how to do this on windows machine
+            if len(ports) == 1:
+                port = ports[0]
+            elif len(ports) == 0:
+                raise RuntimeError(
+                    "No available ports found. either use --no-hardware argument or provide a specific port through --port <PORT PATH>")
+            else:
+                print("available ports are: \n"+ "\n".join(f"{i+1}: {port}" for i, port in enumerate(ports)))
+                while True:
+                    try:
+                        port_number = int(input("select one of them (by number before it in list): "))
+                    except ValueError:
+                        print("Not a number or not an integer, try again.")
                     else:
-                        print("Not in range of the list, try again.")
-        
-            port = ports[port_number-1]
+                        if 0 < port_number <= len(ports):
+                            break
+                        else:
+                            print("Not in range of the list, try again.")
+            
+                port = ports[port_number-1]
 
         self.ser_connection = serial.Serial(port, 2_000_000, timeout=0.05) # very short timeout so we can do other things
         self.test_hardware()
@@ -50,14 +57,12 @@ class HardwareManager:
         """
         self.ser_connection.reset_input_buffer() # clear the input buffer
         self.ser_connection.write(b"\xff") # start sending something
-        self.ser_connection.write(b"\0\0\0") # one word - 0
+        self.ser_connection.write(b"\0\0\x05") # one word - 5
         self.ser_connection.write(b"\xfa") # stop sending
         dat = self.ser_connection.read(2)
-        try:
-            assert dat == b'\0\xff' # checksum of nothing is 0, and 0xff for done running
-        except AssertionError as err:
-            print(f"Assert failed. didn't get b'\\0\\xff', instead got {dat!r}. Error was:")
-            raise err
+        
+        # checksum of 000005 is 5, and 0xff for done running
+        assert dat == b'\x05\xff', f"Assert failed. didn't get b'\\0\\xff', instead got {dat!r}. Error was:"
         print("Hardware connected and running correctly")
     
     def send_program(self, machine_code, clear_received = True):
@@ -125,7 +130,7 @@ class HardwareManager:
         except SyntaxError as err:
             print_to_client(client_socket, aes_key, "Error: "+err.msg)
             # restart thread
-            threading.Thread(target=client_communication_thread, args=(client_socket, self, aes_key, machine_code), daemon=True).start()
+            spin_up_client_coms_thread(client_socket, self, aes_key, machine_code)
             return # no use in trying to run
         except RuntimeError as err:
             print_to_client(client_socket, aes_key, "Unkown server side error while sending program: "+str(err))
@@ -291,7 +296,7 @@ class HardwareManager:
         self.running = False
         
         # recreate client thread, so they can continue running
-        threading.Thread(target=client_communication_thread, args=(client_socket, self, aes_key, machine_code), daemon=True).start()
+        spin_up_client_coms_thread(client_socket, self, aes_key, machine_code)
         # run next in queue if it's there
         if len(self.queue) > 0:
             if not self.running: # here in case somehow in that short span, a thread ran add_to_queue and started running
@@ -470,8 +475,22 @@ exit: exit the program
 
 you can press Ctrl+C at any point to kill the program.
 """
+
+# centralized way to start that thread
+MULTIPROCESSING = False
+def spin_up_client_coms_thread(client_socket: socket.socket, hardware: HardwareManager, aes_key=None, last_machine_code=None):
+    global MULTIPROCESSING
+    args = (client_socket, hardware, aes_key, last_machine_code)
+    if MULTIPROCESSING:
+        print("spinning up new process for client")
+        p = multiprocessing.Process(target=client_communication_thread, args=args)
+        p.daemon = True
+        p.start()
+    else:
+        threading.Thread(target=client_communication_thread, args=args, daemon = True).start()
+
 # thread that does everything
-def client_communication_thread(client_socket, hardware: HardwareManager, aes_key=None, last_machine_code=None):
+def client_communication_thread(client_socket: socket.socket, hardware: HardwareManager, aes_key=None, last_machine_code=None):
     """
     Handles the communication with a client in a separate thread.
     Can be given aes_key to start from middle, or if not given, it starts a new connection by getting an aes key from the client.
@@ -481,7 +500,7 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
         aes_key (bytes, optional): The AES encryption key. Defaults to None.
                                     if it is none, a handshake is done to get one
         hardware (HardwareManager): The hardware manager to hand control over to if trying to run program on hardware
-        last_machine_code (str): The machine code to run if user asks to run somewhere. None requires user to provide it
+        last_machine_code (str): The default machine code to run if user asks to run somewhere. None requires user to provide it
         
     Returns:
         None
@@ -581,11 +600,26 @@ def client_communication_thread(client_socket, hardware: HardwareManager, aes_ke
 
 # dispatches threads whenever clients connect
 def main():
-    if len(sys.argv) == 2 and sys.argv[1] == "--no-hardware":
+    global MULTIPROCESSING
+    
+    # parse command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--no-hardware", action="store_true", 
+                        help="don't connect to external hardware processor") 
+    parser.add_argument("--multiprocessing", action="store_true",
+                        help="communicate with clients through a new process rather than a green thread")
+    parser.add_argument("-p", "--port", help="choose specific port to use")
+    args = vars(parser.parse_args())
+    
+    MULTIPROCESSING = args["multiprocessing"]
+
+    if args["no_hardware"]:
         hardware = None
     else:
-        hardware = HardwareManager()
+        hardware = HardwareManager(args["port"]) # port is None if not given, at which point HardwareManager finds port by itself
     
+    
+    # setup socket and port for tcp connections
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     # set SO_REUSEADDR option. this allows us to rerun the server immediately after closing, even
@@ -600,7 +634,7 @@ def main():
         client_socket, addr = server_socket.accept()
         print("Client connected:", addr)
 
-        threading.Thread(target = client_communication_thread, args = (client_socket, hardware), daemon = True).start()
+        spin_up_client_coms_thread(client_socket, hardware)
 
 
 if __name__ == "__main__":
