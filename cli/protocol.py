@@ -42,16 +42,16 @@ else:
     def is_socket_closed(sock: socket.socket) -> bool:
         try:
             # this will try to read bytes without blocking and also without removing them from buffer (peek only)
-            sock.set_blocking(0)
+            sock.setblocking(0)
             data = sock.recv(16, socket.MSG_PEEK)
-            sock.set_blocking(1)
+            sock.setblocking(1)
             if len(data) == 0:
                 return True
         except BlockingIOError:
-            sock.set_blocking(1)
+            sock.setblocking(1)
             return False  # socket is open and reading from it would block
         except ConnectionResetError:
-            sock.set_blocking(1)
+            sock.setblocking(1)
             return True  # socket was closed for some other reason
         return False
 
