@@ -609,7 +609,6 @@ def client_communication_thread(client_socket: socket.socket, hardware: Hardware
                 
                 case "exit":
                     print("Client disconnected")
-                    client_socket.close()
                     break
                 
                 case _:
