@@ -621,7 +621,7 @@ def client_communication_thread(client_socket: socket.socket, hardware: Hardware
     try:
         disconnect_from_client(client_socket, aes_key)
         
-    except (ConnectionResetError, BrokenPipeError):
+    except (ConnectionResetError, BrokenPipeError, OSError):
         pass # if they disconnected we don't care at this point
 
 
